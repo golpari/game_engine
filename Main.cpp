@@ -14,7 +14,7 @@ int main() {
     int health = 3;
     int score = 0;
     // print player health and score
-    std::cout << "health : " << health << std::endl
+    std::cout << "health : " << health << ", "
         << "score : " << score << std::endl;
 
     //prompt user
@@ -31,7 +31,7 @@ int main() {
         int health = 3;
         int score = 0;
         // print player health and score
-        std::cout << "health : " << health << std::endl
+        std::cout << "health : " << health << ", "
             << "score : " << score << std::endl;
 
         //prompt user
