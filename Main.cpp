@@ -10,7 +10,7 @@ int main() {
 
     std::string userInput;
     do {
-        // print map
+        // print ma
         // print initial render
         std::cout << initial_render << std::endl;
 
