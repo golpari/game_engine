@@ -1,6 +1,68 @@
 #include <iostream>
 #include "MapHelper.h"
 
+// given some movement command, update the relevant actor
+void UpdateActorPosition(Actor& actor, std::string movement) {
+
+    //if not valid movement, do nothing
+    if (movement != "n" &&
+        movement != "e" &&
+        movement != "s" &&
+        movement != "w")
+        return;
+
+    //update position vec
+    else if (movement == "n") {
+        actor.position.y--;
+    }
+    else if (movement == "e") {
+        actor.position.x++;
+    }
+    else if (movement == "s") {
+        actor.position.y++;
+    }
+    else if (movement == "w") {
+        actor.position.x--;
+    }
+
+    //DEBUG STATEMENT std::cerr << actor.position.x << ", " << actor.position.y << std::endl;
+
+    return;
+}
+
+
+void PrintCameraView(glm::ivec2 playerPosition) {
+    //9x13
+
+    // loop through map starting from playerPosition
+    int startX = std::max(playerPosition.x - 6, 0);
+    int endX = std::min(playerPosition.x + 6, HARDCODED_MAP_WIDTH);
+
+    int startY = std::max(playerPosition.y - 4, 0);
+    int endY = std::min(playerPosition.y + 4, HARDCODED_MAP_HEIGHT);
+
+    bool actorPresent = false;
+    for (int y = startY; y <= endY; ++y) {
+        for (int x = startX; x <= endX; ++x) {
+            // print each character of map, but only when an actor isnt already in that spot
+            for (Actor actor : hardcoded_actors) {
+                if (actor.position == glm::ivec2{ x, y }) {
+                    actorPresent = true;
+                    std::cout << actor.view;
+                }
+            }
+            if (!actorPresent)
+                std::cout << hardcoded_map[y][x];
+
+            actorPresent = false;
+        }
+        std::cout << std::endl;
+    }
+
+    return;
+}
+
+
 int main() {
 
     //test suit 0 
@@ -10,9 +72,11 @@ int main() {
 
     std::string userInput;
     do {
-        // print ma
-        // print initial render
-        std::cout << initial_render << std::endl;
+        //update player position based on the movement
+        UpdateActorPosition(hardcoded_actors.back(), userInput);
+
+        // print map (pass in player position)
+        PrintCameraView(hardcoded_actors.back().position);
 
         int health = 3;
         int score = 0;
@@ -32,13 +96,3 @@ int main() {
     return 0; 
 }
 
-// given some movement command, update the relevant actor
-void UpdateActorPosition(Actor actor, char movement) {
-    return;
-}
-
-
-void PrintCameraView(glm::ivec2 playerPosition) {
-
-    return;
-}
