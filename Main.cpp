@@ -13,15 +13,24 @@ void UpdateActorPosition(Actor& actor, std::string movement) {
 
     //update position vec
     else if (movement == "n") {
+        //DEBUG STATEMENT std::cout << "HERE: " << hardcoded_map[actor.position.y - 1][actor.position.x] << std::endl;
+        if (hardcoded_map[actor.position.y - 1][actor.position.x] == 'b') //dont do anything if b (blocking) wall is there
+            return;
         actor.position.y--;
     }
     else if (movement == "e") {
+        if (hardcoded_map[actor.position.y][actor.position.x + 1] == 'b') //dont do anything if b (blocking) wall is there
+            return;
         actor.position.x++;
     }
     else if (movement == "s") {
+        if (hardcoded_map[actor.position.y + 1][actor.position.x] == 'b') //dont do anything if b (blocking) wall is there
+            return;
         actor.position.y++;
     }
     else if (movement == "w") {
+        if (hardcoded_map[actor.position.y][actor.position.x - 1] == 'b') //dont do anything if b (blocking) wall is there
+            return;
         actor.position.x--;
     }
 
