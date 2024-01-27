@@ -2,6 +2,24 @@
 #include "MapHelper.h"
 
 bool firstRun = true;
+int health = 3;
+int score = 0;
+
+std::string CheckDialogue(std::string& dialogue) {
+    if (dialogue.find("game over") != std::string::npos)
+        return game_over_bad_message;
+    if (dialogue.find("health down") != std::string::npos)
+        health--;
+    if (dialogue.find("score up") != std::string::npos) {
+        score++;
+        dialogue.erase(dialogue.find("score up"), std::string("score up").length());
+    }
+    if (dialogue.find("you win") != std::string::npos)
+        return game_over_good_message;
+    if (health <= 0)
+        return game_over_bad_message;
+    return "";
+}
 
 bool CheckBlocking(glm::ivec2 nextPosition) {
     if (hardcoded_map[nextPosition.y][nextPosition.x] == 'b')
@@ -98,19 +116,20 @@ void PrintCameraView(glm::ivec2 playerPosition) {
     return;
 }
 
-void PrintDialogue(glm::ivec2 playerPosition) {
+std::string PrintDialogue(glm::ivec2 playerPosition) {
     //access surrounding 8 slots
     const int diffX[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
     const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
 
     int adjacentX;
     int adjacentY; 
-
+    std::string endgameString;
     //loop through possible actors
     for (Actor actor : hardcoded_actors) {
         //print contact dialogue if relevant
         if (playerPosition == actor.position && actor.contact_dialogue != "") {
             std::cout << actor.contact_dialogue << std::endl;
+            endgameString = CheckDialogue(actor.contact_dialogue);
         }
 
         // loop through adjacent actors
@@ -120,10 +139,12 @@ void PrintDialogue(glm::ivec2 playerPosition) {
             //print nearby dialogue if relevant
             if (adjacent == actor.position && actor.nearby_dialogue != "") {
                 std::cout << actor.nearby_dialogue << std::endl;
+                endgameString = CheckDialogue(actor.nearby_dialogue);
             }
         }  
     }
 
+    return endgameString;
 }
 
 int main() {
@@ -144,14 +165,18 @@ int main() {
         // print map (pass in player position)
         PrintCameraView(hardcoded_actors.back().position);
 
-        // check + print nearby & contact dialogue
-        PrintDialogue(hardcoded_actors.back().position);
+        // check + print nearby & contact dialogue & eng game if needed
+        std::string endgame = PrintDialogue(hardcoded_actors.back().position);
 
-        int health = 3;
-        int score = 0;
         // print player health and score
         std::cout << "health : " << health << ", "
             << "score : " << score << std::endl;
+
+        //if relevant, print relevant game end string  and return
+        if (endgame != "") {
+            std::cout << endgame;
+            return;
+        }
 
         //prompt user
         std::cout << "Please make a decision..." << std::endl;
