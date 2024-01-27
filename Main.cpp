@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MapHelper.h"
 
+bool firstRun = true;
+
 bool CheckBlocking(glm::ivec2 nextPosition) {
     if (hardcoded_map[nextPosition.y][nextPosition.x] == 'b')
         return true;
@@ -134,7 +136,8 @@ int main() {
     std::string userInput;
     do {
         //update player position based on the movement
-        UpdateAllActorPositions();
+        if (!firstRun) UpdateAllActorPositions();
+        firstRun = false;
         UpdateActorPosition(hardcoded_actors.back(), userInput);
         
 
