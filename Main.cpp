@@ -94,6 +94,11 @@ void PrintDialogue(glm::ivec2 playerPosition) {
     //loop through possible actors
     for (Actor actor : hardcoded_actors) {
 
+        //print contact dialogue if relevant
+        if (hardcoded_map[playerPosition.y][playerPosition.x] == actor.view) {
+            std::cout << actor.contact_dialogue << std::endl;
+        }
+
         // loop through adjacent actors
         for (int i = 0; i < 8; i++) {
             glm::ivec2 adjacent{ playerPosition.x + diffX[i],playerPosition.y + diffY[i] };
@@ -104,10 +109,7 @@ void PrintDialogue(glm::ivec2 playerPosition) {
             }
         }
 
-        //print contact dialogue if relevant
-        if (hardcoded_map[playerPosition.y][playerPosition.x] == actor.view) {
-            std::cout << actor.contact_dialogue << std::endl;
-        }
+        
     }
 
 }
