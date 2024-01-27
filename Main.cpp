@@ -51,16 +51,19 @@ void PrintCameraView(glm::ivec2 playerPosition) {
     int endY = std::min(playerPosition.y + 4, HARDCODED_MAP_HEIGHT);
 
     bool actorPresent = false;
+    Actor actorToPrint;
     for (int y = startY; y <= endY; ++y) {
         for (int x = startX; x <= endX; ++x) {
             // print each character of map, but only when an actor isnt already in that spot
             for (Actor actor : hardcoded_actors) {
                 if (actor.position == glm::ivec2{ x, y }) {
                     actorPresent = true;
-                    std::cout << actor.view;
+                    actorToPrint = actor;
                 }
             }
-            if (!actorPresent)
+            if (actorPresent)
+                std::cout << actorToPrint.view;
+            else if (!actorPresent)
                 std::cout << hardcoded_map[y][x];
 
             actorPresent = false;
@@ -71,6 +74,34 @@ void PrintCameraView(glm::ivec2 playerPosition) {
     return;
 }
 
+void PrintDialogue(glm::ivec2 playerPosition) {
+    //access surrounding 8 slots
+    const int diffX[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
+    const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+    int adjacentX;
+    int adjacentY;
+
+    //loop through possible actors
+    for (Actor actor : hardcoded_actors) {
+
+        // loop through adjacent actors
+        for (int i = 0; i < 8; i++) {
+            glm::ivec2 adjacent{ playerPosition.x + diffX[i],playerPosition.y + diffY[i] };
+            
+            //print nearby dialogue if relevant
+            if (adjacent == actor.position) {
+                std::cout << actor.nearby_dialogue << std::endl;
+            }
+        }
+
+        //print contact dialogue if relevant
+        if (hardcoded_map[playerPosition.y][playerPosition.x] == actor.view) {
+            std::cout << actor.contact_dialogue << std::endl;
+        }
+    }
+
+}
 
 int main() {
 
@@ -86,6 +117,9 @@ int main() {
 
         // print map (pass in player position)
         PrintCameraView(hardcoded_actors.back().position);
+
+        // check + print nearby & contact dialogue
+        PrintDialogue(hardcoded_actors.back().position);
 
         int health = 3;
         int score = 0;
