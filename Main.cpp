@@ -55,9 +55,10 @@ void UpdateAllActorPositions() {
     //update all actors except for the player (which is the last actor)
     for (int i = 0; i < hardcoded_actors.size() - 1; i++) {
         nextPosition = hardcoded_actors[i].position + hardcoded_actors[i].velocity;
-        //if (!CheckBlocking(nextPosition))
+        if (!CheckBlocking(nextPosition))
             hardcoded_actors[i].position = nextPosition;
-       
+        else
+            hardcoded_actors[i].velocity = -hardcoded_actors[i].velocity;
     }
 }
 
@@ -133,8 +134,9 @@ int main() {
     std::string userInput;
     do {
         //update player position based on the movement
-        UpdateActorPosition(hardcoded_actors.back(), userInput);
         UpdateAllActorPositions();
+        UpdateActorPosition(hardcoded_actors.back(), userInput);
+        
 
         // print map (pass in player position)
         PrintCameraView(hardcoded_actors.back().position);
