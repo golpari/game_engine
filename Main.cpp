@@ -99,7 +99,7 @@ void PrintDialogue(glm::ivec2 playerPosition) {
         }
 
         // loop through adjacent actors
-        for (int i = 0; i < 8; i++) {  
+        for (int i = 0; i < 8; i++) {
             glm::ivec2 adjacent{ playerPosition.x + diffX[i],playerPosition.y + diffY[i] };
             
             //print nearby dialogue if relevant
