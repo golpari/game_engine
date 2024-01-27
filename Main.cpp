@@ -125,7 +125,7 @@ std::string PrintDialogue(glm::ivec2 playerPosition) {
     int adjacentY; 
     std::string endgameString;
     //loop through possible actors
-    for (Actor actor : hardcoded_actors) {
+    for (Actor& actor : hardcoded_actors) {
         //print contact dialogue if relevant
         if (playerPosition == actor.position && actor.contact_dialogue != "") {
             std::cout << actor.contact_dialogue << std::endl;
