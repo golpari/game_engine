@@ -175,7 +175,7 @@ int main() {
         //if relevant, print relevant game end string  and return
         if (endgame != "") {
             std::cout << endgame;
-            return;
+            return 0;
         }
 
         //prompt user
