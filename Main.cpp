@@ -1,6 +1,16 @@
 #include <iostream>
 #include "MapHelper.h"
 
+bool CheckBlocking(glm::ivec2 nextPosition) {
+    if (hardcoded_map[nextPosition.x][nextPosition.y] == 'b')
+        return true;
+    for (Actor actor : hardcoded_actors) {
+        if (actor.position == nextPosition && actor.blocking)
+            return true;
+    }
+    return false;
+}
+
 // given some movement command, update the relevant actor
 void UpdateActorPosition(Actor& actor, std::string movement) {
 
@@ -14,22 +24,22 @@ void UpdateActorPosition(Actor& actor, std::string movement) {
     //update position vec
     else if (movement == "n") {
         //DEBUG STATEMENT std::cout << "HERE: " << hardcoded_map[actor.position.y - 1][actor.position.x] << std::endl;
-        if (hardcoded_map[actor.position.y - 1][actor.position.x] == 'b') //dont do anything if b (blocking) wall is there
+        if (CheckBlocking(glm::ivec2(actor.position.y - 1, actor.position.x))) //dont do anything if b (blocking) wall is there
             return;
         actor.position.y--;
     }
     else if (movement == "e") {
-        if (hardcoded_map[actor.position.y][actor.position.x + 1] == 'b') //dont do anything if b (blocking) wall is there
+        if (CheckBlocking(glm::ivec2(actor.position.y, actor.position.x + 1))) //dont do anything if b (blocking) wall is there
             return;
         actor.position.x++;
     }
     else if (movement == "s") {
-        if (hardcoded_map[actor.position.y + 1][actor.position.x] == 'b') //dont do anything if b (blocking) wall is there
+        if (CheckBlocking(glm::ivec2(actor.position.y + 1, actor.position.x))) //dont do anything if b (blocking) wall is there
             return;
         actor.position.y++;
     }
     else if (movement == "w") {
-        if (hardcoded_map[actor.position.y][actor.position.x - 1] == 'b') //dont do anything if b (blocking) wall is there
+        if (CheckBlocking(glm::ivec2(actor.position.y, actor.position.x - 1))) //dont do anything if b (blocking) wall is there
             return;
         actor.position.x--;
     }
@@ -38,7 +48,6 @@ void UpdateActorPosition(Actor& actor, std::string movement) {
 
     return;
 }
-
 
 void PrintCameraView(glm::ivec2 playerPosition) {
     //9x13
