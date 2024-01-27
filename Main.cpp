@@ -89,7 +89,7 @@ void PrintDialogue(glm::ivec2 playerPosition) {
     const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
 
     int adjacentX;
-    int adjacentY;
+    int adjacentY; 
 
     //loop through possible actors
     for (Actor actor : hardcoded_actors) {
