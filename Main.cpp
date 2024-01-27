@@ -5,14 +5,14 @@ bool firstRun = true;
 int health = 3;
 int score = 0;
 
-std::string CheckDialogue(std::string& dialogue) {
+std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
     if (dialogue.find("game over") != std::string::npos)
         return game_over_bad_message;
     if (dialogue.find("health down") != std::string::npos)
         health--;
-    if (dialogue.find("score up") != std::string::npos) {
+    if (dialogue.find("score up") != std::string::npos && !scoredUpped) {
         score++;
-        dialogue.erase(dialogue.find("score up"), std::string("score up").length());
+        scoredUpped = true;
     }
     if (dialogue.find("you win") != std::string::npos)
         return game_over_good_message;
@@ -129,7 +129,7 @@ std::string PrintDialogue(glm::ivec2 playerPosition) {
         //print contact dialogue if relevant
         if (playerPosition == actor.position && actor.contact_dialogue != "") {
             std::cout << actor.contact_dialogue << std::endl;
-            endgameString = CheckDialogue(actor.contact_dialogue);
+            endgameString = CheckDialogue(actor.contact_dialogue, actor.scoredUpped);
         }
 
         // loop through adjacent actors
@@ -139,7 +139,7 @@ std::string PrintDialogue(glm::ivec2 playerPosition) {
             //print nearby dialogue if relevant
             if (adjacent == actor.position && actor.nearby_dialogue != "") {
                 std::cout << actor.nearby_dialogue << std::endl;
-                endgameString = CheckDialogue(actor.nearby_dialogue);
+                endgameString = CheckDialogue(actor.nearby_dialogue, actor.scoredUpped);
             }
         }  
     }
