@@ -49,6 +49,19 @@ void UpdateActorPosition(Actor& actor, std::string movement) {
     return;
 }
 
+void UpdateAllActorPositions() {
+
+    glm::ivec2 nextPosition;
+    //update all actors except for the player (which is the last actor)
+    for (int i = 0; i < hardcoded_actors.size() - 1; i++) {
+        nextPosition = hardcoded_actors[i].position + hardcoded_actors[i].velocity;
+        if (!CheckBlocking(nextPosition))
+            hardcoded_actors[i].position = nextPosition;
+        else
+            hardcoded_actors[i].velocity = -hardcoded_actors[i].velocity;
+    }
+}
+
 void PrintCameraView(glm::ivec2 playerPosition) {
     //9x13
 
@@ -122,6 +135,7 @@ int main() {
     do {
         //update player position based on the movement
         UpdateActorPosition(hardcoded_actors.back(), userInput);
+        UpdateAllActorPositions();
 
         // print map (pass in player position)
         PrintCameraView(hardcoded_actors.back().position);
