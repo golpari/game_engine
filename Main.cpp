@@ -26,7 +26,7 @@ std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 bool CheckBlocking(glm::ivec2 nextPosition) {
     if (hardcoded_map[nextPosition.y][nextPosition.x] == 'b')
         return true;
-    for (Actor actor : hardcoded_actors) {
+    for (Actor& actor : hardcoded_actors) {
         if (actor.position == nextPosition && actor.blocking)
             return true;
     }
@@ -34,7 +34,7 @@ bool CheckBlocking(glm::ivec2 nextPosition) {
 }
 
 // given some movement command, update the relevant actor
-void UpdateActorPosition(Actor& actor, std::string movement) {
+void UpdateActorPosition(Actor& actor, std::string& movement) {
 
     //if not valid movement, do nothing
     if (movement != "n" &&
@@ -84,7 +84,7 @@ void UpdateAllActorPositions() {
     }
 }
 
-void PrintCameraView(glm::ivec2 playerPosition) {
+void PrintCameraView(glm::ivec2& playerPosition) {
     // 9x13 view
 
     // Calculate starting and ending coordinates for the 9x13 grid
@@ -104,7 +104,7 @@ void PrintCameraView(glm::ivec2 playerPosition) {
             // Check if the current coordinates are within the map bounds
             if (x >= 0 && x < HARDCODED_MAP_WIDTH && y >= 0 && y < HARDCODED_MAP_HEIGHT) {
                 // Check if there's an actor at the current position
-                for (Actor actor : hardcoded_actors) {
+                for (Actor& actor : hardcoded_actors) {
                     if (actor.position == glm::ivec2{ x, y }) {
                         actorPresent = true;
                         actorToPrint = actor;
@@ -128,7 +128,7 @@ void PrintCameraView(glm::ivec2 playerPosition) {
 }
 
 
-std::string PrintDialogue(glm::ivec2 playerPosition) {
+std::string PrintDialogue(glm::ivec2& playerPosition) {
     //access surrounding 8 slots
     const int diffX[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
     const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
