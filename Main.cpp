@@ -204,7 +204,7 @@ int main() {
         ss.str("");
     } while (std::cin >> userInput && userInput != "quit");
 
-    ss << game_over_bad_message;
+    std::cout << game_over_bad_message;
   
     return 0; 
 }
