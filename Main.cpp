@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MapHelper.h"
+#include <sstream>
 
+std::stringstream ss;
 bool firstRun = true;
 int health = 3;
 int score = 0;
@@ -110,16 +112,16 @@ void PrintCameraView(glm::ivec2 playerPosition) {
                 }
 
                 if (actorPresent)
-                    std::cout << actorToPrint.view;
+                    ss << actorToPrint.view;
                 else
-                    std::cout << hardcoded_map[y][x];
+                    ss << hardcoded_map[y][x];
             }
             else {
                 // Print an empty space if outside map bounds
-                std::cout << ' ';
+                ss << ' ';
             }
         }
-        std::cout << std::endl;
+        ss << '\n';
     }
 
     return;
@@ -138,7 +140,7 @@ std::string PrintDialogue(glm::ivec2 playerPosition) {
     for (Actor& actor : hardcoded_actors) {
         //print contact dialogue if relevant
         if (playerPosition == actor.position && actor.contact_dialogue != "") {
-            std::cout << actor.contact_dialogue << std::endl;
+            ss << actor.contact_dialogue << '\n';
             endgameString = CheckDialogue(actor.contact_dialogue, actor.scoredUpped);
         }
 
@@ -148,7 +150,7 @@ std::string PrintDialogue(glm::ivec2 playerPosition) {
             
             //print nearby dialogue if relevant
             if (adjacent == actor.position && actor.nearby_dialogue != "") {
-                std::cout << actor.nearby_dialogue << std::endl;
+                ss << actor.nearby_dialogue << '\n';
                 endgameString = CheckDialogue(actor.nearby_dialogue, actor.scoredUpped);
             }
         }  
@@ -162,7 +164,7 @@ int main() {
     //test suit 0 
     
     // on launch, print game_start_message
-    std::cout << game_start_message << std::endl;
+    ss << game_start_message << '\n';
 
     std::string userInput;
     do {
@@ -179,23 +181,26 @@ int main() {
         std::string endgame = PrintDialogue(hardcoded_actors.back().position);
 
         // print player health and score
-        std::cout << "health : " << health << ", "
-            << "score : " << score << std::endl;
+        ss << "health : " << health << ", "
+            << "score : " << score << '\n';
 
         //if relevant, print relevant game end string  and return
         if (endgame != "") {
-            std::cout << endgame;
+            ss << endgame;
+            std::cout << ss.str();
             return 0;
         }
 
         //prompt user
-        std::cout << "Please make a decision..." << std::endl;
+        ss << "Please make a decision..." << '\n';
 
         //explain user options
-        std::cout << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << std::endl;
+        ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
+
+        std::cout << ss.str();
     } while (std::cin >> userInput && userInput != "quit");
 
-    std::cout << game_over_bad_message;
+    ss << game_over_bad_message;
   
     return 0; 
 }
