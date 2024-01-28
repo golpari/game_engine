@@ -115,7 +115,7 @@ void PrintCameraView(glm::ivec2 playerPosition) {
                     std::cout << hardcoded_map[y][x];
             }
             else {
-                // Print an empty space if outside the map bounds
+                // Print an empty space if outside map bounds
                 std::cout << ' ';
             }
         }
