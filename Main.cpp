@@ -83,38 +83,49 @@ void UpdateAllActorPositions() {
 }
 
 void PrintCameraView(glm::ivec2 playerPosition) {
-    //9x13
+    // 9x13 view
 
-    // loop through map starting from playerPosition
-    int startX = std::max(playerPosition.x - 6, 0);
-    int endX = std::min(playerPosition.x + 6, HARDCODED_MAP_WIDTH);
+    // Calculate starting and ending coordinates for the 9x13 grid
+    int startX = playerPosition.x - 6;
+    int endX = playerPosition.x + 6;
 
-    int startY = std::max(playerPosition.y - 4, 0);
-    int endY = std::min(playerPosition.y + 4, HARDCODED_MAP_HEIGHT);
+    int startY = playerPosition.y - 4;
+    int endY = playerPosition.y + 4;
 
     bool actorPresent = false;
     Actor actorToPrint;
+
     for (int y = startY; y <= endY; ++y) {
         for (int x = startX; x <= endX; ++x) {
-            // print each character of map, but only when an actor isnt already in that spot
-            for (Actor actor : hardcoded_actors) {
-                if (actor.position == glm::ivec2{ x, y }) {
-                    actorPresent = true;
-                    actorToPrint = actor;
-                }
-            }
-            if (actorPresent)
-                std::cout << actorToPrint.view;
-            else if (!actorPresent)
-                std::cout << hardcoded_map[y][x];
-
             actorPresent = false;
+
+            // Check if the current coordinates are within the map bounds
+            if (x >= 0 && x < HARDCODED_MAP_WIDTH && y >= 0 && y < HARDCODED_MAP_HEIGHT) {
+                // Check if there's an actor at the current position
+                for (Actor actor : hardcoded_actors) {
+                    if (actor.position == glm::ivec2{ x, y }) {
+                        actorPresent = true;
+                        actorToPrint = actor;
+                        break; // Break out of the loop once an actor is found
+                    }
+                }
+
+                if (actorPresent)
+                    std::cout << actorToPrint.view;
+                else
+                    std::cout << hardcoded_map[y][x];
+            }
+            else {
+                // Print an empty space if outside the map bounds
+                std::cout << ' ';
+            }
         }
         std::cout << std::endl;
     }
 
     return;
 }
+
 
 std::string PrintDialogue(glm::ivec2 playerPosition) {
     //access surrounding 8 slots
