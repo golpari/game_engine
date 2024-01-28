@@ -106,7 +106,6 @@ void PrintCameraView(glm::ivec2 playerPosition) {
                     if (actor.position == glm::ivec2{ x, y }) {
                         actorPresent = true;
                         actorToPrint = actor;
-                        break; // Break out of the loop once an actor is found
                     }
                 }
 
