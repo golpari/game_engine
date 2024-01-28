@@ -164,7 +164,7 @@ int main() {
     //test suit 0 
     
     // on launch, print game_start_message
-    ss << game_start_message << '\n';
+    std::cout << game_start_message << '\n';
 
     std::string userInput;
     do {
@@ -188,6 +188,8 @@ int main() {
         if (endgame != "") {
             ss << endgame;
             std::cout << ss.str();
+            ss.clear();
+            ss.str("");
             return 0;
         }
 
@@ -198,6 +200,8 @@ int main() {
         ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
 
         std::cout << ss.str();
+        ss.clear();
+        ss.str("");
     } while (std::cin >> userInput && userInput != "quit");
 
     ss << game_over_bad_message;
