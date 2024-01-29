@@ -1,0 +1,2 @@
+ChatGPT used to help write functions for printing whitespace in the camera view, for printing the camera view as a whole, and for accessing the 8 slots around the player for dialogue.
+These methods are all in main.cpp
