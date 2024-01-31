@@ -2,6 +2,7 @@
 #include "MapHelper.h"
 #include <sstream>
 
+//homework3 test adventure
 std::stringstream ss;
 bool firstRun = true;
 int health = 3;
