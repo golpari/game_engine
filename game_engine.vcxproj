@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -88,8 +88,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,8 +105,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +123,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,8 +139,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -568,6 +572,41 @@
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\vec4.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\vector_relational.hpp" />
     <ClInclude Include="ThirdParty\MapHelper.h" />
+    <ClInclude Include="ThirdParty\rapidjson\allocators.h" />
+    <ClInclude Include="ThirdParty\rapidjson\document.h" />
+    <ClInclude Include="ThirdParty\rapidjson\encodedstream.h" />
+    <ClInclude Include="ThirdParty\rapidjson\encodings.h" />
+    <ClInclude Include="ThirdParty\rapidjson\error\en.h" />
+    <ClInclude Include="ThirdParty\rapidjson\error\error.h" />
+    <ClInclude Include="ThirdParty\rapidjson\filereadstream.h" />
+    <ClInclude Include="ThirdParty\rapidjson\filewritestream.h" />
+    <ClInclude Include="ThirdParty\rapidjson\fwd.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\itoa.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\meta.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\pow10.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\regex.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\stack.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\strtod.h" />
+    <ClInclude Include="ThirdParty\rapidjson\internal\swap.h" />
+    <ClInclude Include="ThirdParty\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="ThirdParty\rapidjson\memorybuffer.h" />
+    <ClInclude Include="ThirdParty\rapidjson\memorystream.h" />
+    <ClInclude Include="ThirdParty\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="ThirdParty\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="ThirdParty\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="ThirdParty\rapidjson\pointer.h" />
+    <ClInclude Include="ThirdParty\rapidjson\prettywriter.h" />
+    <ClInclude Include="ThirdParty\rapidjson\rapidjson.h" />
+    <ClInclude Include="ThirdParty\rapidjson\reader.h" />
+    <ClInclude Include="ThirdParty\rapidjson\schema.h" />
+    <ClInclude Include="ThirdParty\rapidjson\stream.h" />
+    <ClInclude Include="ThirdParty\rapidjson\stringbuffer.h" />
+    <ClInclude Include="ThirdParty\rapidjson\writer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

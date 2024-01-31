@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MapHelper.h"
 #include <sstream>
+#include "rapidjson/document.h"
 
 std::stringstream ss;
 bool firstRun = true;
