@@ -87,28 +87,28 @@ void UpdateAllActorPositions() {
 }
 
 void PrintCameraView(glm::ivec2& playerPosition) {
-    // 9x13 view
-
-    // Calculate starting and ending coordinates for the 9x13 grid
-    int startX = playerPosition.x - 6;
-    int endX = playerPosition.x + 6;
-
-    int startY = playerPosition.y - 4;
-    int endY = playerPosition.y + 4;
-
-    bool actorPresent = false;
-    Actor actorToPrint;
+    // 9x13 view default
 
     uint32_t x_res;
     uint32_t y_res;
     EngineUtils::split(Scene::GetCameraResolution(), x_res, y_res);
+
+    // Calculate starting and ending coordinates for the customizable grid
+    int startX = playerPosition.x - (x_res-1)/2;
+    int endX = playerPosition.x + (x_res-1)/2;
+
+    int startY = playerPosition.y - (y_res-1)/2;
+    int endY = playerPosition.y + (y_res - 1) / 2;
+
+    bool actorPresent = false;
+    Actor actorToPrint;
 
     for (int y = startY; y <= endY; ++y) {
         for (int x = startX; x <= endX; ++x) {
             actorPresent = false;
 
             // Check if the current coordinates are within the map bounds
-            if (x >= 0 && x < x_res && y >= 0 && y < y_res) {
+            if (x >= 0 && x < HARDCODED_MAP_WIDTH && y >= 0 && y < HARDCODED_MAP_HEIGHT) {
                 // Check if there's an actor at the current position
                 for (Actor& actor : hardcoded_actors) {
                     if (actor.position == glm::ivec2{ x, y }) {

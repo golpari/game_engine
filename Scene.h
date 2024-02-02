@@ -62,12 +62,12 @@ public:
 
 		if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
 			rapidjson::Document out_renderingConfig;
-			EngineUtils::ReadJsonFile("resources/render.config", out_renderingConfig);
+			EngineUtils::ReadJsonFile("resources/rendering.config", out_renderingConfig);
 			if (out_renderingConfig.HasMember("x_resolution")) {
 				x_res = out_renderingConfig["x_resolution"].GetUint();
 			}
 			if (out_renderingConfig.HasMember("y_resolution")) {
-				x_res = out_renderingConfig["y_resolution"].GetUint();
+				y_res = out_renderingConfig["y_resolution"].GetUint();
 			}
 		}
 
