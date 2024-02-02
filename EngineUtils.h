@@ -58,6 +58,9 @@ public:
 			if (out_gameConfig["game_start_message"] != "") {
 				std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
 			}
+			else {
+				exit(0);
+			}
 		}
 		
 	}
