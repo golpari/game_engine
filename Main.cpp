@@ -99,12 +99,16 @@ void PrintCameraView(glm::ivec2& playerPosition) {
     bool actorPresent = false;
     Actor actorToPrint;
 
+    uint32_t x_res;
+    uint32_t y_res;
+    EngineUtils::split(Scene::GetCameraResolution(), x_res, y_res);
+
     for (int y = startY; y <= endY; ++y) {
         for (int x = startX; x <= endX; ++x) {
             actorPresent = false;
 
             // Check if the current coordinates are within the map bounds
-            if (x >= 0 && x < HARDCODED_MAP_WIDTH && y >= 0 && y < HARDCODED_MAP_HEIGHT) {
+            if (x >= 0 && x < x_res && y >= 0 && y < y_res) {
                 // Check if there's an actor at the current position
                 for (Actor& actor : hardcoded_actors) {
                     if (actor.position == glm::ivec2{ x, y }) {

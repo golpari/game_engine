@@ -14,13 +14,15 @@
 #include "EngineUtils.h"
 
 
-class Scene {
+class Scene {	
+
 public:
+
 
 	static void GameStart() {
 
-		EngineUtils::CheckPathExists("resources/");
-		EngineUtils::CheckPathExists("resources/game.config");
+		EngineUtils::CheckPathExists("resources/", true);
+		EngineUtils::CheckPathExists("resources/game.config", true);
 
 		rapidjson::Document out_gameConfig;
 		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
@@ -51,6 +53,25 @@ public:
 				exit(0);
 			}
 		}
+	}
+
+	static uint64_t GetCameraResolution() {
+		//default values
+		uint32_t x_res = 13;
+		uint32_t y_res = 9;
+
+		if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
+			rapidjson::Document out_renderingConfig;
+			EngineUtils::ReadJsonFile("resources/render.config", out_renderingConfig);
+			if (out_renderingConfig.HasMember("x_resolution")) {
+				x_res = out_renderingConfig["x_resolution"].GetUint();
+			}
+			if (out_renderingConfig.HasMember("y_resolution")) {
+				x_res = out_renderingConfig["y_resolution"].GetUint();
+			}
+		}
+
+		return EngineUtils::combine(x_res, y_res);
 	}
 };
 #endif
