@@ -1379,6 +1379,9 @@
     <ClInclude Include="ThirdParty\rapidjson\writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EngineUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\glm-0.9.9.8\glm\detail\glm.cpp">
