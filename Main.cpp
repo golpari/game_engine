@@ -2,7 +2,7 @@
 #include "MapHelper.h"
 #include <sstream>
 
-#include "EngineUtils.h"
+#include "Scene.h"
 
 std::stringstream ss;
 bool firstRun = true;
@@ -11,7 +11,7 @@ int score = 0;
 
 std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
     if (dialogue.find("game over") != std::string::npos)
-        return EngineUtils::GameEnd(false);
+        return Scene::GameEnd(false);
     if (dialogue.find("health down") != std::string::npos)
         health--;
     if (dialogue.find("score up") != std::string::npos && !scoredUpped) {
@@ -19,9 +19,9 @@ std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
         scoredUpped = true;
     }
     if (dialogue.find("you win") != std::string::npos)
-        return EngineUtils::GameEnd(true);
+        return Scene::GameEnd(true);
     if (health <= 0)
-        return EngineUtils::GameEnd(false);
+        return Scene::GameEnd(false);
     return "";
 }
 
@@ -163,7 +163,7 @@ std::string PrintDialogue(glm::ivec2& playerPosition) {
 
 int main() {    
     // on launch, check for resources directory
-    EngineUtils::GameStart();
+    Scene::GameStart();
 
     std::string userInput;
     do {
@@ -203,7 +203,7 @@ int main() {
         ss.str("");
     } while (std::cin >> userInput && userInput != "quit");
 
-    std::cout << EngineUtils::GameEnd(false);
+    std::cout << Scene::GameEnd(false);
   
     return 0; 
 }

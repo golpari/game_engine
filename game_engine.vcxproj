@@ -290,6 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineUtils.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\common.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\detail\compute_common.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\detail\compute_vector_relational.hpp" />

@@ -35,59 +35,11 @@ public:
 		}
 	}
 
-	static void CheckResourcesAndConfig() {
-		// Check if resources directory missing
-		if (!std::filesystem::exists("resources/")) {
-			std::cout << "error: resources/ missing";
+	static void CheckPathExists(std::filesystem::path path) {
+		// Check if directory or file is missing
+		if (!std::filesystem::exists(path)) {
+			std::cout << "error: " << path.string() << " missing";
 			exit(0);
-		}
-
-		// Check if gameConfig missing
-		if (!std::filesystem::exists("resources/game.config")) {
-			std::cout << "error: resources/game.config missing";
-			exit(0);
-		}
-	}
-	static void GameStart() {
-
-		CheckResourcesAndConfig();
-
-		rapidjson::Document out_gameConfig;
-		ReadJsonFile("resources/game.config", out_gameConfig);
-		if (out_gameConfig.HasMember("game_start_message")) {
-			//if (out_gameConfig["game_start_message"] != "") {
-				std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
-			//}
-		}
-		
-	}
-
-	static std::string GameEnd(bool good) {
-		// how to resetup this to not have the parsing happen twice?
-		rapidjson::Document out_gameConfig;
-		ReadJsonFile("resources/game.config", out_gameConfig);
-		if (good)
-		{
-			if (out_gameConfig.HasMember("game_over_good_message")) {
-				//if (out_gameConfig["game_over_good_message"] != "") {
-					return out_gameConfig["game_over_good_message"].GetString();
-				//}
-				
-			}
-			else {
-				exit(0);
-			}
-		}
-		else {
-			if (out_gameConfig.HasMember("game_over_bad_message")) {
-				//if (out_gameConfig["game_over_bad_message"] != "") {
-					return out_gameConfig["game_over_bad_message"].GetString();
-				//}
-				
-			}
-			else {
-				exit(0);
-			}
 		}
 	}
 };
