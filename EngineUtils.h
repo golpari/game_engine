@@ -51,7 +51,7 @@ public:
 	static void GameStart() {
 
 		CheckResourcesAndConfig();
-		
+
 		rapidjson::Document out_gameConfig;
 		ReadJsonFile("resources/game.config", out_gameConfig);
 		if (out_gameConfig.HasMember("game_start_message")) {
@@ -60,6 +60,27 @@ public:
 			}
 		}
 		
+	}
+
+	static std::string GameEnd(bool good) {
+		// how to resetup this to not have the parsing happen twice?
+		rapidjson::Document out_gameConfig;
+		ReadJsonFile("resources/game.config", out_gameConfig);
+		if (good)
+		{
+			if (out_gameConfig.HasMember("game_over_good_message")) {
+				if (out_gameConfig["game_over_good_message"] != "") {
+					return out_gameConfig["game_over_good_message"].GetString();
+				}
+			}
+		}
+		else {
+			if (out_gameConfig.HasMember("game_over_bad_message")) {
+				if (out_gameConfig["game_over_bad_message"] != "") {
+					return out_gameConfig["game_over_bad_message"].GetString();
+				}
+			}
+		}
 	}
 };
 #endif

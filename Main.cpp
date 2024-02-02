@@ -11,7 +11,7 @@ int score = 0;
 
 std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
     if (dialogue.find("game over") != std::string::npos)
-        return game_over_bad_message;
+        return EngineUtils::GameEnd(false);
     if (dialogue.find("health down") != std::string::npos)
         health--;
     if (dialogue.find("score up") != std::string::npos && !scoredUpped) {
@@ -19,9 +19,9 @@ std::string CheckDialogue(std::string& dialogue, bool& scoredUpped) {
         scoredUpped = true;
     }
     if (dialogue.find("you win") != std::string::npos)
-        return game_over_good_message;
+        return EngineUtils::GameEnd(true);
     if (health <= 0)
-        return game_over_bad_message;
+        return EngineUtils::GameEnd(false);
     return "";
 }
 
@@ -193,17 +193,17 @@ int main() {
         }
 
         //prompt user
-        ss << "please make a decision..." << '\n';
+        ss << "Please make a decision..." << '\n';
 
         //explain user options
-        ss << "your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
+        ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
 
         std::cout << ss.str();
         ss.clear();
         ss.str("");
     } while (std::cin >> userInput && userInput != "quit");
 
-    std::cout << game_over_bad_message;
+    std::cout << EngineUtils::GameEnd(false);
   
     return 0; 
 }
