@@ -72,12 +72,18 @@ public:
 				if (out_gameConfig["game_over_good_message"] != "") {
 					return out_gameConfig["game_over_good_message"].GetString();
 				}
+				else {
+					exit(0);
+				}
 			}
 		}
 		else {
 			if (out_gameConfig.HasMember("game_over_bad_message")) {
 				if (out_gameConfig["game_over_bad_message"] != "") {
 					return out_gameConfig["game_over_bad_message"].GetString();
+				}
+				else {
+					exit(0);
 				}
 			}
 		}
