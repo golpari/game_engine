@@ -55,12 +55,9 @@ public:
 		rapidjson::Document out_gameConfig;
 		ReadJsonFile("resources/game.config", out_gameConfig);
 		if (out_gameConfig.HasMember("game_start_message")) {
-			if (out_gameConfig["game_start_message"] != "") {
+			//if (out_gameConfig["game_start_message"] != "") {
 				std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
-			}
-			else {
-				exit(0);
-			}
+			//}
 		}
 		
 	}
@@ -72,22 +69,24 @@ public:
 		if (good)
 		{
 			if (out_gameConfig.HasMember("game_over_good_message")) {
-				if (out_gameConfig["game_over_good_message"] != "") {
+				//if (out_gameConfig["game_over_good_message"] != "") {
 					return out_gameConfig["game_over_good_message"].GetString();
-				}
-				else {
-					exit(0);
-				}
+				//}
+				
+			}
+			else {
+				exit(0);
 			}
 		}
 		else {
 			if (out_gameConfig.HasMember("game_over_bad_message")) {
-				if (out_gameConfig["game_over_bad_message"] != "") {
+				//if (out_gameConfig["game_over_bad_message"] != "") {
 					return out_gameConfig["game_over_bad_message"].GetString();
-				}
-				else {
-					exit(0);
-				}
+				//}
+				
+			}
+			else {
+				exit(0);
 			}
 		}
 	}
