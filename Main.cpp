@@ -58,21 +58,20 @@ std::string PrintDialogue(Scene scene) {
 int main() {    
     // on launch, check for resources directory
     Game gameManager;
-    Game::GameStart();
-    Scene initial = gameManager.LoadInitialScene();
+    gameManager.GameStart();
 
     std::string userInput;
     do {
         //update player position based on the movement
-        if (!firstRun) initial.MoveActors();
+        if (!firstRun) gameManager.currentScene->MoveActors();
         firstRun = false;
 
-        initial.MovePlayer(userInput);
+		gameManager.currentScene->MovePlayer(userInput);
 
-        initial.RenderScene();
+		gameManager.currentScene->RenderScene();
 
         // check + print nearby & contact dialogue & eng game if needed
-        std::string endgame = PrintDialogue(initial);
+        std::string endgame = PrintDialogue(*gameManager.currentScene);
 
         // print player health and score
         ss << "health : " << health << ", "

@@ -14,15 +14,20 @@
 class Game {	
 
 public:
-	std::vector<Scene*> scenes;
+	std::vector<Scene> scenes;
 
-	static void GameStart() {
+	Scene* currentScene;
+
+	void GameStart() {
 
 		EngineUtils::CheckPathExists("resources/", true);
 		EngineUtils::CheckPathExists("resources/game.config", true);
 
 		rapidjson::Document out_gameConfig;
 		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
+
+		this->LoadInitialScene(out_gameConfig);
+
 		if (out_gameConfig.HasMember("game_start_message")) {
 			std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
 		}
@@ -71,15 +76,14 @@ public:
 		return EngineUtils::combine(x_res, y_res);
 	}
 
-	Scene LoadInitialScene() {
-		scenes.reserve(10); // come back to this later
+	void LoadInitialScene(rapidjson::Document& out_gameConfig) {
 		rapidjson::Document out_sceneInitial;
-		rapidjson::Document out_gameConfig;
 		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 
 		//check for initial scene
 		if (out_gameConfig.HasMember("initial_scene")) {
-			if (out_gameConfig["initial_scene"].GetString() != "") {
+			std::string temp = (out_gameConfig["initial_scene"].GetString());
+			if (!temp.empty()) {
 
 				std::string sceneName = out_gameConfig["initial_scene"].GetString();
 				std::filesystem::path scenePath = "resources/scenes/" + sceneName + ".scene";
@@ -89,9 +93,9 @@ public:
 					//take this out of the if later?
 
 					Scene initialScene;
-					initialScene.ProcessActors(out_sceneInitial);
-					scenes.push_back(&initialScene);
-					return initialScene;
+					scenes.push_back(initialScene);
+					scenes.back().ProcessActors(out_sceneInitial);
+					currentScene = &scenes.back();
 				}
 
 				else {
@@ -110,8 +114,8 @@ public:
 		}
 	}
 
-	 void RunScene(Scene& scene) {
+	void RunScene(Scene& scene) {
 
-	 }
+	}
 };
 #endif
