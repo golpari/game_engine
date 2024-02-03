@@ -55,7 +55,7 @@ std::string PrintDialogue(Scene scene) {
 	return endgameString;
 }
 
-int main() {    
+int main() {   
     // on launch, check for resources directory
     Game gameManager;
     gameManager.GameStart();
