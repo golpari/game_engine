@@ -11,7 +11,7 @@
 class Scene
 {
 public:
-	std::vector<Actor*> actors;
+	std::vector<Actor> actors;
 
 	Actor* player;
 

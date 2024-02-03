@@ -8,8 +8,8 @@ bool Scene::CheckBlocking(glm::ivec2 position)
 {
 	//if (hardcoded_map[position.y][position.x] == 'b')
 	//	return true;
-	for (Actor* actor : actors) {
-		if (actor->position == position && actor->blocking)
+	for (Actor actor : actors) {
+		if (actor.position == position && actor.blocking)
 			return true;
 	}
 	return false;
@@ -39,16 +39,16 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				name = actor["name"].GetString();
 			}
 			if (actor.HasMember("x")) {
-				x = actor["x"].GetUint();
+				x = actor["x"].GetInt();
 			}
 			if (actor.HasMember("y")) {
-				x = actor["y"].GetUint();
+				x = actor["y"].GetInt();
 			}
 			if (actor.HasMember("vel_x")) {
-				vel_x = actor["vel_x"].GetUint();
+				vel_x = actor["vel_x"].GetInt();
 			}
 			if (actor.HasMember("vel_y")) {
-				vel_y = actor["vel_y"].GetUint();
+				vel_y = actor["vel_y"].GetInt();
 			}
 			if (actor.HasMember("view")) {
 				view = *actor["view"].GetString();
@@ -60,18 +60,18 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				nearby_dialogue = actor["nearby_dialogue"].GetString();
 			}
 			if (actor.HasMember("contact_dialogue")) {
-				contact_dialogue = actor["contact_dialogue"].GetUint();
+				contact_dialogue = actor["contact_dialogue"].GetString();
 			}
 			
 			// create actor variable and store it in list of actors
 			glm::ivec2 position{ x, y };
 			glm::ivec2 velocity{ vel_x, vel_y };
 			Actor new_actor(name, view, position, velocity, blocking, nearby_dialogue, contact_dialogue);
-			actors.push_back(&new_actor);
+			actors.push_back(new_actor);
 
 			// store a pointer directly to the player
 			if (name == "player") {
-				player = &new_actor;
+				player = &actors.back();
 			}
 		}
 	}
@@ -114,12 +114,12 @@ void Scene::MoveActors() {
 	glm::ivec2 nextPosition;
 	//update all actors except for the player (which is the last actor)
 	for (int i = 0; i < actors.size() - 1; i++) {
-		if (actors[i]->actor_name != "player") {
-			nextPosition = actors[i]->position + actors[i]->velocity;
+		if (actors[i].actor_name != "player") {
+			nextPosition = actors[i].position + actors[i].velocity;
 			if (!CheckBlocking(nextPosition))
-				actors[i]->position = nextPosition;
+				actors[i].position = nextPosition;
 			else
-				actors[i]->velocity = -actors[i]->velocity;
+				actors[i].velocity = -actors[i].velocity;
 		}
 	}
 }
@@ -145,16 +145,19 @@ void Scene::RenderScene()
 			actorPresent = false;
 
 			// Check if there's an actor at the current position
-			for (Actor* actor : actors) {
-				if (actor->position == glm::ivec2{ x, y }) {
+			char viewToPrint = ' ';
+			for (Actor actor : actors) {
+				if (actor.position == glm::ivec2{ x, y }) {
 					actorPresent = true;
-					if (!actorPresent)
-						std::cout << actor->view;
+					viewToPrint = actor.view;
 				}
 			}
 			//print a space whenever there is no actor being rendered, since now all items are stored as actors
 			if(!actorPresent)
 				std::cout << ' ';
+			else {
+				std::cout << viewToPrint;
+			}
 		}
 		std::cout << '\n';
 	}

@@ -34,11 +34,11 @@ std::string PrintDialogue(Scene scene) {
 	int adjacentY;
 	std::string endgameString;
 	//loop through possible actors
-	for (Actor* actor : scene.actors) {
+	for (Actor actor : scene.actors) {
 		//print contact dialogue if relevant
-		if (scene.player->position == actor->position && actor->contact_dialogue != "") {
-			std::cout << actor->contact_dialogue << '\n';
-			endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
+		if (scene.player->position == actor.position && actor.contact_dialogue != "") {
+			std::cout << actor.contact_dialogue << '\n';
+			endgameString = CheckDialogue(actor.contact_dialogue, actor.scoredUpped);
 		}
 
 		// loop through adjacent actors
@@ -46,9 +46,9 @@ std::string PrintDialogue(Scene scene) {
 			glm::ivec2 adjacent{ scene.player->position.x + diffX[i], scene.player->position.y + diffY[i] };
 
 			//print nearby dialogue if relevant
-			if (adjacent == actor->position && actor->nearby_dialogue != "") {
-				std::cout << actor->nearby_dialogue << '\n';
-				endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
+			if (adjacent == actor.position && actor.nearby_dialogue != "") {
+				std::cout << actor.nearby_dialogue << '\n';
+				endgameString = CheckDialogue(actor.nearby_dialogue, actor.scoredUpped);
 			}
 		}
 	}
