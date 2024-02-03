@@ -16,11 +16,11 @@ class Scene
 public:
 	std::unordered_map<uint64_t, std::vector<Actor*>> actors_map;
 
-	std::vector<Actor> actors;
+	std::vector<Actor*> actors;
 
 	Actor* player;
 
-	bool CheckBlocking(glm::ivec2& position);
+	bool CheckBlocking(uint64_t& position);
 
 	void ProcessActors(rapidjson::Document& doc);
 
@@ -34,6 +34,8 @@ private:
 	void addActorToMap(uint64_t& position, Actor* new_actor);
 
 	void updateActorPosition(Actor* actor, uint64_t newPos);
+
+	uint64_t getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velocity);
 };
 #endif
 

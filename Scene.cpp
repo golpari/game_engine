@@ -1,15 +1,13 @@
 #include "Scene.h"
 
-bool Scene::CheckBlocking(glm::ivec2& position)
+bool Scene::CheckBlocking(uint64_t& position)
 {
-	//if (hardcoded_map[position.y][position.x] == 'b')
-	//	return true;
-	/*for (Actor actor : actors) {
-		if (actor.position == position && actor.blocking)
-			return true;
-	}*/
-
-	//check the map
+	if (actors_map.find(position) != actors_map.end()) {
+		for (Actor* actor : actors_map.at(position)) {
+			if (actor->blocking)
+				return true;
+		}
+	}
 	return false;
 }
 
@@ -33,6 +31,16 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	if (doc.HasMember("actors") && doc["actors"].IsArray()) {
 		actors.reserve(doc["actors"].GetArray().Size());
 		for (const auto& actor : doc["actors"].GetArray()) {
+			//reset defaults
+			name = "";
+			x = 0;
+			y = 0;
+			vel_x = 0;
+			vel_y = 0;
+			view = '?';
+			blocking = false;
+			nearby_dialogue = "";
+			contact_dialogue = "";
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("name")) {
 				name = actor["name"].GetString();
@@ -66,7 +74,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			uint64_t position = EngineUtils::combine(x, y);
 			glm::ivec2 velocity{ vel_x, vel_y };
 			Actor* new_actor = new Actor(name, view, position, velocity, blocking, nearby_dialogue, contact_dialogue);
-			//actors.push_back(new_actor);
+			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map
 			addActorToMap(position, new_actor);
@@ -88,32 +96,6 @@ void Scene::MovePlayer(std::string& movement)
 		movement != "s" &&
 		movement != "w")
 		return;
-
-	/*update position vec
-	else if (movement == "n") {
-		temp = glm::ivec2{ player->position.x, player->position.y - 1 };
-		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
-			return;
-		player->position.y--;
-	}
-	else if (movement == "e") {
-		temp = glm::ivec2{ player->position.x + 1, player->position.y };
-		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
-			return;
-		player->position.x++;
-	}
-	else if (movement == "s") {
-		temp = glm::ivec2{ player->position.x, player->position.y + 1 };
-		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
-			return;
-		player->position.y++;
-	}
-	else if (movement == "w") {
-		temp = glm::ivec2{ player->position.x - 1, player->position.y };
-		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
-			return;
-		player->position.x--;
-	}*/
 
 	int x, y;
 	// Split the current position into x and y
@@ -139,37 +121,30 @@ void Scene::MovePlayer(std::string& movement)
 
 	// Check for blocking at the new position
 	uint64_t tempPosition = EngineUtils::combine(newX, newY);
-	glm::ivec2 position{ 0,0 };
-	if (CheckBlocking(position))  // Don't do anything if blocking wall is there
+	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
 		return;
 
 	// Update player's position if not blocked
-	updateActorPosition(player, EngineUtils::combine(newX, newY));
+	updateActorPosition(player, tempPosition);
 }
 
 void Scene::MoveActors() {
 	glm::ivec2 nextPosition;
 	//update all actors except for the player (which is the last actor)
-	/*for (int i = 0; i < actors.size() - 1; i++) {
-		if (actors[i].actor_name != "player") {
-			nextPosition = actors[i].position + actors[i].velocity;
-			if (!CheckBlocking(nextPosition))
-				actors[i].position = nextPosition;
-			else
-				actors[i].velocity = -actors[i].velocity;
+	for (int i = 0; i < actors.size() - 1; i++) {
+		if (actors[i]->actor_name != "player") {
+			updateActorPosition(actors[i], getNewPosFromVelocity(actors[i]->position, actors[i]->velocity));
 		}
-	}*/
+	}
 }
 
 void Scene::RenderScene()
 {
-	int x_res;
-	int y_res;
+	int x_res, y_res;
 	EngineUtils::split(Game::GetCameraResolution(), x_res, y_res);
 
 	// Calculate starting and ending coordinates for the customizable grid
-	int posX;
-	int posY;
+	int posX, posY;
 	EngineUtils::split(player->position, posX, posY);
 	int startX = posX - (x_res - 1) / 2;
 	int endX = posX + (x_res - 1) / 2;
@@ -186,31 +161,12 @@ void Scene::RenderScene()
 			if (actors_map.find(EngineUtils::combine(x, y)) != actors_map.end()) {
 				std::cout << actors_map.at(EngineUtils::combine(x, y)).front()->view;
 			}
-			/*actorPresent = false;
-
-			// Check if there's an actor at the current position
-			char viewToPrint = ' ';
-			for (Actor actor : actors) {
-				if (actor.position == glm::ivec2{ x, y }) {
-					// if another actor isnt already gonna be rendered on top, then set the render view
-					if (!actorPresent) {
-						viewToPrint = actor.view;
-					}
-					actorPresent = true;
-					
-				}
-			}
-			//print a space whenever there is no actor being rendered, since now all items are stored as actors
-			if(!actorPresent)
-				std::cout << ' ';*/
 			else {
 				std::cout << " ";
 			}
 		}
 		std::cout << '\n';
 	}
-
-	return;
 }
 
 // PRIVATE HELPER FUNCTIONS
@@ -232,6 +188,8 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	// Remove actor from old position vector
 	auto& oldVec = actors_map[oldPos];
 	oldVec.erase(std::remove(oldVec.begin(), oldVec.end(), actor), oldVec.end());
+
+	// delete that vector / kv pair if its empty
 	if (oldVec.empty()) {
 		actors_map.erase(oldPos);
 	}
@@ -240,4 +198,22 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	actors_map[newPos].push_back(actor);
 	// Update the Actor's position property
 	actor->position = newPos;
+}
+
+uint64_t Scene::getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velocity) {
+	int x, y;
+
+	EngineUtils::split(position, x, y);
+
+	// Update x and y components with velocity
+	x += velocity.x;
+	y += velocity.y;
+	uint64_t newPosition = EngineUtils::combine(x, y);
+
+	//only return the updated position if its not blocked
+	if (!CheckBlocking(newPosition)) {
+		return newPosition;
+	}
+
+	return position;
 }
