@@ -18,104 +18,23 @@ public:
 
 	Scene* currentScene;
 
-	void GameStart() {
+	std::stringstream ss;
+	bool firstRun = true;
+	int health = 3;
+	int score = 0;
 
-		EngineUtils::CheckPathExists("resources/", true);
-		EngineUtils::CheckPathExists("resources/game.config", true);
+	void GameStart();
 
-		rapidjson::Document out_gameConfig;
-		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
+	static std::string GameEnd(bool good);
 
-		this->LoadInitialScene(out_gameConfig);
+	static uint64_t GetCameraResolution();
 
-		if (out_gameConfig.HasMember("game_start_message")) {
-			std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
-		}
+	void LoadInitialScene(rapidjson::Document& out_gameConfig);
 
-	}
+	std::string CheckDialogue(std::string& dialogue, bool& scoredUpped);
 
-	static std::string GameEnd(bool good) {
-		// how to resetup this to not have the parsing happen twice? compared to gameStart
-		rapidjson::Document out_gameConfig;
-		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
-		if (good)
-		{
-			if (out_gameConfig.HasMember("game_over_good_message")) {
-				return out_gameConfig["game_over_good_message"].GetString();
-			}
-			else {
-				exit(0);
-			}
-		}
-		else {
-			if (out_gameConfig.HasMember("game_over_bad_message")) {
-				return out_gameConfig["game_over_bad_message"].GetString();
-			}
-			else {
-				exit(0);
-			}
-		}
-	}
+	std::string PrintDialogue(Scene& scene);
 
-	static uint64_t GetCameraResolution() {
-		//default values
-		uint32_t x_res = 13;
-		uint32_t y_res = 9;
-
-		if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
-			rapidjson::Document out_renderingConfig;
-			EngineUtils::ReadJsonFile("resources/rendering.config", out_renderingConfig);
-			if (out_renderingConfig.HasMember("x_resolution")) {
-				x_res = out_renderingConfig["x_resolution"].GetUint();
-			}
-			if (out_renderingConfig.HasMember("y_resolution")) {
-				y_res = out_renderingConfig["y_resolution"].GetUint();
-			}
-		}
-
-		return EngineUtils::combine(x_res, y_res);
-	}
-
-	void LoadInitialScene(rapidjson::Document& out_gameConfig) {
-		rapidjson::Document out_sceneInitial;
-		EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
-
-		//check for initial scene
-		if (out_gameConfig.HasMember("initial_scene")) {
-			std::string temp = (out_gameConfig["initial_scene"].GetString());
-			if (!temp.empty()) {
-
-				std::string sceneName = out_gameConfig["initial_scene"].GetString();
-				std::filesystem::path scenePath = "resources/scenes/" + sceneName + ".scene";
-				if (EngineUtils::CheckPathExists(scenePath, false)) {
-					EngineUtils::ReadJsonFile("resources/scenes/" + sceneName + ".scene", out_sceneInitial);
-
-					//take this out of the if later?
-
-					Scene initialScene;
-					scenes.push_back(initialScene);
-					scenes.back().ProcessActors(out_sceneInitial);
-					currentScene = &scenes.back();
-				}
-
-				else {
-					std::cout << "error: scene " << out_gameConfig["initial_scene"].GetString() << " is missing";
-					exit(0);
-				}
-			}
-			else {
-				std::cout << "error: initial_scene unspecified";
-				exit(0);
-			}
-		}
-		else {
-			std::cout << "error: initial_scene unspecified";
-			exit(0);
-		}
-	}
-
-	void RunScene(Scene& scene) {
-
-	}
+	void RunScene(Scene& scene, std::string input);
 };
 #endif
