@@ -73,7 +73,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			if (name == "player") {
 				player = &actors.back();
 			}
-		}
+		} 
 	}
 }
 
