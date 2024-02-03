@@ -5,7 +5,6 @@ void Game::GameStart() {
 	EngineUtils::CheckPathExists("resources/", true);
 	EngineUtils::CheckPathExists("resources/game.config", true);
 
-	rapidjson::Document out_gameConfig;
 	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 
 	this->LoadInitialScene(out_gameConfig);
@@ -17,9 +16,6 @@ void Game::GameStart() {
 }
 
 std::string Game::GameEnd(bool good) {
-	// how to resetup this to not have the parsing happen twice? compared to gameStart
-	rapidjson::Document out_gameConfig;
-	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 	if (good)
 	{
 		if (out_gameConfig.HasMember("game_over_good_message")) {
@@ -142,7 +138,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 	return endgameString;
 }
 
-void Game::RunScene(Scene& scene, std::string input)
+void Game::RunScene(Scene& scene, std::string& input)
 {
 	//update player position based on the movement
 	if (!firstRun) scene.MoveActors();

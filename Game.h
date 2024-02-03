@@ -18,6 +18,8 @@ public:
 
 	Scene* currentScene;
 
+	rapidjson::Document out_gameConfig;
+
 	std::stringstream ss;
 	bool firstRun = true;
 	int health = 3;
@@ -25,7 +27,7 @@ public:
 
 	void GameStart();
 
-	static std::string GameEnd(bool good);
+	std::string GameEnd(bool good);
 
 	static uint64_t GetCameraResolution();
 
@@ -35,6 +37,6 @@ public:
 
 	std::string PrintDialogue(Scene& scene);
 
-	void RunScene(Scene& scene, std::string input);
+	void RunScene(Scene& scene, std::string& input);
 };
 #endif

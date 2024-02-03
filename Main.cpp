@@ -13,7 +13,7 @@ int main() {
 
     } while (std::cin >> userInput && userInput != "quit");
 
-    std::cout << Game::GameEnd(false);
+    std::cout << gameManager.GameEnd(false);
   
     return 0; 
 }
