@@ -109,32 +109,76 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 }
 
 std::string Game::PrintDialogue(Scene& scene) {
-	//access surrounding 8 slots
+	/*access surrounding 8 slots
 	const int diffX[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
 	const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
 
 	int adjacentX;
 	int adjacentY;
-	std::string endgameString = ""; /*
+	std::string endgameString = ""; 
 	//loop through possible actors
-	for (Actor actor : scene.actors) {
+	for (Actor* actor : scene.actors) {
 		//print contact dialogue if relevant
-		if (scene.player->position == actor.position && actor.contact_dialogue != "") {
-			std::cout << actor.contact_dialogue << '\n';
-			endgameString = CheckDialogue(actor.contact_dialogue, actor.scoredUpped);
+		if (scene.player->position == actor->position && actor->contact_dialogue != "") {
+			std::cout << actor->contact_dialogue << '\n';
+			endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
 		}
 
 		// loop through adjacent actors
 		for (int i = 0; i < 8; i++) {
-			glm::ivec2 adjacent{ scene.player->position.x + diffX[i], scene.player->position.y + diffY[i] };
+			glm::ivec2 adjacent{ scene->player->position.x + diffX[i], scene->player->position.y + diffY[i] };
 
 			//print nearby dialogue if relevant
-			if (adjacent == actor.position && actor.nearby_dialogue != "") {
-				std::cout << actor.nearby_dialogue << '\n';
-				endgameString = CheckDialogue(actor.nearby_dialogue, actor.scoredUpped);
+			if (adjacent == actor->position && actor->nearby_dialogue != "") {
+				std::cout << actor->nearby_dialogue << '\n';
+				endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
 			}
 		}
-	}*/
+	}
+	return endgameString;*/
+
+	int x, y;
+	std::string endgameString = "";
+
+	// Split the player's position into x and y coordinates
+	EngineUtils::split(scene.player->position, x, y);
+
+	// Offsets for the surrounding 8 spaces
+	const std::vector<glm::ivec2> offsets = {
+		{ -1, -1 }, { 0, -1 }, { 1, -1 },
+		{ -1,  0 },            { 1,  0 },
+		{ -1,  1 }, { 0,  1 }, { 1,  1 }
+	};
+
+	for (const auto& offset : offsets) {
+		// Calculate the position for each surrounding space
+		int checkX = x + offset.x;
+		int checkY = y + offset.y;
+
+		// Combine the coordinates back into a uint64_t position
+		uint64_t adjacent = EngineUtils::combine(checkX, checkY);
+
+		// Use surroundingPosition to access actors_map
+		auto actorsIt = scene.actors_map.find(adjacent);
+		if (actorsIt != scene.actors_map.end()) {
+			// Found actors for this position, loop through them
+			for (Actor* actor : actorsIt->second) {
+				//check contact dialogue
+				if (scene.player->position == actor->position && actor->contact_dialogue != "") {
+					std::cout << actor->contact_dialogue << '\n';
+					endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
+				}
+				//check nearby dialogue
+				if (adjacent == actor->position && actor->nearby_dialogue != "") {
+					std::cout << actor->nearby_dialogue << '\n';
+					endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
+				}
+			}
+		}
+	}
+
+	
+
 	return endgameString;
 }
 
