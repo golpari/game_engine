@@ -4,7 +4,7 @@
 #include "glm/glm.hpp"
 #include "Game.h"
 
-bool Scene::CheckBlocking(glm::ivec2 position)
+bool Scene::CheckBlocking(glm::ivec2& position)
 {
 	//if (hardcoded_map[position.y][position.x] == 'b')
 	//	return true;
@@ -33,6 +33,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	glm::ivec2 velocity;
 
 	if (doc.HasMember("actors") && doc["actors"].IsArray()) {
+		actors.reserve(doc["actors"].GetArray().Size());
 		for (const auto& actor : doc["actors"].GetArray()) {
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("name")) {
@@ -79,6 +80,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 
 void Scene::MovePlayer(std::string& movement)
 {
+	glm::ivec2 temp;
 	//if not valid movement, do nothing
 	if (movement != "n" &&
 		movement != "e" &&
@@ -88,23 +90,26 @@ void Scene::MovePlayer(std::string& movement)
 
 	//update position vec
 	else if (movement == "n") {
-		//DEBUG STATEMENT std::cout << "HERE: " << hardcoded_map[actor.position.y - 1][actor.position.x] << std::endl;
-		if (CheckBlocking(glm::ivec2(player->position.x, player->position.y - 1))) //dont do anything if b (blocking) wall is there
+		temp = glm::ivec2{ player->position.x, player->position.y - 1 };
+		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
 			return;
 		player->position.y--;
 	}
 	else if (movement == "e") {
-		if (CheckBlocking(glm::ivec2(player->position.x + 1, player->position.y))) //dont do anything if b (blocking) wall is there
+		temp = glm::ivec2{ player->position.x + 1, player->position.y };
+		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
 			return;
 		player->position.x++;
 	}
 	else if (movement == "s") {
-		if (CheckBlocking(glm::ivec2(player->position.x, player->position.y + 1))) //dont do anything if b (blocking) wall is there
+		temp = glm::ivec2{ player->position.x, player->position.y + 1 };
+		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
 			return;
 		player->position.y++;
 	}
 	else if (movement == "w") {
-		if (CheckBlocking(glm::ivec2(player->position.x - 1, player->position.y))) //dont do anything if b (blocking) wall is there
+		temp = glm::ivec2{ player->position.x - 1, player->position.y };
+		if (CheckBlocking(temp)) //dont do anything if b (blocking) wall is there
 			return;
 		player->position.x--;
 	}

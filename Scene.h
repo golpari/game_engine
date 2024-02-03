@@ -15,7 +15,7 @@ public:
 
 	Actor* player;
 
-	bool CheckBlocking(glm::ivec2 position);
+	bool CheckBlocking(glm::ivec2& position);
 
 	void ProcessActors(rapidjson::Document& doc);
 

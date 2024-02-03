@@ -66,10 +66,9 @@ int main() {
         //update player position based on the movement
         if (!firstRun) initial.MoveActors();
         firstRun = false;
-        initial.MovePlayer(userInput);
-        
 
-        // print map
+        initial.MovePlayer(userInput);
+
         initial.RenderScene();
 
         // check + print nearby & contact dialogue & eng game if needed
