@@ -42,7 +42,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				x = actor["x"].GetInt();
 			}
 			if (actor.HasMember("y")) {
-				x = actor["y"].GetInt();
+				y = actor["y"].GetInt();
 			}
 			if (actor.HasMember("vel_x")) {
 				vel_x = actor["vel_x"].GetInt();
@@ -148,8 +148,12 @@ void Scene::RenderScene()
 			char viewToPrint = ' ';
 			for (Actor actor : actors) {
 				if (actor.position == glm::ivec2{ x, y }) {
+					// if another actor isnt already gonna be rendered on top, then set the render view
+					if (!actorPresent) {
+						viewToPrint = actor.view;
+					}
 					actorPresent = true;
-					viewToPrint = actor.view;
+					
 				}
 			}
 			//print a space whenever there is no actor being rendered, since now all items are stored as actors
