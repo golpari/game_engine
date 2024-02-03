@@ -1,16 +1,15 @@
 #ifndef ENGINEUTILS_H
 #define ENGINEUTILS_H
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <stdio.h>
-
-#include "rapidjson/filereadstream.h"
-#include "rapidjson/document.h"
-
 #include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdio.h>
+#include <string>
+
+#include "rapidjson/document.h"
+#include "rapidjson/filereadstream.h"
 
 class EngineUtils {
 public:
