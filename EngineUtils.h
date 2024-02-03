@@ -48,18 +48,30 @@ public:
 
 	//from chat
 	// Function to combine two uint32_t values into a single uint64_t
-	static uint64_t combine(uint32_t& x, uint32_t& y) {
-		// Shift the first uint32_t 32 bits to the left and combine with the second
-		return (static_cast<uint64_t>(x) << 32) | y;
+	static uint64_t combine(int& x, int& y) {
+		// cast to ensure the ints become exactly 32 bits in size.
+		uint32_t ux = static_cast<uint32_t>(x);
+		uint32_t uy = static_cast<uint32_t>(y);
+
+		// place x into right 32 bits.
+		uint64_t result = static_cast<uint64_t>(ux);
+
+		// move x to left 32 bits.
+		result = result << 32;
+
+		// place y into right 32 bits.
+		result = result | static_cast<uint64_t>(uy);
+
+		return result;
 	}
 
 	//from chat
 	// Function to split a uint64_t back into two uint32_t values
-	static void split(const uint64_t combined, uint32_t& x, uint32_t& y) {
-		// Right shift to get the high 32 bits
-		x = combined >> 32;
-		// Bitwise AND with 0xFFFFFFFF to get the low 32 bits
-		y = combined & 0xFFFFFFFF;
+	static void split(const uint64_t combined, int& x, int& y) {
+		// Extract the upper 32 bits for x
+		x = static_cast<int>((combined >> 32) & 0xFFFFFFFF);
+		// Extract the lower 32 bits for y
+		y = static_cast<int>(combined & 0xFFFFFFFF);
 	}
 };
 #endif

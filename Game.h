@@ -5,11 +5,13 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "EngineUtils.h"
 #include "rapidjson/document.h"
 #include "Scene.h"
 
+class Scene;
 
 class Game {	
 

@@ -37,8 +37,8 @@ std::string Game::GameEnd(bool good) {
 
 uint64_t Game::GetCameraResolution() {
 	//default values
-	uint32_t x_res = 13;
-	uint32_t y_res = 9;
+	int x_res = 13;
+	int y_res = 9;
 
 	if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
 		rapidjson::Document out_renderingConfig;
@@ -115,7 +115,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 
 	int adjacentX;
 	int adjacentY;
-	std::string endgameString;
+	std::string endgameString = ""; /*
 	//loop through possible actors
 	for (Actor actor : scene.actors) {
 		//print contact dialogue if relevant
@@ -134,7 +134,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 				endgameString = CheckDialogue(actor.nearby_dialogue, actor.scoredUpped);
 			}
 		}
-	}
+	}*/
 	return endgameString;
 }
 
