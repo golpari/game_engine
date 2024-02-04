@@ -2,6 +2,8 @@
 
 #include "Game.h"
 
+int guuid = 0;
+
 int main() {   
     Game gameManager;
     gameManager.GameStart();
