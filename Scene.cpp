@@ -157,8 +157,12 @@ void Scene::RenderScene()
 
 	for (int y = startY; y <= endY; ++y) {
 		for (int x = startX; x <= endX; ++x) {
+			if (player->position == EngineUtils::combine(x, y)) {
+				//render player on top
+				std::cout << player->view;
+			}
 			//instead, just check the map and see if there is an actor present
-			if (actors_map.find(EngineUtils::combine(x, y)) != actors_map.end()) {
+			else if (actors_map.find(EngineUtils::combine(x, y)) != actors_map.end()) {
 				// use .back() to render highest actorID on top (aka the actor loaded in last)
 				std::cout << actors_map.at(EngineUtils::combine(x, y)).back()->view;
 			}
