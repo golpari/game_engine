@@ -16,10 +16,8 @@ class Scene;
 class Game {	
 
 public:
-	std::vector<Scene> scenes;
 
 	Scene* currentScene;
-
 	rapidjson::Document out_gameConfig;
 
 	std::stringstream ss;
@@ -34,6 +32,8 @@ public:
 	static uint64_t GetCameraResolution();
 
 	void LoadInitialScene(rapidjson::Document& out_gameConfig);
+
+	void LoadScene(std::string sceneName);
 
 	std::string CheckDialogue(std::string& dialogue, bool& scoredUpped);
 

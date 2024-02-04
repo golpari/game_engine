@@ -55,8 +55,6 @@ uint64_t Game::GetCameraResolution() {
 }
 
 void Game::LoadInitialScene(rapidjson::Document& out_gameConfig) {
-	rapidjson::Document out_sceneInitial;
-	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 
 	//check for initial scene
 	if (out_gameConfig.HasMember("initial_scene")) {
@@ -64,22 +62,7 @@ void Game::LoadInitialScene(rapidjson::Document& out_gameConfig) {
 		if (!temp.empty()) {
 
 			std::string sceneName = out_gameConfig["initial_scene"].GetString();
-			std::filesystem::path scenePath = "resources/scenes/" + sceneName + ".scene";
-			if (EngineUtils::CheckPathExists(scenePath, false)) {
-				EngineUtils::ReadJsonFile("resources/scenes/" + sceneName + ".scene", out_sceneInitial);
-
-				//take this out of the if later?
-
-				Scene initialScene;
-				scenes.push_back(initialScene);
-				scenes.back().ProcessActors(out_sceneInitial);
-				currentScene = &scenes.back();
-			}
-
-			else {
-				std::cout << "error: scene " << out_gameConfig["initial_scene"].GetString() << " is missing";
-				exit(0);
-			}
+			LoadScene(sceneName);
 		}
 		else {
 			std::cout << "error: initial_scene unspecified";
@@ -88,6 +71,33 @@ void Game::LoadInitialScene(rapidjson::Document& out_gameConfig) {
 	}
 	else {
 		std::cout << "error: initial_scene unspecified";
+		exit(0);
+	}
+}
+
+void Game::LoadScene(std::string sceneName)
+{
+	rapidjson::Document out_sceneInitial;
+	std::filesystem::path scenePath = "resources/scenes/" + sceneName + ".scene";
+	if (EngineUtils::CheckPathExists(scenePath, false)) {
+		EngineUtils::ReadJsonFile("resources/scenes/" + sceneName + ".scene", out_sceneInitial);
+
+		if (currentScene != nullptr) {
+			// deallocate mem for all the actors in the old scene
+			for (Actor* actor : currentScene->actors) {
+				delete actor;
+				actor = nullptr;
+			}
+			// deallocate mem of the old scene
+			delete currentScene;
+		}
+		
+		currentScene = new Scene(); // store scene on the heap
+		currentScene->ProcessActors(out_sceneInitial);
+	}
+
+	else {
+		std::cout << "error: scene " << sceneName << " is missing";
 		exit(0);
 	}
 }

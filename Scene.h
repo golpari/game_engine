@@ -15,11 +15,12 @@
 class Scene
 {
 public:
+
 	std::unordered_map<uint64_t, std::vector<Actor*>> actors_map;
-
 	std::vector<Actor*> actors;
-
 	Actor* player;
+
+	Scene() {}
 
 	bool CheckBlocking(uint64_t& position);
 
