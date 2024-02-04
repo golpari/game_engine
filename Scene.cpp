@@ -159,7 +159,8 @@ void Scene::RenderScene()
 		for (int x = startX; x <= endX; ++x) {
 			//instead, just check the map and see if there is an actor present
 			if (actors_map.find(EngineUtils::combine(x, y)) != actors_map.end()) {
-				std::cout << actors_map.at(EngineUtils::combine(x, y)).front()->view;
+				// use .back() to render highest actorID on top (aka the actor loaded in last)
+				std::cout << actors_map.at(EngineUtils::combine(x, y)).back()->view;
 			}
 			else {
 				std::cout << " ";
@@ -196,6 +197,12 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 
 	// Add actor to new position vector
 	actors_map[newPos].push_back(actor);
+	//resort the actors new vector since it may have been put out of guuid order
+	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(),
+		[](auto& a, auto& b) {
+			return a->actorID > b->actorID;
+		});
+
 	// Update the Actor's position property
 	actor->position = newPos;
 }
