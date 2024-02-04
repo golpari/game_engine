@@ -10,6 +10,7 @@
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
+#include "Actor.h"
 
 class EngineUtils {
 public:
@@ -72,6 +73,12 @@ public:
 		x = static_cast<int>((combined >> 32) & 0xFFFFFFFF);
 		// Extract the lower 32 bits for y
 		y = static_cast<int>(combined & 0xFFFFFFFF);
+	}
+};
+
+struct ActorComparator {
+	bool operator()(const Actor* a, const Actor* b) const {
+		return a->actorID < b->actorID;
 	}
 };
 #endif

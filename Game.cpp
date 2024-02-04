@@ -137,6 +137,9 @@ std::string Game::PrintDialogue(Scene& scene) {
 	}
 	return endgameString;*/
 
+	//for nearby dialogue
+	std::vector<Actor*> actorsWithNearbyDialogue;
+
 	int x, y;
 	std::string endgameString = "";
 
@@ -150,6 +153,8 @@ std::string Game::PrintDialogue(Scene& scene) {
 		{ -1,  1 }, { 0,  1 }, { 1,  1 }
 	};
 
+	
+	// calculate every option for surrounding positions
 	for (const auto& offset : offsets) {
 		// Calculate the position for each surrounding space
 		int checkX = x + offset.x;
@@ -158,26 +163,45 @@ std::string Game::PrintDialogue(Scene& scene) {
 		// Combine the coordinates back into a uint64_t position
 		uint64_t adjacent = EngineUtils::combine(checkX, checkY);
 
-		// Use surroundingPosition to access actors_map
+		// check actors at adjacent position
 		auto actorsIt = scene.actors_map.find(adjacent);
 		if (actorsIt != scene.actors_map.end()) {
-			// Found actors for this position, loop through them
+			// found actors for this position, add them to the printable list
 			for (Actor* actor : actorsIt->second) {
-				//check contact dialogue
-				if (scene.player->position == actor->position && actor->contact_dialogue != "") {
-					std::cout << actor->contact_dialogue << '\n';
-					endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
-				}
 				//check nearby dialogue
 				if (adjacent == actor->position && actor->nearby_dialogue != "") {
-					std::cout << actor->nearby_dialogue << '\n';
+					actorsWithNearbyDialogue.push_back(actor);
 					endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
 				}
 			}
 		}
 	}
 
+	// for contact dialogue
+	std::vector<Actor*> actorsWithContactDialogue;
+	auto actorsIt = scene.actors_map.find(scene.player->position);
+	if (actorsIt != scene.actors_map.end()) {
+		// found actors for this position, add them to the printable list
+		for (Actor* actor : actorsIt->second) {
+			//check nearby dialogue
+			if (actor->actor_name != "player" && scene.player->position == actor->position && actor->contact_dialogue != "") {
+				actorsWithContactDialogue.push_back(actor);
+				endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
+			}
+		}
+	}
 	
+	// sort the dialogues to be printed by actorID
+	std::sort(actorsWithNearbyDialogue.begin(), actorsWithNearbyDialogue.end(), ActorComparator());
+	std::sort(actorsWithContactDialogue.begin(), actorsWithContactDialogue.end(), ActorComparator());
+
+	//print the dialogues in order by actorID
+	for (Actor* actor : actorsWithNearbyDialogue) {
+		ss << actor->nearby_dialogue << "\n";
+	}
+	for (Actor* actor : actorsWithContactDialogue) {
+		ss << actor->contact_dialogue << "\n";
+	}
 
 	return endgameString;
 }
