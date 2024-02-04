@@ -153,7 +153,9 @@ std::string Game::PrintDialogue(Scene& scene) {
 		{ -1,  1 }, { 0,  1 }, { 1,  1 }
 	};
 
-	
+	// if there is anyone nearby, the player will also be added to the nearby dialogue list
+	bool playerDialogued = false;
+
 	// calculate every option for surrounding positions
 	for (const auto& offset : offsets) {
 		// Calculate the position for each surrounding space
@@ -174,6 +176,11 @@ std::string Game::PrintDialogue(Scene& scene) {
 					endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
 				}
 			}
+
+			if (!playerDialogued) {
+				actorsWithNearbyDialogue.push_back(scene.player);
+				playerDialogued = true;
+			}
 		}
 	}
 
@@ -184,7 +191,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 		// found actors for this position, add them to the printable list
 		for (Actor* actor : actorsIt->second) {
 			// check nearby dialogue
-			if (actor->actor_name != "player" && scene.player->position == actor->position && actor->contact_dialogue != "") {
+			if (scene.player->position == actor->position && actor->contact_dialogue != "") {
 				actorsWithContactDialogue.push_back(actor);
 				endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
 			}
