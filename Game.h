@@ -42,7 +42,7 @@ public:
 
 	std::string CheckDialogue(std::string& dialogue, bool& scoredUpped);
 
-	std::string PrintDialogue(Scene& scene);
+	std::string PrintDialogue();
 
 	void RunScene(Scene& scene, std::string& input);
 };

@@ -118,36 +118,7 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 	return "";
 }
 
-std::string Game::PrintDialogue(Scene& scene) {
-	/*access surrounding 8 slots
-	const int diffX[8] = { -1, -1, -1, 0, 1, 1, 1, 0 };
-	const int diffY[8] = { -1, 0, 1, 1, 1, 0, -1, -1 };
-
-	int adjacentX;
-	int adjacentY;
-	std::string endgameString = ""; 
-	//loop through possible actors
-	for (Actor* actor : scene.actors) {
-		//print contact dialogue if relevant
-		if (scene.player->position == actor->position && actor->contact_dialogue != "") {
-			std::cout << actor->contact_dialogue << '\n';
-			endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
-		}
-
-		// loop through adjacent actors
-		for (int i = 0; i < 8; i++) {
-			glm::ivec2 adjacent{ scene->player->position.x + diffX[i], scene->player->position.y + diffY[i] };
-
-			//print nearby dialogue if relevant
-			if (adjacent == actor->position && actor->nearby_dialogue != "") {
-				std::cout << actor->nearby_dialogue << '\n';
-				endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
-			}
-		}
-	}
-	return endgameString;*/
-
-	
+std::string Game::PrintDialogue() {
 	std::vector<Dialogue> dialogues;
 
 	//for nearby dialogue
@@ -155,7 +126,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 	std::string endgameString = "";
 
 	// Split the player's position into x and y coordinates
-	EngineUtils::split(scene.player->position, x, y);
+	EngineUtils::split(currentScene->player->position, x, y);
 
 	// Offsets for the surrounding 8 spaces
 	const std::vector<glm::ivec2> offsets = {
@@ -179,8 +150,8 @@ std::string Game::PrintDialogue(Scene& scene) {
 		uint64_t adjacent = EngineUtils::combine(checkX, checkY);
 
 		// check actors at adjacent position
-		auto actorsIt = scene.actors_map.find(adjacent);
-		if (actorsIt != scene.actors_map.end()) {
+		auto actorsIt = currentScene->actors_map.find(adjacent);
+		if (actorsIt != currentScene->actors_map.end()) {
 			// found actors for this position, add them to the printable list
 			for (Actor* actor : actorsIt->second) {
 				//check nearby dialogue
@@ -199,12 +170,12 @@ std::string Game::PrintDialogue(Scene& scene) {
 	}
 
 	// for contact dialogue
-	auto actorsIt = scene.actors_map.find(scene.player->position);
-	if (actorsIt != scene.actors_map.end()) {
+	auto actorsIt = currentScene->actors_map.find(currentScene->player->position);
+	if (actorsIt != currentScene->actors_map.end()) {
 		// found actors for this position, add them to the printable list
 		for (Actor* actor : actorsIt->second) {
 			// check nearby dialogue
-			if (actor->actor_name != "player" && scene.player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
+			if (actor->actor_name != "player" && currentScene->player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
 				temp.dialogueID = actor->actorID;
 				temp.text = actor->contact_dialogue;
 				dialogues.push_back(temp);
@@ -235,7 +206,7 @@ void Game::RunScene(Scene& scene, std::string& input)
 	currentScene->RenderScene();
 
 	// check + print nearby & contact dialogue & eng game if needed
-	std::string endgame = PrintDialogue(*currentScene);
+	std::string endgame = PrintDialogue();
 
 	// print player health and score
 	ss << "health : " << health << ", "
