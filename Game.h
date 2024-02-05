@@ -31,7 +31,7 @@ public:
 	bool loadNew = false;
 	std::string nextScene = "";
 
-	Game() {}
+	Game() {} 
 
 	void GameStart();
 
