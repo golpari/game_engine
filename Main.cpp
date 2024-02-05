@@ -1,8 +1,13 @@
 #include <iostream>
+#include <unordered_map>
+#include <filesystem>
 
 #include "Game.h"
+#include "ActorTemplate.h"
+#include "rapidjson/document.h"
 
 int guuid = 0;
+std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template name
 
 int main() {   
     Game gameManager;

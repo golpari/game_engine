@@ -13,8 +13,6 @@ bool Scene::CheckBlocking(uint64_t& position)
 
 void Scene::ProcessActors(rapidjson::Document& doc)
 {
-	// Use the parsed document here...
-	// For example, access the 'actors' array
 	std::string name = "";
 	int x = 0;
 	int y = 0;
@@ -24,9 +22,6 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	bool blocking = false;
 	std::string nearby_dialogue = "";
 	std::string contact_dialogue = "";
-
-	glm::ivec2 position;
-	glm::ivec2 velocity;
 
 	if (doc.HasMember("actors") && doc["actors"].IsArray()) {
 		actors.reserve(doc["actors"].GetArray().Size());
@@ -41,34 +36,37 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			blocking = false;
 			nearby_dialogue = "";
 			contact_dialogue = "";
+
 			//PROCESS EACH ACTOR
-			if (actor.HasMember("name")) {
-				name = actor["name"].GetString();
+			if (actor.HasMember("template")) {
+				//check if the template has already been processessed, if not then load it
+				if (templates.find(actor["template"].GetString()) == templates.end()) {
+					EngineUtils::ProcessTemplate(actor["template"].GetString());
+				}
+				ActorTemplate* actorTemplate = templates.at(actor["template"].GetString());
+
+				// make the initial values inherit the template values
+				name = actorTemplate->name;
+				x = actorTemplate->pos_x;
+				y = actorTemplate->pos_y;
+				vel_x = actorTemplate->vel_x;
+				vel_y = actorTemplate->vel_y;
+				view = actorTemplate->view;
+				blocking = actorTemplate->blocking;
+				nearby_dialogue = actorTemplate->nearby_dialogue;
+				contact_dialogue = actorTemplate->contact_dialogue;
 			}
-			if (actor.HasMember("x")) {
-				x = actor["x"].GetInt();
-			}
-			if (actor.HasMember("y")) {
-				y = actor["y"].GetInt();
-			}
-			if (actor.HasMember("vel_x")) {
-				vel_x = actor["vel_x"].GetInt();
-			}
-			if (actor.HasMember("vel_y")) {
-				vel_y = actor["vel_y"].GetInt();
-			}
-			if (actor.HasMember("view")) {
-				view = *actor["view"].GetString();
-			}
-			if (actor.HasMember("blocking")) {
-				blocking = actor["blocking"].GetBool();
-			}
-			if (actor.HasMember("nearby_dialogue")) {
-				nearby_dialogue = actor["nearby_dialogue"].GetString();
-			}
-			if (actor.HasMember("contact_dialogue")) {
-				contact_dialogue = actor["contact_dialogue"].GetString();
-			}
+
+			// make the actor overwrite template values as needed
+			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
+			if (actor.HasMember("x")) { x = actor["x"].GetInt(); }
+			if (actor.HasMember("y")) { y = actor["y"].GetInt(); }
+			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetInt(); }
+			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetInt(); }
+			if (actor.HasMember("view")) { view = *actor["view"].GetString(); }
+			if (actor.HasMember("blocking")) { blocking = actor["blocking"].GetBool(); }
+			if (actor.HasMember("nearby_dialogue")) { nearby_dialogue = actor["nearby_dialogue"].GetString(); }
+			if (actor.HasMember("contact_dialogue")) { contact_dialogue = actor["contact_dialogue"].GetString(); }
 			
 			// create actor variable and store it in list of actors
 			uint64_t position = EngineUtils::combine(x, y);

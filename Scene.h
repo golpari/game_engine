@@ -12,6 +12,8 @@
 #include "glm/glm.hpp"
 #include "rapidjson/document.h"
 
+extern std::unordered_map<std::string, ActorTemplate*> templates;
+
 class Scene
 {
 public:
@@ -33,10 +35,13 @@ public:
 	void RenderScene();
 
 private:
+	// chat help
 	void addActorToMap(uint64_t& position, Actor* new_actor);
 
+	// chat help
 	void updateActorPosition(Actor* actor, uint64_t newPos);
 
+	// chat help
 	uint64_t getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velocity);
 };
 #endif

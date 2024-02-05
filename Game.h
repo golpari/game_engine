@@ -6,10 +6,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "EngineUtils.h"
 #include "rapidjson/document.h"
 #include "Scene.h"
+#include "ActorTemplate.h"
 
 class Scene;
 
@@ -18,6 +20,7 @@ class Game {
 public:
 
 	Scene* currentScene;
+	
 	rapidjson::Document out_gameConfig;
 
 	std::stringstream ss;

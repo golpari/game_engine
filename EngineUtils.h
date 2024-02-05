@@ -11,6 +11,9 @@
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 #include "Actor.h"
+#include "ActorTemplate.h"
+
+extern std::unordered_map<std::string, ActorTemplate*> templates;
 
 class EngineUtils {
 public:
@@ -47,6 +50,48 @@ public:
 		return true;
 	}
 
+	// can change this to not always load templates and to only load them when they are requested
+	// check if template was already processed, if no, check path exists and process it. 
+	static void ProcessTemplate(std::string templateName) {
+		//if the folder exists, then load the template
+		if (EngineUtils::CheckPathExists("resources/actor_templates/" + templateName + ".template", false)) {
+			//parse the template into readable json
+			rapidjson::Document out_template;
+			EngineUtils::ReadJsonFile("resources/actor_templates/" + templateName + ".template", out_template);
+
+			// process the template
+
+			std::string name = "";
+			int x = 0;
+			int y = 0;
+			int vel_x = 0;
+			int vel_y = 0;
+			char view = '?';
+			bool blocking = false;
+			std::string nearby_dialogue = "";
+			std::string contact_dialogue = "";
+
+			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
+			if (out_template.HasMember("x")) { x = out_template["x"].GetInt(); }
+			if (out_template.HasMember("y")) { y = out_template["y"].GetInt(); }
+			if (out_template.HasMember("vel_x")) { vel_x = out_template["vel_x"].GetInt(); }
+			if (out_template.HasMember("vel_y")) { vel_y = out_template["vel_y"].GetInt(); }
+			if (out_template.HasMember("view")) { view = *out_template["view"].GetString(); }
+			if (out_template.HasMember("blocking")) { blocking = out_template["blocking"].GetBool(); }
+			if (out_template.HasMember("nearby_dialogue")) { nearby_dialogue = out_template["nearby_dialogue"].GetString(); }
+			if (out_template.HasMember("contact_dialogue")) { contact_dialogue = out_template["contact_dialogue"].GetString(); }
+
+			// create template variable
+			ActorTemplate* new_template = new ActorTemplate(name, view, x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue);
+			// store template in map of templates
+			templates[templateName] = new_template;
+		}
+		else {
+			std::cout << "error: template " << templateName << " is missing";
+			exit(0);
+		}
+	}
+
 	//from chat
 	// Function to combine two uint32_t values into a single uint64_t
 	static uint64_t combine(int& x, int& y) {
@@ -73,6 +118,32 @@ public:
 		x = static_cast<int>((combined >> 32) & 0xFFFFFFFF);
 		// Extract the lower 32 bits for y
 		y = static_cast<int>(combined & 0xFFFFFFFF);
+	}
+
+	static std::string obtain_word_after_phrase(const std::string& input, const std::string& phrase) {
+		// Find the position of the phrase in the string
+		size_t pos = input.find(phrase);
+
+		//If phrase is not found, return an empty string
+		if (pos == std::string::npos) return "";
+
+		//Find the starting position of the next word (skip spaces after the phrase)
+		pos += phrase.length();
+		while (pos < input.size() && std::isspace(input[pos])) {
+			++pos;
+		}
+
+		//If we're at the end of the string, return an empty string
+		if (pos == input.size())  return "";
+
+		// Find the end position of the word (until a space or the end of the string)
+		size_t endPos = pos;
+		while (endPos < input.size() && !std::isspace(input[endPos])) {
+			++endPos;
+		}
+
+		// extract and return the word
+		return input.substr(pos, endPos - pos);
 	}
 };
 
