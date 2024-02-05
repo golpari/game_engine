@@ -153,7 +153,7 @@ struct Dialogue {
 };
 
 struct ActorComparator {
-	bool operator()(const Actor* a, const Actor* b) const {
+	bool operator()(const std::shared_ptr<Actor> a, const std::shared_ptr<Actor> b) const {
 		return a->actorID < b->actorID;
 	}
 };

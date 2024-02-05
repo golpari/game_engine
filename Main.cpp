@@ -13,12 +13,7 @@ int main() {
     Game gameManager;
     gameManager.GameStart();
 
-    std::string userInput;
-    do {
-
-        gameManager.RunScene(*gameManager.currentScene, userInput);
-
-    } while (std::cin >> userInput && userInput != "quit");
+    gameManager.RunScene(*gameManager.currentScene);
 
     std::cout << gameManager.GameEnd(false);
   

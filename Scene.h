@@ -18,9 +18,9 @@ class Scene
 {
 public:
 
-	std::unordered_map<uint64_t, std::vector<Actor*>> actors_map;
-	std::vector<Actor*> actors;
-	Actor* player;
+	std::unordered_map<uint64_t, std::vector<std::shared_ptr<Actor>>> actors_map;
+	std::vector<std::shared_ptr<Actor>> actors;
+	std::shared_ptr<Actor> player;
 
 	Scene() { player = nullptr; }
 
@@ -36,10 +36,10 @@ public:
 
 private:
 	// chat help
-	void addActorToMap(uint64_t& position, Actor* new_actor);
+	void addActorToMap(uint64_t& position, std::shared_ptr<Actor> new_actor);
 
 	// chat help
-	void updateActorPosition(Actor* actor, uint64_t newPos);
+	void updateActorPosition(std::shared_ptr<Actor> actor, uint64_t newPos);
 
 	// chat help
 	uint64_t getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity);

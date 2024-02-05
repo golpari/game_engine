@@ -84,10 +84,10 @@ void Game::LoadScene(std::string sceneName)
 
 		if (currentScene != nullptr) {
 			// deallocate mem for all the actors in the old scene
-			for (Actor* actor : currentScene->actors) {
-				delete actor;
-				actor = nullptr;
-			}
+			currentScene->actors.clear();
+			currentScene->player = nullptr;
+			currentScene->actors_map.clear();
+			
 			// deallocate mem of the old scene
 			delete currentScene;
 		}
@@ -157,7 +157,7 @@ std::string Game::PrintDialogue() {
 		auto actorsIt = currentScene->actors_map.find(adjacent);
 		if (actorsIt != currentScene->actors_map.end()) {
 			// found actors for this position, add them to the printable list
-			for (Actor* actor : actorsIt->second) {
+			for (std::shared_ptr<Actor> actor : actorsIt->second) {
 				//check nearby dialogue
 				if (actor->actor_name != "player" && adjacent == actor->position && actor->nearby_dialogue != "" && actor->nearby_dialogue != " ") {
 					temp.dialogueID = actor->actorID;
@@ -177,7 +177,7 @@ std::string Game::PrintDialogue() {
 	auto actorsIt = currentScene->actors_map.find(currentScene->player->position);
 	if (actorsIt != currentScene->actors_map.end()) {
 		// found actors for this position, add them to the printable list
-		for (Actor* actor : actorsIt->second) {
+		for (std::shared_ptr<Actor> actor : actorsIt->second) {
 			// check nearby dialogue
 			if (actor->actor_name != "player" && currentScene->player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
 				temp.dialogueID = actor->actorID;
@@ -199,47 +199,62 @@ std::string Game::PrintDialogue() {
 	return endgameString;
 }
 
-void Game::RunScene(Scene& scene, std::string& input)
+void Game::RunScene(Scene& scene)
 {
-	//update player position based on the movement
-	if (!firstRun) scene.MoveActors();
-	firstRun = false;
+	std::string input;
+	do {
+		//update player position based on the movement
+		if (!firstRun) scene.MoveActors();
+		firstRun = false;
 
-	scene.MovePlayer(input);
+		scene.MovePlayer(input);
 
-	currentScene->RenderScene();
+		currentScene->RenderScene();
 
-	// check + print nearby & contact dialogue & eng game if needed
-	std::string endgame = PrintDialogue();
+		// check + print nearby & contact dialogue & eng game if needed
+		std::string endgame = PrintDialogue();
 
-	// print player health and score
-	ss << "health : " << health << ", "
-		<< "score : " << score << '\n';
+		// print player health and score
+		ss << "health : " << health << ", "
+			<< "score : " << score << '\n';
 
-	//if relevant, print relevant game end string  and return
-	if (endgame != "") {
-		ss << endgame;
-		std::cout << ss.str();
-		ss.clear();
-		ss.str("");
-		exit(0);
-	}
+		//if relevant, print relevant game end string  and return
+		if (endgame != "") {
+			ss << endgame;
+			std::cout << ss.str();
+			ss.clear();
+			ss.str("");
+			exit(0);
+		}
 
-	if (loadNew) {
-		loadNew = false;
-		std::cout << ss.str();
-		ss.clear();
-		ss.str("");
-		LoadScene(nextScene);
-	}
+		if (loadNew) {
+			loadNew = false;
+			std::cout << ss.str();
+			ss.clear();
+			ss.str("");
+			LoadScene(nextScene);
+			currentScene->RenderScene();
 
-	//prompt user
-	ss << "Please make a decision..." << '\n';
+			//prompt user
+			ss << "Please make a decision..." << '\n';
 
-	//explain user options
-	ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
+			//explain user options
+			ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
 
-	std::cout << ss.str();
-	ss.clear();
-	ss.str("");
+			std::cout << ss.str();
+			ss.clear();
+			ss.str("");
+		}
+		else {
+			//prompt user
+			ss << "Please make a decision..." << '\n';
+
+			//explain user options
+			ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
+
+			std::cout << ss.str();
+			ss.clear();
+			ss.str("");
+		}
+	} while (std::cin >> input && input != "quit");
 }

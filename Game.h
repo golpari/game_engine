@@ -46,6 +46,6 @@ public:
 
 	std::string PrintDialogue();
 
-	void RunScene(Scene& scene, std::string& input);
+	void RunScene(Scene& scene);
 };
 #endif
