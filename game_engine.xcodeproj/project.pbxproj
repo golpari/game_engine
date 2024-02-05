@@ -172,6 +172,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/ThirdParty/glm-0.9.9.8",
+					"$(PROJECT_DIR)/ThirdParty/rapidjson",
 					"$(PROJECT_DIR)/ThirdParty",
 					"$(PROJECT_DIR)",
 				);
@@ -230,6 +231,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/ThirdParty/glm-0.9.9.8",
+					"$(PROJECT_DIR)/ThirdParty/rapidjson",
 					"$(PROJECT_DIR)/ThirdParty",
 					"$(PROJECT_DIR)",
 				);
