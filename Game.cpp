@@ -103,6 +103,10 @@ void Game::LoadScene(std::string sceneName)
 }
 
 std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
+	if (dialogue.find("proceed to") != std::string::npos) {
+		loadNew = true;
+		nextScene = EngineUtils::obtain_word_after_phrase(dialogue, "proceed to ");
+	}
 	if (dialogue.find("game over") != std::string::npos)
 		return Game::GameEnd(false);
 	if (dialogue.find("health down") != std::string::npos)
@@ -219,6 +223,14 @@ void Game::RunScene(Scene& scene, std::string& input)
 		ss.clear();
 		ss.str("");
 		exit(0);
+	}
+
+	if (loadNew) {
+		loadNew = false;
+		std::cout << ss.str();
+		ss.clear();
+		ss.str("");
+		LoadScene(nextScene);
 	}
 
 	//prompt user

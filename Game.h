@@ -27,6 +27,8 @@ public:
 	bool firstRun = true;
 	int health = 3;
 	int score = 0;
+	bool loadNew = false;
+	std::string nextScene = "";
 
 	Game() {}
 
