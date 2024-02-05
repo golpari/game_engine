@@ -57,7 +57,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				contact_dialogue = actorTemplate->contact_dialogue;
 			}
 
-			// make the actor overwrite template values as needed
+			// make the actor overwrite template values as needed 
 			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
 			if (actor.HasMember("x")) { x = actor["x"].GetInt(); }
 			if (actor.HasMember("y")) { y = actor["y"].GetInt(); }
