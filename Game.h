@@ -1,17 +1,18 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
+#include "ActorTemplate.h"
 #include "EngineUtils.h"
 #include "rapidjson/document.h"
 #include "Scene.h"
-#include "ActorTemplate.h"
 
 class Scene;
 
