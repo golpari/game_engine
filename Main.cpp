@@ -13,7 +13,7 @@ int main() {
     Game gameManager;
     gameManager.GameStart();
 
-    gameManager.RunScene(*gameManager.currentScene);
+    gameManager.RunScene();
 
     std::cout << gameManager.GameEnd(false);
   

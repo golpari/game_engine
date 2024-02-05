@@ -18,6 +18,7 @@ class Scene;
 class Game {	
 
 public:
+	std::vector<Scene> scenes;
 
 	Scene* currentScene;
 	
@@ -46,6 +47,9 @@ public:
 
 	std::string PrintDialogue();
 
-	void RunScene(Scene& scene);
+	void RunScene();
+
+private:
+	void Deallocate();
 };
 #endif

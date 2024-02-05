@@ -83,17 +83,14 @@ void Game::LoadScene(std::string sceneName)
 		EngineUtils::ReadJsonFile("resources/scenes/" + sceneName + ".scene", out_sceneInitial);
 
 		if (currentScene != nullptr) {
-			// deallocate mem for all the actors in the old scene
-			currentScene->actors.clear();
-			currentScene->player = nullptr;
-			currentScene->actors_map.clear();
-			
-			// deallocate mem of the old scene
-			delete currentScene;
+			Deallocate();
 		}
-		
-		currentScene = new Scene(); // store scene on the heap
-		currentScene->ProcessActors(out_sceneInitial);
+
+		Scene initialScene;
+		scenes.push_back(initialScene);
+		scenes.back().ProcessActors(out_sceneInitial);
+		currentScene = &scenes.back();
+
 	}
 
 	else {
@@ -157,7 +154,7 @@ std::string Game::PrintDialogue() {
 		auto actorsIt = currentScene->actors_map.find(adjacent);
 		if (actorsIt != currentScene->actors_map.end()) {
 			// found actors for this position, add them to the printable list
-			for (std::shared_ptr<Actor> actor : actorsIt->second) {
+			for (Actor* actor : actorsIt->second) {
 				//check nearby dialogue
 				if (actor->actor_name != "player" && adjacent == actor->position && actor->nearby_dialogue != "" && actor->nearby_dialogue != " ") {
 					temp.dialogueID = actor->actorID;
@@ -177,7 +174,7 @@ std::string Game::PrintDialogue() {
 	auto actorsIt = currentScene->actors_map.find(currentScene->player->position);
 	if (actorsIt != currentScene->actors_map.end()) {
 		// found actors for this position, add them to the printable list
-		for (std::shared_ptr<Actor> actor : actorsIt->second) {
+		for (Actor* actor : actorsIt->second) {
 			// check nearby dialogue
 			if (actor->actor_name != "player" && currentScene->player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
 				temp.dialogueID = actor->actorID;
@@ -199,15 +196,15 @@ std::string Game::PrintDialogue() {
 	return endgameString;
 }
 
-void Game::RunScene(Scene& scene)
+void Game::RunScene()
 {
 	std::string input;
 	do {
 		//update player position based on the movement
-		if (!firstRun) scene.MoveActors();
+		if (!firstRun) currentScene->MoveActors();
 		firstRun = false;
 
-		scene.MovePlayer(input);
+		currentScene->MovePlayer(input);
 
 		currentScene->RenderScene();
 
@@ -257,4 +254,26 @@ void Game::RunScene(Scene& scene)
 			ss.str("");
 		}
 	} while (std::cin >> input && input != "quit");
+}
+
+//PRIVATE HELPER
+void Game::Deallocate() {
+	// Deallocate memory pointed to by the pointers in the unordered_map
+	for (auto& map_entry : currentScene->actors_map) {
+		for (Actor* actor : map_entry.second) {
+			delete actor; // Deallocate memory for each Actor in the vector
+		}
+		map_entry.second.clear(); // Clear the vector (not strictly necessary)
+	}
+	currentScene->actors_map.clear(); // Clear the map (not strictly necessary)
+
+	//// Deallocate memory pointed to by the pointers in the vector
+	//for (Actor* actor : currentScene->actors) {
+	//	delete actor; // Deallocate memory for each Actor in the vector
+	//}
+	currentScene->actors.clear(); // Clear the vector (not strictly necessary)
+
+	// Deallocate memory pointed to by the 'player' pointer
+	//delete currentScene->player; // Deallocate memory for the player
+	currentScene->player = nullptr;
 }

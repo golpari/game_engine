@@ -3,7 +3,7 @@
 bool Scene::CheckBlocking(uint64_t& position)
 {
 	if (actors_map.find(position) != actors_map.end()) {
-		for (std::shared_ptr<Actor> actor : actors_map.at(position)) {
+		for (Actor* actor : actors_map.at(position)) {
 			if (actor->blocking)
 				return true;
 		}
@@ -71,7 +71,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			// create actor variable and store it in list of actors
 			uint64_t position = EngineUtils::combine(x, y);
 			glm::ivec2 velocity{ vel_x, vel_y };
-			std::shared_ptr<Actor> new_actor(new Actor(name, view, position, velocity, blocking, nearby_dialogue, contact_dialogue));
+			Actor* new_actor(new Actor(name, view, position, velocity, blocking, nearby_dialogue, contact_dialogue));
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map
@@ -166,7 +166,7 @@ void Scene::RenderScene()
 }
 
 // PRIVATE HELPER FUNCTIONS
-void Scene::addActorToMap(uint64_t& position, std::shared_ptr<Actor> new_actor) {
+void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {
 	// Check if the position key already exists in the map
 	auto it = actors_map.find(position);
 	if (it != actors_map.end()) {
@@ -175,11 +175,11 @@ void Scene::addActorToMap(uint64_t& position, std::shared_ptr<Actor> new_actor) 
 	}
 	else {
 		// Position key does not exist, create a new vector and add new_actor
-		actors_map[position] = std::vector<std::shared_ptr<Actor>>{ new_actor };
+		actors_map[position] = std::vector<Actor*>{ new_actor };
 	}
 }
 
-void Scene::updateActorPosition(std::shared_ptr<Actor> actor, uint64_t newPos) {
+void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	uint64_t oldPos = actor->position;
 	// Remove actor from old position vector
 	auto& oldVec = actors_map[oldPos];
