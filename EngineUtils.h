@@ -147,9 +147,20 @@ public:
 	}
 };
 
+struct Dialogue {
+	std::string text = "";
+	int dialogueID = 0;
+};
+
 struct ActorComparator {
 	bool operator()(const Actor* a, const Actor* b) const {
 		return a->actorID < b->actorID;
+	}
+};
+
+struct DialogueComparator {
+	bool operator()(const Dialogue a, const Dialogue b) const {
+		return a.dialogueID < b.dialogueID;
 	}
 };
 #endif

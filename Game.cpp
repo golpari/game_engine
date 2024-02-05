@@ -147,9 +147,10 @@ std::string Game::PrintDialogue(Scene& scene) {
 	}
 	return endgameString;*/
 
-	//for nearby dialogue
-	std::vector<Actor*> actorsWithNearbyDialogue;
+	
+	std::vector<Dialogue> dialogues;
 
+	//for nearby dialogue
 	int x, y = 0;
 	std::string endgameString = "";
 
@@ -162,6 +163,8 @@ std::string Game::PrintDialogue(Scene& scene) {
 		{ -1,  0 },            { 1,  0 },
 		{ -1,  1 }, { 0,  1 }, { 1,  1 }
 	};
+
+	Dialogue temp;
 
 	// if there is anyone nearby, the player will also be added to the nearby dialogue list
 	bool playerDialogued = false;
@@ -182,11 +185,12 @@ std::string Game::PrintDialogue(Scene& scene) {
 			for (Actor* actor : actorsIt->second) {
 				//check nearby dialogue
 				if (actor->actor_name != "player" && adjacent == actor->position && actor->nearby_dialogue != "" && actor->nearby_dialogue != " ") {
-					actorsWithNearbyDialogue.push_back(actor);
+					temp.dialogueID = actor->actorID;
+					temp.text = actor->nearby_dialogue;
+					dialogues.push_back(temp);
 					endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
 				}
 			}
-
 			/*if (!playerDialogued) {
 				actorsWithNearbyDialogue.push_back(scene.player);
 				playerDialogued = true;
@@ -195,29 +199,26 @@ std::string Game::PrintDialogue(Scene& scene) {
 	}
 
 	// for contact dialogue
-	std::vector<Actor*> actorsWithContactDialogue;
 	auto actorsIt = scene.actors_map.find(scene.player->position);
 	if (actorsIt != scene.actors_map.end()) {
 		// found actors for this position, add them to the printable list
 		for (Actor* actor : actorsIt->second) {
 			// check nearby dialogue
 			if (actor->actor_name != "player" && scene.player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
-				actorsWithContactDialogue.push_back(actor);
+				temp.dialogueID = actor->actorID;
+				temp.text = actor->contact_dialogue;
+				dialogues.push_back(temp);
 				endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
 			}
 		}
 	}
 	
-	// sort the dialogues to be printed by actorID
-	std::sort(actorsWithNearbyDialogue.begin(), actorsWithNearbyDialogue.end(), ActorComparator());
-	std::sort(actorsWithContactDialogue.begin(), actorsWithContactDialogue.end(), ActorComparator());
+	// sort the dialogues to be printed by actorID (which is the same as dialogueID)
+	std::sort(dialogues.begin(), dialogues.end(), DialogueComparator());
 
 	//print the dialogues in order by actorID
-	for (Actor* actor : actorsWithNearbyDialogue) {
-		ss << actor->nearby_dialogue << "\n";
-	}
-	for (Actor* actor : actorsWithContactDialogue) {
-		ss << actor->contact_dialogue << "\n";
+	for (Dialogue& dialogue : dialogues) {
+		ss << dialogue.text << "\n";
 	}
 
 	return endgameString;
