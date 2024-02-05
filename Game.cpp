@@ -181,16 +181,16 @@ std::string Game::PrintDialogue(Scene& scene) {
 			// found actors for this position, add them to the printable list
 			for (Actor* actor : actorsIt->second) {
 				//check nearby dialogue
-				if (adjacent == actor->position && actor->nearby_dialogue != "") {
+				if (actor->actor_name != "player" && adjacent == actor->position && actor->nearby_dialogue != "" && actor->nearby_dialogue != " ") {
 					actorsWithNearbyDialogue.push_back(actor);
 					endgameString = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
 				}
 			}
 
-			if (!playerDialogued) {
+			/*if (!playerDialogued) {
 				actorsWithNearbyDialogue.push_back(scene.player);
 				playerDialogued = true;
-			}
+			}*/
 		}
 	}
 
@@ -201,7 +201,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 		// found actors for this position, add them to the printable list
 		for (Actor* actor : actorsIt->second) {
 			// check nearby dialogue
-			if (scene.player->position == actor->position && actor->contact_dialogue != "") {
+			if (actor->actor_name != "player" && scene.player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
 				actorsWithContactDialogue.push_back(actor);
 				endgameString = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
 			}

@@ -22,7 +22,7 @@ public:
 	std::vector<Actor*> actors;
 	Actor* player;
 
-	Scene() {}
+	Scene() { player = nullptr; }
 
 	bool CheckBlocking(uint64_t& position);
 

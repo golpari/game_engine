@@ -87,7 +87,6 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 
 void Scene::MovePlayer(std::string& movement)
 {
-	glm::ivec2 temp;
 	//if not valid movement, do nothing
 	if (movement != "n" &&
 		movement != "e" &&
@@ -127,7 +126,6 @@ void Scene::MovePlayer(std::string& movement)
 }
 
 void Scene::MoveActors() {
-	glm::ivec2 nextPosition;
 	//update all actors except for the player (which is the last actor)
 	for (int i = 0; i < actors.size() - 1; i++) {
 		if (actors[i]->actor_name != "player") {
@@ -151,7 +149,6 @@ void Scene::RenderScene()
 	int endY = posY + (y_res - 1) / 2;
 
 	bool actorPresent = false;
-	Actor* actorToPrint;
 
 	for (int y = startY; y <= endY; ++y) {
 		for (int x = startX; x <= endX; ++x) {
