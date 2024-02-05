@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E7D49CE22B677E70008B384A /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE02B677E6F008B384A /* Main.cpp */; };
+		E7D49CEB2B70D170008B384A /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE62B70D170008B384A /* Actor.cpp */; };
+		E7D49CEC2B70D170008B384A /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE72B70D170008B384A /* Scene.cpp */; };
+		E7D49CED2B70D170008B384A /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CEA2B70D170008B384A /* Game.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +29,14 @@
 		E7D49CCF2B676FFA008B384A /* game_engine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = game_engine; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D49CE02B677E6F008B384A /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		E7D49CE12B677E70008B384A /* ThirdParty */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThirdParty; sourceTree = "<group>"; };
+		E7D49CE32B70D170008B384A /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		E7D49CE42B70D170008B384A /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		E7D49CE52B70D170008B384A /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
+		E7D49CE62B70D170008B384A /* Actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Actor.cpp; sourceTree = "<group>"; };
+		E7D49CE72B70D170008B384A /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		E7D49CE82B70D170008B384A /* ActorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActorTemplate.h; sourceTree = "<group>"; };
+		E7D49CE92B70D170008B384A /* EngineUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineUtils.h; sourceTree = "<group>"; };
+		E7D49CEA2B70D170008B384A /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +53,14 @@
 		E7D49CC62B676FFA008B384A = {
 			isa = PBXGroup;
 			children = (
+				E7D49CE62B70D170008B384A /* Actor.cpp */,
+				E7D49CE52B70D170008B384A /* Actor.h */,
+				E7D49CE82B70D170008B384A /* ActorTemplate.h */,
+				E7D49CE92B70D170008B384A /* EngineUtils.h */,
+				E7D49CEA2B70D170008B384A /* Game.cpp */,
+				E7D49CE42B70D170008B384A /* Game.h */,
+				E7D49CE72B70D170008B384A /* Scene.cpp */,
+				E7D49CE32B70D170008B384A /* Scene.h */,
 				E7D49CE02B677E6F008B384A /* Main.cpp */,
 				E7D49CE12B677E70008B384A /* ThirdParty */,
 				E7D49CD02B676FFA008B384A /* Products */,
@@ -112,7 +131,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7D49CEC2B70D170008B384A /* Scene.cpp in Sources */,
 				E7D49CE22B677E70008B384A /* Main.cpp in Sources */,
+				E7D49CEB2B70D170008B384A /* Actor.cpp in Sources */,
+				E7D49CED2B70D170008B384A /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +147,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -190,7 +212,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
