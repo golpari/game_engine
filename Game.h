@@ -21,7 +21,7 @@ class Game {
 public:
 	std::vector<Scene> scenes;
 
-	Scene* currentScene;
+	Scene* currentScene = nullptr;
 	
 	rapidjson::Document out_gameConfig;
 
@@ -32,7 +32,7 @@ public:
 	bool loadNew = false;
 	std::string nextScene = "";
 
-	Game() {} 
+	Game() { currentScene = nullptr; }
 
 	void GameStart();
 

@@ -1,11 +1,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <algorithm>
 #include <string>
 #include <unordered_map>
-#include <vector>
 #include <utility>
-#include <algorithm>
+#include <vector>
 
 #include "Actor.h"
 #include "EngineUtils.h"
