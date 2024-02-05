@@ -232,6 +232,13 @@ void Game::RunScene()
 			LoadScene(nextScene);
 			currentScene->RenderScene();
 
+			// check + print nearby & contact dialogue & eng game if needed
+			std::string endgame = PrintDialogue();
+
+			// print player health and score
+			ss << "health : " << health << ", "
+				<< "score : " << score << '\n';
+
 			//prompt user
 			ss << "Please make a decision..." << '\n';
 
