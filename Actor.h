@@ -10,15 +10,15 @@ extern int guuid;
 class Actor
 {
 public:
-	std::string actor_name = "";
+	std::string actor_name;
 	int actorID;
-	uint64_t position = 00;
-	glm::ivec2 velocity = { 0,0 };
-	char view = '?';
-	bool blocking = false;
-	std::string nearby_dialogue = "";
-	std::string contact_dialogue = "";
-	bool scoredUpped = false;
+	uint64_t position;
+	glm::ivec2 velocity;
+	char view;
+	bool blocking;
+	std::string nearby_dialogue;
+	std::string contact_dialogue;
+	bool scoredUpped;
 
 	Actor(std::string actor_name_in, char view_in, uint64_t position_in, glm::ivec2 initial_velocity_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in)
@@ -34,6 +34,16 @@ public:
 	{}
 
 
-	Actor();
+	Actor() {
+		actor_name = "";
+		actorID = 0;
+		position = 00;
+		velocity = { 0,0 };
+		view = '?';
+		blocking = false;
+		nearby_dialogue = "";
+		contact_dialogue = "";
+		scoredUpped = false;
+	};
 };
 #endif

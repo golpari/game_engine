@@ -150,7 +150,7 @@ std::string Game::PrintDialogue(Scene& scene) {
 	//for nearby dialogue
 	std::vector<Actor*> actorsWithNearbyDialogue;
 
-	int x, y;
+	int x, y = 0;
 	std::string endgameString = "";
 
 	// Split the player's position into x and y coordinates
