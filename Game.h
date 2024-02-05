@@ -28,6 +28,8 @@ public:
 	int health = 3;
 	int score = 0;
 
+	Game() {}
+
 	void GameStart();
 
 	std::string GameEnd(bool good);

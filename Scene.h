@@ -42,7 +42,7 @@ private:
 	void updateActorPosition(Actor* actor, uint64_t newPos);
 
 	// chat help
-	uint64_t getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velocity);
+	uint64_t getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity);
 };
 #endif
 

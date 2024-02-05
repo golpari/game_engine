@@ -199,9 +199,10 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	actor->position = newPos;
 }
 
-uint64_t Scene::getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velocity) {
-	int x, y;
-
+// QUESTION TIHS NEVER GETS USED IN PLAYER MOVEMENT RIGHT?
+uint64_t Scene::getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity) {
+	
+	int x, y = 0;
 	EngineUtils::split(position, x, y);
 
 	// Update x and y components with velocity
@@ -213,6 +214,10 @@ uint64_t Scene::getNewPosFromVelocity(uint64_t& position, const glm::ivec2& velo
 	if (!CheckBlocking(newPosition)) {
 		return newPosition;
 	}
+	else {
+		velocity = -velocity;
+	}
+	// IF ITS BLOCKED FLIP THE VELOCITY !!!!
 
 	return position;
 }
