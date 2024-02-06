@@ -128,8 +128,8 @@ void Scene::MovePlayer(std::string& movement)
 void Scene::MoveActors() {
 	//update all actors except for the player (which is the last actor)
 	for (int i = 0; i < actors.size() - 1; i++) {
-		if (actors[i]->actor_name != "player") {
-			updateActorPosition(actors[i], getNewPosFromVelocity(actors[i]->position, actors[i]->velocity));
+		if (actors.at(i)->actor_name != "player") {
+			updateActorPosition(actors.at(i), getNewPosFromVelocity(actors.at(i)->position, actors.at(i)->velocity));
 		}
 	}
 }
@@ -180,23 +180,24 @@ void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {
 }
 
 void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
-	uint64_t oldPos = actor->position;
-	// Remove actor from old position vector
-	auto& oldVec = actors_map[oldPos];
+	const uint64_t oldPos = actor->position;
+	// get actors position vector
+	std::vector<Actor*>& oldVec = actors_map.at(oldPos);
+
+	// delete the actor from the position vector
 	oldVec.erase(std::remove(oldVec.begin(), oldVec.end(), actor), oldVec.end());
 
-	// delete that vector / kv pair if its empty
+	// delete the position vector / kv pair if its empty
 	if (oldVec.empty()) {
 		actors_map.erase(oldPos);
 	}
 
-	// Add actor to new position vector
-	actors_map[newPos].push_back(actor);
-	//resort the actors new vector since it may have been put out of guuid order
-	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
-
 	// Update the Actor's position property
 	actor->position = newPos;
+
+	// Add actor to new position vector
+	addActorToMap(newPos, actor);
+	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
 }
 
 // QUESTION TIHS NEVER GETS USED IN PLAYER MOVEMENT RIGHT?
@@ -213,11 +214,12 @@ uint64_t Scene::getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity) 
 	//only return the updated position if its not blocked
 	if (!CheckBlocking(newPosition)) {
 		return newPosition;
+		// IF ITS BLOCKED FLIP THE VELOCITY !!!!
 	}
 	else {
 		velocity = -velocity;
 	}
-	// IF ITS BLOCKED FLIP THE VELOCITY !!!!
-
+	
+	// return old position if actor wont go anywhere
 	return position;
 }
