@@ -127,7 +127,7 @@ void Scene::MovePlayer(std::string& movement)
 
 void Scene::MoveActors() {
 	//update all actors except for the player (which is the last actor)
-	for (int i = 0; i < actors.size() - 1; i++) {
+	for (int i = 0; i < actors.size(); i++) {
 		if (actors.at(i)->actor_name != "player") {
 			updateActorPosition(actors.at(i), getNewPosFromVelocity(actors.at(i)->position, actors.at(i)->velocity));
 		}
