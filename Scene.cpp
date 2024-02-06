@@ -128,8 +128,8 @@ void Scene::MovePlayer(std::string& movement)
 void Scene::MoveActors() {
 	//update all actors except for the player (which is the last actor)
 	for (int i = 0; i < actors.size(); i++) {
-		if (actors.at(i)->actor_name != "player") {
-			updateActorPosition(actors.at(i), getNewPosFromVelocity(actors.at(i)->position, actors.at(i)->velocity));
+		if (actors[i]->actor_name != "player") {
+			updateActorPosition(actors[i], getNewPosFromVelocity(actors[i]->position, actors[i]->velocity));
 		}
 	}
 }
@@ -182,7 +182,7 @@ void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {
 void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	const uint64_t oldPos = actor->position;
 	// get actors position vector
-	std::vector<Actor*>& oldVec = actors_map.at(oldPos);
+	std::vector<Actor*>& oldVec = actors_map[oldPos];
 
 	// delete the actor from the position vector
 	oldVec.erase(std::remove(oldVec.begin(), oldVec.end(), actor), oldVec.end());
