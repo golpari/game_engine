@@ -200,7 +200,6 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
 }
 
-// QUESTION TIHS N
 uint64_t Scene::getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity) {
 	
 	int x, y = 0;
