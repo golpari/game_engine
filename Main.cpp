@@ -19,7 +19,6 @@ int guuid = 0;
 std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template name
 
 int main(int argc, char* argv[]) {
-    SDL_Event inputEvent;
     Game gameManager;
     gameManager.GameStart();
 
