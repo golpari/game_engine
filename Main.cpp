@@ -12,6 +12,9 @@
 #include "ActorTemplate.h"
 #include "rapidjson/document.h"
 
+#include "Helper.h"
+#include "AudioHelper.h"
+
 int guuid = 0;
 std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template name
 

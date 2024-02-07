@@ -299,6 +299,7 @@
     <ClInclude Include="EngineUtils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ThirdParty\AudioHelper.h" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\common.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\detail\compute_common.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\detail\compute_vector_relational.hpp" />
@@ -581,6 +582,7 @@
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\vec3.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\vec4.hpp" />
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\vector_relational.hpp" />
+    <ClInclude Include="ThirdParty\Helper.h" />
     <ClInclude Include="ThirdParty\MapHelper.h" />
     <ClInclude Include="ThirdParty\rapidjson\allocators.h" />
     <ClInclude Include="ThirdParty\rapidjson\document.h" />
