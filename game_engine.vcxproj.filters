@@ -423,6 +423,7 @@
     <None Include="ThirdParty\glm-0.9.9.8\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\glm-0.9.9.8\glm\detail\_features.hpp">

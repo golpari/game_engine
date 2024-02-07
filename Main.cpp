@@ -2,12 +2,20 @@
 #include <unordered_map>
 #include <filesystem>
 
+#include <SDL.h>
+#include <SDL_events.h>
+
 #include "Game.h"
 #include "ActorTemplate.h"
 #include "rapidjson/document.h"
 
 int guuid = 0;
 std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template name
+
+int main(int argc, char* argv[]) {
+    SDL_Event inputEvent;
+    return 0;
+}
 
 int main() {   
     Game gameManager;
