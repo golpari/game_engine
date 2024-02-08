@@ -43,6 +43,7 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
     SDL_Event nextEvent;
     while (Helper::SDL_PollEvent498(&nextEvent)) {
         if (nextEvent.type == SDL_QUIT) {
+            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
             SDL_RenderClear(renderer);
             EndFrame();
             exit(0);
