@@ -11,8 +11,8 @@ void Renderer::Initialize(const std::string& title)
     SDL_Init(SDL_INIT_VIDEO);
 
     // default values
-    int winWidth = 640;
-    int winHeight = 360;
+    winWidth = 640;
+    winHeight = 360;
     EngineUtils::split(GetCameraResolution(processed), winWidth, winHeight);
 
     // Create the window
@@ -43,6 +43,7 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
     SDL_Event nextEvent;
     while (Helper::SDL_PollEvent498(&nextEvent)) {
         if (nextEvent.type == SDL_QUIT) {
+            SDL_RenderClear(renderer);
             EndFrame();
             exit(0);
         }
@@ -64,6 +65,7 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
     }
 
     SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+    SDL_RenderClear(renderer);
 
     // show intro image as directed
     if (introImages.size() > index)
@@ -93,7 +95,7 @@ void Renderer::RenderImage(const std::string& imageName)
     // get img w and h
     int w, h;
     SDL_QueryTexture(img, NULL, NULL, &w, &h);
-    SDL_Rect destination_rect = { 0, 0, w, h };
+    SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
     SDL_Point pivot_point = { w * 0.5, h };
     SDL_RenderCopyEx(
         renderer,

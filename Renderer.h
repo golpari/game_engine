@@ -22,6 +22,9 @@ class Renderer
     int g = 255;
     int b = 255;
 
+    int winWidth = 640;
+    int winHeight = 360;
+
 public:
     SDL_Renderer* renderer = nullptr;
 
