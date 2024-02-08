@@ -35,12 +35,12 @@ void Renderer::Initialize(const std::string& title)
         }
     }   
     
-    renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);    
+    renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);  
+    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 }
 
 void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
 {
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
     if (nextEvent.type == SDL_QUIT) {
         EndFrame();
         exit(0);
