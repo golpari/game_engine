@@ -33,14 +33,14 @@ void Renderer::Initialize(const std::string& title)
             g = out_renderingConfig["clear_color_g"].GetInt();
             b = out_renderingConfig["clear_color_b"].GetInt();
         }
-    }
-    
+    }   
     
     renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);    
 }
 
 void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
 {
+    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
     if (nextEvent.type == SDL_QUIT) {
         EndFrame();
         exit(0);
@@ -50,9 +50,6 @@ void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
     else if (nextEvent.type == SDL_MOUSEBUTTONDOWN && nextEvent.button.button == SDL_BUTTON_LEFT) {
         // Handle left mouse click
         index++;
-        // always clear framebuffer at beginning of frame
-        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-        SDL_RenderClear(renderer);
     }
 
     // Keyboard event: SDL_KEYDOWN is for key press
@@ -61,9 +58,6 @@ void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
         if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
             // Handle spacebar or enter key press
             index++;
-            // always clear framebuffer at beginning of frame
-            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-            SDL_RenderClear(renderer);
         }
     } 
 }

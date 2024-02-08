@@ -214,8 +214,8 @@ void Game::RunScene()
 			// show intro image as directed
 			if (introImages.size() > index)
 				renderer.RenderImage(introImages[index]);
-			/*else
-				renderer->RenderImage(introImages[introImages.size() - 1]);*/
+			else
+				SDL_RenderClear(renderer.renderer);
 
 			renderer.EndFrame();
 		}

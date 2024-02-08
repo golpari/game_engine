@@ -17,12 +17,14 @@ class Renderer
 {
     std::unordered_map<std::string, SDL_Texture*> textures;
     rapidjson::Document out_renderingConfig;
-    SDL_Renderer* renderer = nullptr;
+    
     int r = 255;
     int g = 255;
     int b = 255;
 
 public:
+    SDL_Renderer* renderer = nullptr;
+
     void Initialize(const std::string& title);
 
     void StartFrame(SDL_Event& nextEvent, int& index);
