@@ -25,7 +25,7 @@ class Renderer
 public:
     void Initialize(const std::string& title);
 
-    void StartFrame();
+    void StartFrame(SDL_Event& nextEvent, int& index);
     void EndFrame();
     void Cleanup();
     void RenderImage(const std::string& imageName);

@@ -15,6 +15,20 @@ void Game::GameStart() {
 
 }
 
+void Game::ProcessIntro() {
+	if (out_gameConfig.HasMember("intro_image") && out_gameConfig["intro_image"].IsArray()) {
+		introImages.reserve(out_gameConfig["intro_image"].GetArray().Size());
+		for (const auto& img : out_gameConfig["intro_image"].GetArray()) {
+			std::string imageName = img.GetString();
+			introImages.push_back(imageName);
+			if (!EngineUtils::CheckPathExists("resources/images/" + imageName + ".png", false)) {
+				std::cout << "error: missing image " << imageName;
+				exit(0);
+			}
+		}
+	}
+}
+
 std::string Game::GameEnd(bool good) {
 	if (good)
 	{
@@ -186,15 +200,28 @@ void Game::RunScene()
 	if (out_gameConfig.HasMember("game_title")) {
 		title = out_gameConfig["game_title"].GetString();
 	}
-	
+	ProcessIntro();
+	int index = 0;
+
 	renderer.Initialize(title);
 	while (true) {
-		renderer.StartFrame();
-		// do stuff
-		renderer.EndFrame();
+		// process events aka keep going until there are no more events or a close event is triggered!
+		SDL_Event nextEvent;
+		while (Helper::SDL_PollEvent498(&nextEvent)) {
+			// start frame and process input
+			renderer.StartFrame(nextEvent, index);
+
+			// show intro image as directed
+			if (introImages.size() > index)
+				renderer.RenderImage(introImages[index]);
+			/*else
+				renderer->RenderImage(introImages[introImages.size() - 1]);*/
+
+			renderer.EndFrame();
+		}
 	}
-	std::string input;
-	/*do {
+	/*std::string input;
+	do {
 		
 		
 		//update player position based on the movement

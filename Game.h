@@ -23,6 +23,8 @@ public:
 	std::vector<Scene> scenes;
 	rapidjson::Document out_gameConfig;
 
+	std::vector<std::string> introImages;
+
 	Scene* currentScene = nullptr;
 
 	std::stringstream ss;
@@ -35,6 +37,8 @@ public:
 	Game() { currentScene = nullptr; }
 
 	void GameStart();
+
+	void ProcessIntro();
 
 	std::string GameEnd(bool good);
 

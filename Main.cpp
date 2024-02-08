@@ -30,7 +30,6 @@ int main(int argc, char* argv[]) {
 int main() {   
     Game gameManager;
     gameManager.GameStart();
-
     gameManager.RunScene();
 
     std::cout << gameManager.GameEnd(false);
