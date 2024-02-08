@@ -36,32 +36,40 @@ void Renderer::Initialize(const std::string& title)
     }   
     
     renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);  
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 }
 
-void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
+void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
 {
-    if (nextEvent.type == SDL_QUIT) {
-        EndFrame();
-        exit(0);
-    }
+    SDL_Event nextEvent;
+    while (Helper::SDL_PollEvent498(&nextEvent)) {
+        if (nextEvent.type == SDL_QUIT) {
+            EndFrame();
+            exit(0);
+        }
 
-    // Mouse event: SDL_MOUSEBUTTONDOWN is for mouse button press
-    else if (nextEvent.type == SDL_MOUSEBUTTONDOWN && nextEvent.button.button == SDL_BUTTON_LEFT) {
-        // Handle left mouse click
-        index++;
-    }
-
-    // Keyboard event: SDL_KEYDOWN is for key press
-    else if (nextEvent.type == SDL_KEYDOWN) {
-        // Check for spacebar or enter key using scancode
-        if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
-            // Handle spacebar or enter key press
+        // Mouse event: SDL_MOUSEBUTTONDOWN is for mouse button press
+        else if (nextEvent.type == SDL_MOUSEBUTTONDOWN && nextEvent.button.button == SDL_BUTTON_LEFT) {
+            // Handle left mouse click
             index++;
         }
-    } 
 
-    SDL_RenderClear(renderer);
+        // Keyboard event: SDL_KEYDOWN is for key press
+        else if (nextEvent.type == SDL_KEYDOWN) {
+            // Check for spacebar or enter key using scancode
+            if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+                // Handle spacebar or enter key press
+                index++;
+            }
+        }
+    }
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+
+    // show intro image as directed
+    if (introImages.size() > index)
+        RenderImage(introImages[index]);
+    else
+        SDL_RenderClear(renderer);
 }
 
 void Renderer::EndFrame()

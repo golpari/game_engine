@@ -205,20 +205,13 @@ void Game::RunScene()
 
 	renderer.Initialize(title);
 	while (true) {
+
+		// start frame and process input
+		renderer.StartFrame(introImages, index);
+
 		// process events aka keep going until there are no more events or a close event is triggered!
-		SDL_Event nextEvent;
-		while (Helper::SDL_PollEvent498(&nextEvent)) {
-			// start frame and process input
-			renderer.StartFrame(nextEvent, index);
-
-			//// show intro image as directed
-			//if (introImages.size() > index)
-			//	renderer.RenderImage(introImages[index]);
-			//else
-			//	SDL_RenderClear(renderer.renderer);
-
-			renderer.EndFrame();
-		}
+		
+		renderer.EndFrame();
 	}
 	/*std::string input;
 	do {
