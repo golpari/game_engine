@@ -22,10 +22,8 @@ void Renderer::Initialize(const std::string& title)
         SDL_WINDOWPOS_CENTERED,         // initial y position
         winWidth,                       // width, in pixels
         winHeight,                      // height, in pixels
-        SDL_WINDOW_SHOWN | SDL_RENDERER_ACCELERATED      // flags
+        SDL_WINDOW_SHOWN                // flags
     );
-
-    SDL_Renderer* renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     int r = 255;
     int g = 255;
@@ -40,7 +38,7 @@ void Renderer::Initialize(const std::string& title)
         b = out_renderingConfig["clear_color_b"].GetInt();
     }
     
-
+    SDL_Renderer* renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     while (true) {
         // process events aka keep going until there are no more events or a close event is triggered!
         SDL_Event nextEvent;
