@@ -66,7 +66,7 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
     }
 
     SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
 
     // show intro image as directed
     if (introImages.size() > index)
