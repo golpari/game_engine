@@ -25,9 +25,6 @@ void Renderer::Initialize(const std::string& title)
         SDL_WINDOW_SHOWN                // flags
     );
 
-    int r = 255;
-    int g = 255;
-    int b = 255;
     if (processed) {
         if (out_renderingConfig.HasMember("clear_color_r") && out_renderingConfig["clear_color_r"] != ""
             && out_renderingConfig.HasMember("clear_color_g") && out_renderingConfig["clear_color_g"] != ""
@@ -39,30 +36,35 @@ void Renderer::Initialize(const std::string& title)
     }
     
     
-    SDL_Renderer* renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-    while (true) {
-        // process events aka keep going until there are no more events or a close event is triggered!
-        SDL_Event nextEvent;
-        while (Helper::SDL_PollEvent498(&nextEvent)) {
-            if (nextEvent.type == SDL_QUIT) {
-                SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-                SDL_RenderClear(renderer);
-                Helper::SDL_RenderPresent498(renderer);
+    renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);    
+}
 
-                exit(0);
-            }
+void Renderer::StartFrame()
+{
+    // process events aka keep going until there are no more events or a close event is triggered!
+    SDL_Event nextEvent;
+    while (Helper::SDL_PollEvent498(&nextEvent)) {
+        if (nextEvent.type == SDL_QUIT) {
+            EndFrame();
+            exit(0);
         }
+    }   
+}
 
-        // always clear framebuffer at beginning of frame
-        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-        SDL_RenderClear(renderer);
+void Renderer::EndFrame()
+{
+    // always clear framebuffer at beginning of frame
+    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+    SDL_RenderClear(renderer);
 
-        // show render to user
-        Helper::SDL_RenderPresent498(renderer);
+    // show render to user
+    Helper::SDL_RenderPresent498(renderer);
 
-        SDL_Delay(1);
-    }
-    
+    SDL_Delay(1);
+}
+
+void Renderer::RenderImage(const std::string& imageName)
+{
 }
 
 uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {

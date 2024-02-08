@@ -188,6 +188,11 @@ void Game::RunScene()
 	}
 	
 	renderer.Initialize(title);
+	while (true) {
+		renderer.StartFrame();
+		// do stuff
+		renderer.EndFrame();
+	}
 	std::string input;
 	/*do {
 		
