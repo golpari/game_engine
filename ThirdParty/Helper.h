@@ -20,6 +20,10 @@
 #include <cstdlib>
 #include <algorithm>
 
+ /* WARNING : You may need to adjust the following include paths if your headers / file structures is different. */
+ /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
+ /* https://bit.ly/3OClfHc */
+
 #include "SDL_image.h"
 #include "SDL.h"
 
@@ -66,6 +70,18 @@ public:
 	/* Wrapper that renders to screen while also persisting to a .BMP file */
 	static void SDL_RenderPresent498(SDL_Renderer* renderer)
 	{
+		if (renderer == nullptr)
+		{
+			std::cout << "ERROR : The renderer pointer passed to Helper::SDL_RenderPresent498() is a nullptr." << std::endl;
+			exit(0);
+		}
+
+		if (input_status == NOT_INITIALIZED)
+		{
+			std::cout << "ERROR : Please do not attempt to render (Helper::SDL_RenderPresent498()) before you've entered the game loop (IE, begun calling Helper::SDL_PollEvent498()." << std::endl;
+			exit(0);
+		}
+
 		static bool initialized = false;
 		static SDL_Surface* saving_surface = nullptr;
 
@@ -259,7 +275,6 @@ private:
 
 	static void LoadSDLEventsFromInputFile()
 	{
-
 		if (IsAutograderMode())
 			_autograder_mode = true;
 
