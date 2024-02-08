@@ -107,7 +107,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
+if not exist "$(TargetDir)SDL2_image.dll" xcopy "$(ProjectDir)lib\SDL2_image.dll" "$(TargetDir)"</Command>
       <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -132,7 +133,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
+if not exist "$(TargetDir)SDL2_image.dll" xcopy "$(ProjectDir)lib\SDL2_image.dll" "$(TargetDir)"</Command>
       <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -153,7 +155,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
+if not exist "$(TargetDir)SDL2_image.dll" xcopy "$(ProjectDir)lib\SDL2_image.dll" "$(TargetDir)"</Command>
       <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -178,7 +181,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
+if not exist "$(TargetDir)SDL2_image.dll" xcopy "$(ProjectDir)lib\SDL2_image.dll" "$(TargetDir)"</Command>
       <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
