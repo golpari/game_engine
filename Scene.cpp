@@ -133,7 +133,7 @@ void Scene::MoveActors() {
 		}
 	}
 }
-
+/*
 void Scene::RenderScene()
 {
 	int x_res, y_res;
@@ -164,6 +164,7 @@ void Scene::RenderScene()
 		std::cout << '\n';
 	}
 }
+*/
 
 // PRIVATE HELPER FUNCTIONS
 void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {

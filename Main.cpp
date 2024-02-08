@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "ActorTemplate.h"
 #include "rapidjson/document.h"
+#include "Renderer.h"
 
 #include "Helper.h"
 #include "AudioHelper.h"
@@ -21,10 +22,7 @@ std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template 
 int main(int argc, char* argv[]) {
     Game gameManager;
     gameManager.GameStart();
-
     gameManager.RunScene();
-
-    std::cout << gameManager.GameEnd(false);
     return 0;
 }
 

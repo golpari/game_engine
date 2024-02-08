@@ -13,6 +13,7 @@
 #include "EngineUtils.h"
 #include "rapidjson/document.h"
 #include "Scene.h"
+#include "Renderer.h"
 
 class Scene;
 
@@ -20,10 +21,9 @@ class Game {
 
 public:
 	std::vector<Scene> scenes;
+	rapidjson::Document out_gameConfig;
 
 	Scene* currentScene = nullptr;
-	
-	rapidjson::Document out_gameConfig;
 
 	std::stringstream ss;
 	bool firstRun = true;
@@ -37,8 +37,6 @@ public:
 	void GameStart();
 
 	std::string GameEnd(bool good);
-
-	static uint64_t GetCameraResolution();
 
 	void LoadInitialScene(rapidjson::Document& out_gameConfig);
 

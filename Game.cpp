@@ -7,11 +7,11 @@ void Game::GameStart() {
 
 	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 
-	this->LoadInitialScene(out_gameConfig);
+	/*this->LoadInitialScene(out_gameConfig);
 
 	if (out_gameConfig.HasMember("game_start_message")) {
 		std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
-	}
+	}*/
 
 }
 
@@ -33,25 +33,6 @@ std::string Game::GameEnd(bool good) {
 			exit(0);
 		}
 	}
-}
-
-uint64_t Game::GetCameraResolution() {
-	//default values
-	int x_res = 13;
-	int y_res = 9;
-
-	if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
-		rapidjson::Document out_renderingConfig;
-		EngineUtils::ReadJsonFile("resources/rendering.config", out_renderingConfig);
-		if (out_renderingConfig.HasMember("x_resolution")) {
-			x_res = out_renderingConfig["x_resolution"].GetUint();
-		}
-		if (out_renderingConfig.HasMember("y_resolution")) {
-			y_res = out_renderingConfig["y_resolution"].GetUint();
-		}
-	}
-
-	return EngineUtils::combine(x_res, y_res);
 }
 
 void Game::LoadInitialScene(rapidjson::Document& out_gameConfig) {
@@ -198,7 +179,16 @@ std::string Game::PrintDialogue() {
 
 void Game::RunScene()
 {
-	std::string input;
+	Renderer renderer;
+
+	//get title, otherwise default ot ""
+	std::string title = "";
+	if (out_gameConfig.HasMember("game_title")) {
+		title = out_gameConfig["game_title"].GetString();
+	}
+	renderer.Initialize(title);
+
+	/*std::string input;
 	do {
 		//update player position based on the movement
 		if (!firstRun) currentScene->MoveActors();
@@ -206,7 +196,7 @@ void Game::RunScene()
 
 		currentScene->MovePlayer(input);
 
-		currentScene->RenderScene();
+		//currentScene->RenderScene();
 
 		// check + print nearby & contact dialogue & eng game if needed
 		std::string endgame = PrintDialogue();
@@ -260,7 +250,7 @@ void Game::RunScene()
 			ss.clear();
 			ss.str("");
 		}
-	} while (std::cin >> input && input != "quit");
+	} while (std::cin >> input && input != "quit");*/
 }
 
 //PRIVATE HELPER
