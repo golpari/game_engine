@@ -60,6 +60,8 @@ void Renderer::StartFrame(SDL_Event& nextEvent, int& index)
             index++;
         }
     } 
+
+    SDL_RenderClear(renderer);
 }
 
 void Renderer::EndFrame()

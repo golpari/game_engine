@@ -211,11 +211,11 @@ void Game::RunScene()
 			// start frame and process input
 			renderer.StartFrame(nextEvent, index);
 
-			// show intro image as directed
-			if (introImages.size() > index)
-				renderer.RenderImage(introImages[index]);
-			else
-				SDL_RenderClear(renderer.renderer);
+			//// show intro image as directed
+			//if (introImages.size() > index)
+			//	renderer.RenderImage(introImages[index]);
+			//else
+			//	SDL_RenderClear(renderer.renderer);
 
 			renderer.EndFrame();
 		}
