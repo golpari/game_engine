@@ -73,26 +73,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)ThirdParty;$(ProjectDir)ThirdParty\glm-0.9.9.8;$(ProjectDir)ThirdParty\rapidjson</IncludePath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CustomBuildAfterTargets>
-    </CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,10 +107,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>
-      </Outputs>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -138,10 +132,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>
-      </Outputs>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,10 +153,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>
-      </Outputs>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -188,10 +178,8 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
-      <Command>
-      </Command>
-      <Outputs>
-      </Outputs>
+      <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"</Command>
+      <Outputs>$(TargetDir)</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
