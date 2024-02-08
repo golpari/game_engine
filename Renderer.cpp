@@ -45,6 +45,7 @@ void Renderer::Initialize(const std::string& title)
         SDL_Event nextEvent;
         while (Helper::SDL_PollEvent498(&nextEvent)) {
             if (nextEvent.type == SDL_QUIT) {
+                Helper::SDL_RenderPresent498(renderer);
                 exit(0);
             }
         }

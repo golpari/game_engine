@@ -186,10 +186,12 @@ void Game::RunScene()
 	if (out_gameConfig.HasMember("game_title")) {
 		title = out_gameConfig["game_title"].GetString();
 	}
-	renderer.Initialize(title);
+	
 
-	/*std::string input;
+	std::string input;
 	do {
+		renderer.Initialize(title);
+		/*
 		//update player position based on the movement
 		if (!firstRun) currentScene->MoveActors();
 		firstRun = false;
@@ -249,8 +251,8 @@ void Game::RunScene()
 			std::cout << ss.str();
 			ss.clear();
 			ss.str("");
-		}
-	} while (std::cin >> input && input != "quit");*/
+		}*/
+	} while (std::cin >> input && input != "quit");
 }
 
 //PRIVATE HELPER
