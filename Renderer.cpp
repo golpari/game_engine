@@ -94,8 +94,6 @@ void Renderer::RenderImage(const std::string& imageName)
         &pivot_point,
         SDL_FLIP_NONE
     );
-
-    Helper::SDL_RenderPresent498(renderer);
 }
 
 uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {
