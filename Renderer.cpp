@@ -5,7 +5,7 @@
 void Renderer::Initialize(const std::string& title)
 {
     // FIRST THING, read in rendering json 
-    ProcessRenderingConfig();
+    bool processed = ProcessRenderingConfig();
 
     // tell SDL what you want to do 
     SDL_Init(SDL_INIT_VIDEO);
@@ -13,7 +13,7 @@ void Renderer::Initialize(const std::string& title)
     // default values
     int winWidth = 640;
     int winHeight = 360;
-    EngineUtils::split(GetCameraResolution(), winWidth, winHeight);
+    EngineUtils::split(GetCameraResolution(processed), winWidth, winHeight);
 
     // Create the window
     SDL_Window* window = SDL_CreateWindow(
@@ -28,13 +28,16 @@ void Renderer::Initialize(const std::string& title)
     int r = 255;
     int g = 255;
     int b = 255;
-    if (out_renderingConfig.HasMember("clear_color_r") && out_renderingConfig["clear_color_r"] != ""
-        && out_renderingConfig.HasMember("clear_color_g") && out_renderingConfig["clear_color_g"] != ""
-        && out_renderingConfig.HasMember("clear_color_b") && out_renderingConfig["clear_color_b"] != "") {
-        r = out_renderingConfig["clear_color_r"].GetInt();
-        g = out_renderingConfig["clear_color_g"].GetInt();
-        b = out_renderingConfig["clear_color_b"].GetInt();
+    if (processed) {
+        if (out_renderingConfig.HasMember("clear_color_r") && out_renderingConfig["clear_color_r"] != ""
+            && out_renderingConfig.HasMember("clear_color_g") && out_renderingConfig["clear_color_g"] != ""
+            && out_renderingConfig.HasMember("clear_color_b") && out_renderingConfig["clear_color_b"] != "") {
+            r = out_renderingConfig["clear_color_r"].GetInt();
+            g = out_renderingConfig["clear_color_g"].GetInt();
+            b = out_renderingConfig["clear_color_b"].GetInt();
+        }
     }
+    
     
     SDL_Renderer* renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     while (true) {
@@ -58,24 +61,27 @@ void Renderer::Initialize(const std::string& title)
     
 }
 
-uint64_t Renderer::GetCameraResolution() {
+uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {
     //default values (diff for HW5, used to be 9x13)
     int x_res = 640;
     int y_res = 360;
 
-    if (out_renderingConfig.HasMember("x_resolution")) {
-        x_res = out_renderingConfig["x_resolution"].GetUint();
-    }
-    if (out_renderingConfig.HasMember("y_resolution")) {
-        y_res = out_renderingConfig["y_resolution"].GetUint();
+    if (renderConfigProcessed) {
+        if (out_renderingConfig.HasMember("x_resolution")) {
+            x_res = out_renderingConfig["x_resolution"].GetUint();
+        }
+        if (out_renderingConfig.HasMember("y_resolution")) {
+            y_res = out_renderingConfig["y_resolution"].GetUint();
+        }
     }
 
     return EngineUtils::combine(x_res, y_res);
 }
 
-void Renderer::ProcessRenderingConfig() {
+bool Renderer::ProcessRenderingConfig() {
     if (EngineUtils::CheckPathExists("resources/rendering.config", false)) {
         EngineUtils::ReadJsonFile("resources/rendering.config", out_renderingConfig);
-
+        return true;
     }
+    return false;
 }

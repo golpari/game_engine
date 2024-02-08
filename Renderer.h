@@ -30,8 +30,8 @@ public:
     void RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score);
 
 private:
-    uint64_t GetCameraResolution();
-    void ProcessRenderingConfig();
+    uint64_t GetCameraResolution(bool renderConfigProcessed);
+    bool ProcessRenderingConfig();
 };
 
 #endif
