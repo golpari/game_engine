@@ -21,6 +21,7 @@ std::unordered_map<std::string, ActorTemplate*> templates; // keyed by template 
 
 int main(int argc, char* argv[]) {
     Game gameManager;
+    std::cout << std::filesystem::current_path();
     gameManager.GameStart();
     gameManager.RunScene();
     return 0;

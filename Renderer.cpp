@@ -28,13 +28,11 @@ void Renderer::Initialize(const std::string& title)
     int r = 255;
     int g = 255;
     int b = 255;
-    if (out_renderingConfig.HasMember("clear_color_r") && out_renderingConfig["clear_color_r"] != "") {
+    if (out_renderingConfig.HasMember("clear_color_r") && out_renderingConfig["clear_color_r"] != ""
+        && out_renderingConfig.HasMember("clear_color_g") && out_renderingConfig["clear_color_g"] != ""
+        && out_renderingConfig.HasMember("clear_color_b") && out_renderingConfig["clear_color_b"] != "") {
         r = out_renderingConfig["clear_color_r"].GetInt();
-    }
-    if (out_renderingConfig.HasMember("clear_color_g") && out_renderingConfig["clear_color_g"] != "") {
         g = out_renderingConfig["clear_color_g"].GetInt();
-    }
-    if (out_renderingConfig.HasMember("clear_color_b") && out_renderingConfig["clear_color_b"] != "") {
         b = out_renderingConfig["clear_color_b"].GetInt();
     }
     
