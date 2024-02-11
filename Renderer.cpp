@@ -40,6 +40,7 @@ void Renderer::Initialize(const std::string& title)
 
 void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
 {
+    // Check Events
     SDL_Event nextEvent;
     while (Helper::SDL_PollEvent498(&nextEvent)) {
         if (nextEvent.type == SDL_QUIT) {
@@ -68,12 +69,6 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
 
     SDL_SetRenderDrawColor(renderer, r, g, b, 255);
     //SDL_RenderClear(renderer);
-
-    // show intro image as directed
-    if (introImages.size() > index)
-        RenderImage(introImages[index]);
-    else
-        SDL_RenderClear(renderer);
 }
 
 void Renderer::EndFrame()
