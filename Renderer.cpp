@@ -110,6 +110,11 @@ void Renderer::RenderImage(const std::string& imageName)
     );
 }
 
+void Renderer::RenderText(TTF_Font* font, const std::string& text, int x, int y)
+{
+
+}
+
 uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {
     //default values (diff for HW5, used to be 9x13)
     int x_res = 640;

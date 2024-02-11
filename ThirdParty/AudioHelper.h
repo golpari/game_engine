@@ -7,7 +7,7 @@
 /* WARNING : You may need to adjust the following include paths if your headers / file structures is different. */
 /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
 /* https://bit.ly/3OClfHc */
-#include "SDL_mixer/SDL_mixer.h"
+#include "SDL_mixer.h"
 #include "Helper.h"
 
 class AudioHelper {

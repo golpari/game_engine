@@ -24,6 +24,7 @@ public:
 	rapidjson::Document out_gameConfig;
 
 	std::vector<std::string> introImages;
+	std::vector<std::string> introTexts;
 
 	Scene* currentScene = nullptr;
 

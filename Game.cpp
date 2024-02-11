@@ -16,7 +16,10 @@ void Game::GameStart() {
 }
 
 void Game::ProcessIntro() {
-	if (out_gameConfig.HasMember("intro_image") && out_gameConfig["intro_image"].IsArray()) {
+	//process intro images
+	if (out_gameConfig.HasMember("intro_image") 
+		&& out_gameConfig["intro_image"].IsArray() 
+		&& !out_gameConfig["intro_image"].GetArray().Empty()) {
 		introImages.reserve(out_gameConfig["intro_image"].GetArray().Size());
 		for (const auto& img : out_gameConfig["intro_image"].GetArray()) {
 			std::string imageName = img.GetString();
@@ -26,7 +29,33 @@ void Game::ProcessIntro() {
 				exit(0);
 			}
 		}
+
+		// only process intro text if intro image is defined
+		if (out_gameConfig.HasMember("intro_text") && out_gameConfig["intro_text"].IsArray()) {
+			introTexts.reserve(out_gameConfig["intro_text"].GetArray().Size());
+			for (const auto& txt : out_gameConfig["intro_text"].GetArray()) {
+				std::string textName = txt.GetString();
+				introTexts.push_back(textName);
+			}
+
+			// only error font spec if intro text specified but font not
+			if (!out_gameConfig.HasMember("font")) {
+				std::cout << "error: text render failed.No font configured";
+				exit(0);
+			}
+		}
 	}
+
+	// check font existence if it is specified
+	if (out_gameConfig.HasMember("font")) {
+		std::string fontName = out_gameConfig["font"].GetString();
+		if (!EngineUtils::CheckPathExists("resources/fonts/" + fontName + ".ttf", false)) {
+			std::cout << "error: font " << fontName << " missing";
+			exit(0);
+		}
+	}
+
+	
 }
 
 std::string Game::GameEnd(bool good) {
