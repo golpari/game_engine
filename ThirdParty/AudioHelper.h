@@ -2,23 +2,39 @@
 #define AUDIOHELPER_H
 
 #include <iostream>
+#include <filesystem>
 
-#include "SDL_mixer.h"
+/* WARNING : You may need to adjust the following include paths if your headers / file structures is different. */
+/* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
+/* https://bit.ly/3OClfHc */
+#include "SDL_mixer/SDL_mixer.h"
 #include "Helper.h"
 
 class AudioHelper {
 public:
+	static inline Mix_Chunk* Mix_LoadWAV498(const char* file)
+	{
+		if (!IsAutograderMode())
+			return Mix_LoadWAV(file);
+		else
+		{
+			if (std::filesystem::exists(file))
+				return &autograder_dummy_sound;
+			else
+				return nullptr;
+		}
+	}
+
 	static inline int Mix_PlayChannel498(int channel, Mix_Chunk* chunk, int loops)
 	{
-		if (chunk == nullptr)
-			return -1;
-
 		std::cout << "(Mix_PlayChannel498(" << channel << ",?," << loops << ") called on frame " << Helper::GetFrameNumber() << ")" << std::endl;
 
 		if (!IsAutograderMode())
 			return Mix_PlayChannel(channel, chunk, loops);
 		else
+		{
 			return channel;
+		}
 	}
 
 	static inline int Mix_OpenAudio498(int frequency, Uint16 format, int channels, int chunksize)
@@ -79,6 +95,8 @@ public:
 	}
 
 private:
+	static inline Mix_Chunk autograder_dummy_sound;
+
 	/* It's best for everyone if the autograder doesn't actually play any audio (it will still check that you try though). */
 	/* Imagine poor Professor Kloosterman hearing the autograder all day as it spams various sounds in my office. */
 	static inline bool IsAutograderMode() {
@@ -107,6 +125,7 @@ private:
 };
 
 /* Prevent students from using the default Mix-related functions. */
+#define Mix_LoadWAV Please_use_Mix_LoadWAV498_instead
 #define Mix_OpenAudio Please_use_Mix_OpenAudio498_instead
 #define Mix_AllocateChannels Please_use_Mix_AllocateChannels498_instead
 #define Mix_PlayChannel Please_use_Mix_PlayChannel498_instead
