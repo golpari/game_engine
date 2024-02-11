@@ -14,6 +14,7 @@
 #include "rapidjson/document.h"
 #include "Scene.h"
 #include "Renderer.h"
+#include "SDL_ttf.h"
 
 class Scene;
 
@@ -25,6 +26,7 @@ public:
 
 	std::vector<std::string> introImages;
 	std::vector<std::string> introTexts;
+	TTF_Font* font;
 
 	Scene* currentScene = nullptr;
 

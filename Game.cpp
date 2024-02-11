@@ -53,6 +53,10 @@ void Game::ProcessIntro() {
 			std::cout << "error: font " << fontName << " missing";
 			exit(0);
 		}
+		else {
+			TTF_Init();
+			font = TTF_OpenFont(("resources/fonts/" + fontName + ".ttf").c_str(), 16);
+		}
 	}
 
 	
@@ -241,8 +245,26 @@ void Game::RunScene()
 		// DO STUFF!!! 
 		// 
 		// show intro image as directed
-		if (introImages.size() > index)
+		int* w = 0;
+		int* h = 0;
+		if (introImages.size() > index && introTexts.size() > index) {
 			renderer.RenderImage(introImages[index]);
+			TTF_SizeText(font, introTexts[index].c_str(), w, h);
+			renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, *w, *h);
+		}	
+		else if (introTexts.size() > index && !introImages.empty()) {
+			renderer.RenderImage(introImages[introImages.size() - 1]);
+			TTF_SizeText(font, introTexts[index].c_str(), w, h);
+			renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, *w, *h);
+		}
+		else if (introImages.size() > index && !introTexts.empty()) {
+			renderer.RenderImage(introImages[index]);
+			TTF_SizeText(font, introTexts[introTexts.size() - 1].c_str(), w, h);
+			renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, *w, *h);
+		}
+		else if (introImages.size() > index && introTexts.empty()) {
+			renderer.RenderImage(introImages[index]);
+		}
 		else
 			SDL_RenderClear(renderer.renderer);
 		

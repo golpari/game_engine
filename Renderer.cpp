@@ -105,9 +105,29 @@ void Renderer::RenderImage(const std::string& imageName)
     );
 }
 
-void Renderer::RenderText(TTF_Font* font, const std::string& text, int x, int y)
+void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int x, int y)
 {
+    
+    //  All text will render at(25, height - 50) where  height is the window height.
 
+    // Render the text to a surface
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), font_color);
+
+    // Create a texture from the surface
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    // Set the rendering space and render to screen
+    SDL_Rect renderQuad = { 25, winHeight - 50, surface->w, surface->h };
+    SDL_Point pivot_point = { x, y };
+    SDL_RenderCopyEx(
+        renderer,
+        texture,
+        NULL,
+        &renderQuad,
+        0, // rotation angle
+        &pivot_point,
+        SDL_FLIP_NONE
+    );
 }
 
 uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {
