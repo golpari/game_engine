@@ -40,7 +40,7 @@ void Game::ProcessIntro() {
 
 			// only error font spec if intro text specified but font not
 			if (!out_gameConfig.HasMember("font")) {
-				std::cout << "error: text render failed.No font configured";
+				std::cout << "error: text render failed. No font configured";
 				exit(0);
 			}
 		}
