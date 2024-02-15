@@ -15,6 +15,7 @@
 #include "Scene.h"
 #include "Renderer.h"
 #include "SDL_ttf.h"
+#include "AudioHelper.h"
 
 class Scene;
 
@@ -56,6 +57,8 @@ public:
 	void RunScene();
 
 private:
+	bool introAudioExists = false;
+
 	void Deallocate();
 };
 #endif

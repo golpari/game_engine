@@ -1,2 +1,2 @@
-# A Miniature Game Engine
+# A Miniature Game Engine 
 by Golpari Abari

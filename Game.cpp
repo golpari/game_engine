@@ -59,6 +59,32 @@ void Game::ProcessIntro() {
 		}
 	}
 
+	// check / process audio intro
+	if (out_gameConfig.HasMember("intro_bgm")) {
+		std::string audioName = out_gameConfig["intro_bgm"].GetString();
+		// if it doesnt exist as a wav file
+		if (!EngineUtils::CheckPathExists("resources/audio/" + audioName + ".wav", false)) {
+			// AND it doesnt exist as a ogg file then error
+			if (!EngineUtils::CheckPathExists("resources/audio/" + audioName + ".ogg", false)) {
+				std::cout << "error: failed to play audio clip " << audioName;
+				exit(0);
+			}
+			// if it DOES exist as an ogg, then play it as an ogg
+			else {
+				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
+				AudioHelper::Mix_AllocateChannels498(0);
+				introAudioExists = true;
+			}
+		}
+		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
+		else {
+			AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
+			AudioHelper::Mix_AllocateChannels498(0);
+			introAudioExists = true;
+		}
+
+	}
+
 	
 }
 
@@ -265,10 +291,13 @@ void Game::RunScene()
 		else if (introImages.size() > index && introTexts.empty()) {
 			renderer.RenderImage(introImages[index]);
 		}
+		// if done with intro, show plain screen and end intro audio
 		else
+		{
 			SDL_RenderClear(renderer.renderer);
-		
-		
+			if (introAudioExists) AudioHelper::Mix_HaltChannel498(0);
+		}
+
 		renderer.EndFrame();
 	}
 	/*std::string input;
