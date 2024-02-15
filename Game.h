@@ -18,6 +18,7 @@
 #include "AudioHelper.h"
 
 class Scene;
+class Renderer;
 
 class Game {	
 
@@ -44,6 +45,8 @@ public:
 
 	void ProcessIntro();
 
+	void PlayGameplayAudio();
+
 	std::string GameEnd(bool good);
 
 	void LoadInitialScene(rapidjson::Document& out_gameConfig);
@@ -60,5 +63,7 @@ private:
 	bool introAudioExists = false;
 
 	void Deallocate();
+
+	void RunIntro(int& index, Renderer& renderer, bool& playAudio);
 };
 #endif

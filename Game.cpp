@@ -71,21 +71,58 @@ void Game::ProcessIntro() {
 			}
 			// if it DOES exist as an ogg, then play it as an ogg
 			else {
-				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
+				//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
 				AudioHelper::Mix_AllocateChannels498(0);
+				AudioHelper::Mix_PlayChannel498(0,
+					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
+					INFINITY);
 				introAudioExists = true;
 			}
 		}
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
 		else {
-			AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
+			//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
 			AudioHelper::Mix_AllocateChannels498(0);
+			AudioHelper::Mix_PlayChannel498(0,
+				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
+				INFINITY);
 			introAudioExists = true;
 		}
 
 	}
 
 	
+}
+
+void Game::PlayGameplayAudio() {
+	// check for and process the audio
+	if (out_gameConfig.HasMember("gameplay_audio")) {
+		std::string audioName = out_gameConfig["gameplay_audio"].GetString();
+		// if it doesnt exist as a wav file
+		if (!EngineUtils::CheckPathExists("resources/audio/" + audioName + ".wav", false)) {
+			// AND it doesnt exist as a ogg file then error
+			if (!EngineUtils::CheckPathExists("resources/audio/" + audioName + ".ogg", false)) {
+				std::cout << "error: failed to play audio clip " << audioName;
+				exit(0);
+			}
+			// if it DOES exist as an ogg, then play it as an ogg
+			else {
+				//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
+				AudioHelper::Mix_AllocateChannels498(0);
+				AudioHelper::Mix_PlayChannel498(0,
+					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
+					INFINITY);
+			}
+		}
+		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
+		else {
+			//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
+			AudioHelper::Mix_AllocateChannels498(0);
+			AudioHelper::Mix_PlayChannel498(0,
+				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
+				INFINITY);
+		}
+	}
 }
 
 std::string Game::GameEnd(bool good) {
@@ -261,6 +298,7 @@ void Game::RunScene()
 	}
 	ProcessIntro();
 	int index = 0;
+	bool playAudio = false;
 
 	renderer.Initialize(title);
 	while (true) {
@@ -271,31 +309,11 @@ void Game::RunScene()
 		// DO STUFF!!! 
 		// 
 		// show intro image as directed
-		int w = 0;
-		int h = 0;
-		if (introImages.size() > index && introTexts.size() > index) {
-			renderer.RenderImage(introImages[index]);
-			TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-			renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
-		}	
-		else if (introTexts.size() > index && !introImages.empty()) {
-			renderer.RenderImage(introImages[introImages.size() - 1]);
-			TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-			renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
-		}
-		else if (introImages.size() > index && !introTexts.empty()) {
-			renderer.RenderImage(introImages[index]);
-			TTF_SizeText(font, introTexts[introTexts.size() - 1].c_str(), &w, &h);
-			renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
-		}
-		else if (introImages.size() > index && introTexts.empty()) {
-			renderer.RenderImage(introImages[index]);
-		}
-		// if done with intro, show plain screen and end intro audio
-		else
-		{
-			SDL_RenderClear(renderer.renderer);
-			if (introAudioExists) AudioHelper::Mix_HaltChannel498(0);
+		RunIntro(index, renderer, playAudio);
+
+		if (playAudio) {
+			PlayGameplayAudio();
+			playAudio = false;
 		}
 
 		renderer.EndFrame();
@@ -387,4 +405,34 @@ void Game::Deallocate() {
 	// Deallocate memory pointed to by the 'player' pointer
 	//delete currentScene->player; // Deallocate memory for the player
 	currentScene->player = nullptr;
+}
+
+void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
+	int w = 0;
+	int h = 0;
+	if (introImages.size() > index && introTexts.size() > index) {
+		renderer.RenderImage(introImages[index]);
+		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+	}
+	else if (introTexts.size() > index && !introImages.empty()) {
+		renderer.RenderImage(introImages[introImages.size() - 1]);
+		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+	}
+	else if (introImages.size() > index && !introTexts.empty()) {
+		renderer.RenderImage(introImages[index]);
+		TTF_SizeText(font, introTexts[introTexts.size() - 1].c_str(), &w, &h);
+		renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+	}
+	else if (introImages.size() > index && introTexts.empty()) {
+		renderer.RenderImage(introImages[index]);
+	}
+	// if done with intro, show plain screen and end intro audio
+	else
+	{
+		SDL_RenderClear(renderer.renderer);
+		if (introAudioExists) AudioHelper::Mix_HaltChannel498(0);
+		playAudio = true;
+	}
 }

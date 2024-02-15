@@ -10,6 +10,7 @@ extern int guuid;
 class Actor
 {
 public:
+	// TODO: comment this out
 	std::string actor_name;
 	int actorID;
 	uint64_t position;
@@ -19,6 +20,13 @@ public:
 	std::string nearby_dialogue;
 	std::string contact_dialogue;
 	bool scoredUpped;
+
+	std::string view_image = "";
+	glm::vec2 scale = { 1.0, 1.0 }; // TODO: use std::abs() when importing new scales
+	// TODO: negative scale shld cause actor to 'flip' -- use SDL_RendererFlip
+	double rotation = 0.0;
+	glm::vec2 pivot_offset; // default is actor_view.w * 0.5 (double) and actor_view.h * 0.5 (double)
+	// TODO: use std::round() to calculate pivot. Pivot point is the top left of image PLUS offset
 
 	Actor(std::string actor_name_in, char view_in, uint64_t position_in, glm::ivec2 initial_velocity_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in)
