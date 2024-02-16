@@ -76,7 +76,7 @@ void Game::ProcessIntro() {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
 					-1);
-				introAudioExists = true;
+				introAudioPlaying = true;
 			}
 		}
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
@@ -86,7 +86,7 @@ void Game::ProcessIntro() {
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
 				-1);
-			introAudioExists = true;
+			introAudioPlaying = true;
 		}
 
 	}
@@ -432,7 +432,10 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	else
 	{
 		SDL_RenderClear(renderer.renderer);
-		if (introAudioExists) AudioHelper::Mix_HaltChannel498(0);
+		if (introAudioPlaying) {
+			AudioHelper::Mix_HaltChannel498(0);
+			introAudioPlaying = false;
+		}
 		playAudio = true;
 	}
 }

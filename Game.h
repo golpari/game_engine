@@ -60,7 +60,7 @@ public:
 	void RunScene();
 
 private:
-	bool introAudioExists = false;
+	bool introAudioPlaying = false;
 
 	void Deallocate();
 
