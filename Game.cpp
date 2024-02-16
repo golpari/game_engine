@@ -75,7 +75,7 @@ void Game::ProcessIntro() {
 				//AudioHelper::Mix_AllocateChannels498(0);
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
-					INFINITY);
+					-1);
 				introAudioExists = true;
 			}
 		}
@@ -85,7 +85,7 @@ void Game::ProcessIntro() {
 			//AudioHelper::Mix_AllocateChannels498(0);
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
-				INFINITY);
+				-1);
 			introAudioExists = true;
 		}
 
@@ -111,7 +111,7 @@ void Game::PlayGameplayAudio() {
 				//AudioHelper::Mix_AllocateChannels498(0);
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
-					INFINITY);
+					-1);
 			}
 		}
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
@@ -120,7 +120,7 @@ void Game::PlayGameplayAudio() {
 			//AudioHelper::Mix_AllocateChannels498(0);
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
-				INFINITY);
+				-1);
 		}
 	}
 }
