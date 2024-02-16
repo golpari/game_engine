@@ -72,7 +72,7 @@ void Game::ProcessIntro() {
 			// if it DOES exist as an ogg, then play it as an ogg
 			else {
 				//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
-				AudioHelper::Mix_AllocateChannels498(0);
+				//AudioHelper::Mix_AllocateChannels498(0);
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
 					INFINITY);
@@ -82,7 +82,7 @@ void Game::ProcessIntro() {
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
 		else {
 			//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
-			AudioHelper::Mix_AllocateChannels498(0);
+			//AudioHelper::Mix_AllocateChannels498(0);
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
 				INFINITY);
@@ -108,7 +108,7 @@ void Game::PlayGameplayAudio() {
 			// if it DOES exist as an ogg, then play it as an ogg
 			else {
 				//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str());
-				AudioHelper::Mix_AllocateChannels498(0);
+				//AudioHelper::Mix_AllocateChannels498(0);
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
 					INFINITY);
@@ -117,7 +117,7 @@ void Game::PlayGameplayAudio() {
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
 		else {
 			//AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str());
-			AudioHelper::Mix_AllocateChannels498(0);
+			//AudioHelper::Mix_AllocateChannels498(0);
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
 				INFINITY);
