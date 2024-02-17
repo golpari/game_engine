@@ -1,6 +1,7 @@
 #include "Renderer.h"
 
 const int PIXEL_SCALE = 100;
+SDL_RendererFlip GetFlipType(const Actor& actor);
 
 // draw window
 void Renderer::Initialize(const std::string& title)
@@ -170,11 +171,23 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         float renderX = static_cast<int>(centerX + relativeXPos - pivotX);
         float renderY = static_cast<int>(centerY + relativeYPos - pivotY);
 
+        // Calculate the scaling factors
+        float scaleX = std::abs(actor.scale.x);
+        float scaleY = std::abs(actor.scale.y);
+
+        // Calculate the new width and height after applying the scaling factors
+        int scaledW = w * scaleX;
+        int scaledH = h * scaleY;
+
+        // Calculate the change in width and height to adjust the actor's position accordingly
+        int deltaW = scaledW - w;
+        int deltaH = scaledH - h;
+
         // Calculate the center point of the texture for rotation
-        SDL_Point pivot_point = { static_cast<int>(w * 0.5), static_cast<int>(h * 0.5) };
+        SDL_Point pivot_point = { static_cast<int>(w * 0.5), static_cast<int>(h * 0.5)};
 
         // Create the destination rectangle at the position where the actor should be drawn
-        SDL_Rect destination_rect = { renderX, renderY, static_cast<int>(w * std::abs(actor.scale.x)), static_cast<int>(h * std::abs(actor.scale.y)) };
+        SDL_Rect destination_rect = { renderX - deltaW, renderY - deltaH, static_cast<int>(w * std::abs(actor.scale.x)), static_cast<int>(h * std::abs(actor.scale.y)) };
 
         // Render the texture with the specified rotation and pivot point
         SDL_RenderCopyEx(
@@ -184,7 +197,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
             &destination_rect,
             actor.rotation, // rotation angle
             &pivot_point,
-            SDL_FLIP_NONE
+            GetFlipType(actor)
         );
     }
 }
@@ -210,4 +223,22 @@ bool Renderer::ProcessRenderingConfig() {
         return true;
     }
     return false;
+}
+
+//helper I wrote with help from Chat
+/* "This function starts with SDL_FLIP_NONE and uses bitwise OR (|) 
+to add SDL_FLIP_HORIZONTAL or SDL_FLIP_VERTICAL to the flip variable 
+based on the conditions of actor.scale.x and actor.scale.y. 
+If both scales are negative, both flip flags will be set in the flip 
+variable, which SDL's rendering functions will interpret as flipping 
+both horizontally and vertically." -- ChatGPT explanation */
+SDL_RendererFlip GetFlipType(const Actor& actor) {
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+
+    if (actor.scale.x < 0)
+        flip = (SDL_RendererFlip)(flip | SDL_FLIP_HORIZONTAL);
+    if (actor.scale.y < 0)
+        flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
+
+    return flip;
 }
