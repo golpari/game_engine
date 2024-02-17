@@ -159,8 +159,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y);
+        float relativeXPos = std::round(actor.position.x - playerPosition.x) * PIXEL_SCALE;
+        float relativeYPos = std::round(actor.position.y - playerPosition.y) * PIXEL_SCALE;
 
         // Convert this position so that an object at the playerPosition would be at the center of the screen
         float renderX = static_cast<int>(centerX + relativeXPos - pivotX);
