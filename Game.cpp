@@ -313,7 +313,8 @@ void Game::RunScene()
 		// DO STUFF!!! 
 		// 
 		// show intro image as directed
-		RunIntro(index, renderer, playAudio);
+		if (!playScene)
+			RunIntro(index, renderer, playAudio);
 
 		if (playAudio) {
 			PlayGameplayAudio();
