@@ -176,15 +176,15 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         float scaleY = std::abs(actor.scale.y);
 
         // Calculate the new width and height after applying the scaling factors
-        int scaledW = w * scaleX;
-        int scaledH = h * scaleY;
+        int scaledW = std::round(w * scaleX);
+        int scaledH = std::round(h * scaleY);
 
         // Calculate the change in width and height to adjust the actor's position accordingly
         int deltaW = scaledW - w;
         int deltaH = scaledH - h;
 
         // Calculate the center point of the texture for rotation
-        SDL_Point pivot_point = { static_cast<int>(w * 0.5), static_cast<int>(h * 0.5)};
+        SDL_Point pivot_point = { static_cast<int>(w * 0.5) - deltaW, static_cast<int>(h * 0.5) - deltaH};
 
         // Create the destination rectangle at the position where the actor should be drawn
         SDL_Rect destination_rect = { renderX - deltaW, renderY - deltaH, static_cast<int>(w * std::abs(actor.scale.x)), static_cast<int>(h * std::abs(actor.scale.y)) };
