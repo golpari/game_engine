@@ -422,6 +422,10 @@ void Game::Deallocate() {
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
+	if (introImages.empty()) {
+		playAudio = true;
+		return;
+	}
 	int w = 0;
 	int h = 0;
 	if (introImages.size() > index && introTexts.size() > index) {
