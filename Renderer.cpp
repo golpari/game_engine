@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+const int PIXEL_SCALE = 100;
 
 // draw window
 void Renderer::Initialize(const std::string& title)
@@ -148,18 +149,6 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         int centerX = std::round(winWidth / 2);
         int centerY = std::round(winHeight / 2);
 
-        // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        glm::vec2 relativePosition = actor.position - playerPosition;
-
-        // Convert this position so that an object at the playerPosition would be at the center of the screen
-        int renderX = centerX + static_cast<int>(relativePosition.x);
-        int renderY = centerY + static_cast<int>(relativePosition.y);
-
-        // Adjust for the actor's width and height to center the actor's texture on its position
-        renderX -= std::round(w / 2);
-        renderY -= std::round(h / 2);
-
-        SDL_Rect destination_rect = { renderX, renderY, w, h };
         double pivotX = std::round(w * 0.5);
         double pivotY = std::round(h * 0.5);
         if (actor.pivot_offsetX.has_value()) {
@@ -168,13 +157,24 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         if (actor.pivot_offsetY.has_value()) {
             pivotY = actor.pivot_offsetY.value();
         }
-        SDL_Point pivot_point = { pivotX, pivotY };
+
+        // Calculate the actor's position relative to the playerPosition, such that the player is always centered
+        float relativeXPos = std::round(actor.position.x - playerPosition.x);
+        float relativeYPos = std::round(actor.position.y - playerPosition.y);
+
+        // Convert this position so that an object at the playerPosition would be at the center of the screen
+        float renderX = static_cast<int>(centerX + relativeXPos - pivotX);
+        float renderY = static_cast<int>(centerY + relativeYPos - pivotY);
+
+        SDL_Rect destination_rect = { renderX, renderY, static_cast<int>(w * actor.scale.x), static_cast<int>(h * actor.scale.y) };
+        
+        SDL_Point pivot_point = {renderX + pivotX, renderY + pivotY };
         SDL_RenderCopyEx(
             renderer,
             img,
             NULL,
             &destination_rect,
-            0, // rotation angle
+            actor.rotation, // rotation angle
             &pivot_point,
             SDL_FLIP_NONE
         );
