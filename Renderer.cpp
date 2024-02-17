@@ -145,8 +145,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 
         // Assuming winWidth and winHeight are the dimensions of your window, and are defined elsewhere in your Renderer class
         // Calculate the center of the window
-        int centerX = winWidth / 2;
-        int centerY = winHeight / 2;
+        int centerX = std::round(winWidth / 2);
+        int centerY = std::round(winHeight / 2);
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
         glm::vec2 relativePosition = actor.position - playerPosition;
@@ -156,12 +156,28 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         int renderY = centerY + static_cast<int>(relativePosition.y);
 
         // Adjust for the actor's width and height to center the actor's texture on its position
-        renderX -= w / 2;
-        renderY -= h / 2;
+        renderX -= std::round(w / 2);
+        renderY -= std::round(h / 2);
 
         SDL_Rect destination_rect = { renderX, renderY, w, h };
-        // No need for a pivot point if we're not rotating the actor
-        SDL_RenderCopy(renderer, img, NULL, &destination_rect);
+        double pivotX = std::round(w * 0.5);
+        double pivotY = std::round(h * 0.5);
+        if (actor.pivot_offsetX.has_value()) {
+            pivotX = actor.pivot_offsetX.value();
+        }
+        if (actor.pivot_offsetY.has_value()) {
+            pivotY = actor.pivot_offsetY.value();
+        }
+        SDL_Point pivot_point = { pivotX, pivotY };
+        SDL_RenderCopyEx(
+            renderer,
+            img,
+            NULL,
+            &destination_rect,
+            0, // rotation angle
+            &pivot_point,
+            SDL_FLIP_NONE
+        );
     }
 }
 

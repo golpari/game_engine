@@ -27,9 +27,6 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	double scaleX = 1.0;
 	double scaleY = 1.0;
 	double rotation_deg = 0.0;
-	double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
-	double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
-
 
 	if (doc.HasMember("actors") && doc["actors"].IsArray()) {
 		actors.reserve(doc["actors"].GetArray().Size());
@@ -49,9 +46,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			scaleX = 1.0;
 			scaleY = 1.0;
 			rotation_deg = 0.0;
-			pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
-			pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
-
+			std::optional<double> pivot_offsetX; // actual default is actor_view.w * 0.5
+			std::optional<double> pivot_offsetY; // actual default is actor_view.h * 0.5
 
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("template")) {
@@ -102,9 +98,9 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			glm::vec2 position{ x, y };
 			glm::ivec2 velocity{ vel_x, vel_y };
 			glm::vec2 scale{ scaleX, scaleY };
-			glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
+			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
 			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scale, rotation_deg, pivot_offset));
+				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY));
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map
