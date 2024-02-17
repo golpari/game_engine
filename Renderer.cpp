@@ -170,9 +170,13 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         float renderX = static_cast<int>(centerX + relativeXPos - pivotX);
         float renderY = static_cast<int>(centerY + relativeYPos - pivotY);
 
-        SDL_Rect destination_rect = { renderX, renderY, static_cast<int>(w * actor.scale.x), static_cast<int>(h * actor.scale.y) };
-        
-        SDL_Point pivot_point = {renderX + pivotX, renderY + pivotY };
+        // Calculate the center point of the texture for rotation
+        SDL_Point pivot_point = { static_cast<int>(w * 0.5), static_cast<int>(h * 0.5) };
+
+        // Create the destination rectangle at the position where the actor should be drawn
+        SDL_Rect destination_rect = { renderX, renderY, static_cast<int>(w * std::abs(actor.scale.x)), static_cast<int>(h * std::abs(actor.scale.y)) };
+
+        // Render the texture with the specified rotation and pivot point
         SDL_RenderCopyEx(
             renderer,
             img,
