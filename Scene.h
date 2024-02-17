@@ -15,17 +15,28 @@
 
 extern std::unordered_map<std::string, ActorTemplate*> templates;
 
+class hashFunction {
+public:
+
+	// Use sum of lengths of first and last names
+	// as hash function.
+	size_t operator()(const glm::vec2& position) const
+	{
+		return EngineUtils::combine(position.x, position.y);
+	}
+};
+
 class Scene
 {
 public:
 
-	std::unordered_map<uint64_t, std::vector<Actor*>> actors_map;
+	std::unordered_map<glm::vec2, std::vector<Actor*>, hashFunction> actors_map;
 	std::vector<Actor*> actors;
 	Actor* player;
 
 	Scene() { player = nullptr; }
 
-	bool CheckBlocking(uint64_t& position);
+	bool CheckBlocking(glm::vec2& position);
 
 	void ProcessActors(rapidjson::Document& doc);
 
@@ -37,13 +48,14 @@ public:
 
 private:
 	// chat help
-	void addActorToMap(uint64_t& position, Actor* new_actor);
+	void addActorToMap(glm::vec2& position, Actor* new_actor);
 
 	// chat help
-	void updateActorPosition(Actor* actor, uint64_t newPos);
+	void updateActorPosition(Actor* actor, glm::vec2 newPos);
 
 	// chat help
-	uint64_t getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity);
+	glm::vec2 getNewPosFromVelocity(glm::vec2& position, glm::ivec2& velocity);
 };
+
 #endif
 

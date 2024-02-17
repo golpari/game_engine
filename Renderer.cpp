@@ -13,7 +13,7 @@ void Renderer::Initialize(const std::string& title)
     // default values
     winWidth = 640;
     winHeight = 360;
-    EngineUtils::split(GetCameraResolution(processed), winWidth, winHeight);
+    SetCameraResolution(processed);
 
     // Create the window
     SDL_Window* window = SDL_CreateWindow(
@@ -75,8 +75,6 @@ void Renderer::EndFrame()
 {
     // show render to user
     Helper::SDL_RenderPresent498(renderer);
-
-    SDL_Delay(1);
 }
 
 void Renderer::RenderImage(const std::string& imageName)
@@ -92,8 +90,8 @@ void Renderer::RenderImage(const std::string& imageName)
     // get img w and h
     int w, h;
     SDL_QueryTexture(img, NULL, NULL, &w, &h);
-    SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
-    SDL_Point pivot_point = { w * 0.5, h };
+    SDL_Rect destination_rect = { 0, 0, w, h };
+    SDL_Point pivot_point = { w * 0.5, h * 0.5 };
     SDL_RenderCopyEx(
         renderer,
         img,
@@ -130,21 +128,56 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
     );
 }
 
-uint64_t Renderer::GetCameraResolution(bool renderConfigProcessed) {
+void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
+{
+    if (!actor.view_image.empty()) {
+        SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.view_image + ".png").c_str());
+
+        /*if (img == nullptr) {
+            // Output the SDL error to the console or handle it as needed
+            std::cerr << "Unable to load texture. SDL_Error: " << SDL_GetError() << std::endl;
+            return; // Exit the function if the texture couldn't be loaded
+        }*/
+
+        // Get img width (w) and height (h)
+        int w, h;
+        SDL_QueryTexture(img, NULL, NULL, &w, &h);
+
+        // Assuming winWidth and winHeight are the dimensions of your window, and are defined elsewhere in your Renderer class
+        // Calculate the center of the window
+        int centerX = winWidth / 2;
+        int centerY = winHeight / 2;
+
+        // Calculate the actor's position relative to the playerPosition, such that the player is always centered
+        glm::vec2 relativePosition = actor.position - playerPosition;
+
+        // Convert this position so that an object at the playerPosition would be at the center of the screen
+        int renderX = centerX + static_cast<int>(relativePosition.x);
+        int renderY = centerY + static_cast<int>(relativePosition.y);
+
+        // Adjust for the actor's width and height to center the actor's texture on its position
+        renderX -= w / 2;
+        renderY -= h / 2;
+
+        SDL_Rect destination_rect = { renderX, renderY, w, h };
+        // No need for a pivot point if we're not rotating the actor
+        SDL_RenderCopy(renderer, img, NULL, &destination_rect);
+    }
+}
+
+uint64_t Renderer::SetCameraResolution(bool renderConfigProcessed) {
     //default values (diff for HW5, used to be 9x13)
-    int x_res = 640;
-    int y_res = 360;
 
     if (renderConfigProcessed) {
         if (out_renderingConfig.HasMember("x_resolution")) {
-            x_res = out_renderingConfig["x_resolution"].GetUint();
+            winWidth = out_renderingConfig["x_resolution"].GetUint();
         }
         if (out_renderingConfig.HasMember("y_resolution")) {
-            y_res = out_renderingConfig["y_resolution"].GetUint();
+            winHeight = out_renderingConfig["y_resolution"].GetUint();
         }
     }
 
-    return EngineUtils::combine(x_res, y_res);
+    return EngineUtils::combine(winWidth, winHeight);
 }
 
 bool Renderer::ProcessRenderingConfig() {

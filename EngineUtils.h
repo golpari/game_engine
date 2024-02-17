@@ -71,9 +71,16 @@ public:
 			std::string nearby_dialogue = "";
 			std::string contact_dialogue = "";
 
+			std::string view_image = "";
+			double scaleX = 1.0;
+			double scaleY = 1.0;
+			double rotation_deg = 0.0;
+			double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
+			double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
+
 			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
-			if (out_template.HasMember("x")) { x = out_template["x"].GetInt(); }
-			if (out_template.HasMember("y")) { y = out_template["y"].GetInt(); }
+			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetInt(); }
+			if (out_template.HasMember("transform_position_y")) { y = out_template["transform_position_y"].GetInt(); }
 			if (out_template.HasMember("vel_x")) { vel_x = out_template["vel_x"].GetInt(); }
 			if (out_template.HasMember("vel_y")) { vel_y = out_template["vel_y"].GetInt(); }
 			if (out_template.HasMember("view")) { view = *out_template["view"].GetString(); }
@@ -81,8 +88,16 @@ public:
 			if (out_template.HasMember("nearby_dialogue")) { nearby_dialogue = out_template["nearby_dialogue"].GetString(); }
 			if (out_template.HasMember("contact_dialogue")) { contact_dialogue = out_template["contact_dialogue"].GetString(); }
 
+			if (out_template.HasMember("view_image")) { view_image = out_template["view_image"].GetString(); }
+			if (out_template.HasMember("transform_scale_x")) { scaleX = out_template["transform_scale_x"].GetDouble(); }
+			if (out_template.HasMember("transform_scale_y")) { scaleY = out_template["transform_scale_y"].GetDouble(); }
+			if (out_template.HasMember("transform_rotation_degrees")) { rotation_deg = out_template["transform_rotation_degrees"].GetDouble(); }
+			if (out_template.HasMember("view_pivot_offset_x")) { pivot_offsetX = out_template["view_pivot_offset_x"].GetDouble(); }
+			if (out_template.HasMember("view_pivot_offset_y")) { pivot_offsetY = out_template["view_pivot_offset_y"].GetDouble(); }
+
 			// create template variable
-			ActorTemplate* new_template = new ActorTemplate(name, view, x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue);
+			ActorTemplate* new_template = new ActorTemplate(name, /*view, */x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue,
+				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY);
 			// store template in map of templates
 			templates[templateName] = new_template;
 		}
@@ -94,7 +109,7 @@ public:
 
 	//from chat
 	// Function to combine two uint32_t values into a single uint64_t
-	static uint64_t combine(int& x, int& y) {
+	static uint64_t combine(int x, int y) {
 		// cast to ensure the ints become exactly 32 bits in size.
 		uint32_t ux = static_cast<uint32_t>(x);
 		uint32_t uy = static_cast<uint32_t>(y);

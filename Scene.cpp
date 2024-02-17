@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-bool Scene::CheckBlocking(uint64_t& position)
+bool Scene::CheckBlocking(glm::vec2& position)
 {
 	if (actors_map.find(position) != actors_map.end()) {
 		for (Actor* actor : actors_map.at(position)) {
@@ -23,6 +23,14 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	std::string nearby_dialogue = "";
 	std::string contact_dialogue = "";
 
+	std::string view_image = "";
+	double scaleX = 1.0;
+	double scaleY = 1.0;
+	double rotation_deg = 0.0;
+	double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
+	double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
+
+
 	if (doc.HasMember("actors") && doc["actors"].IsArray()) {
 		actors.reserve(doc["actors"].GetArray().Size());
 		for (const auto& actor : doc["actors"].GetArray()) {
@@ -37,6 +45,14 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			nearby_dialogue = "";
 			contact_dialogue = "";
 
+			view_image = "";
+			scaleX = 1.0;
+			scaleY = 1.0;
+			rotation_deg = 0.0;
+			pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
+			pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
+
+
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("template")) {
 				//check if the template has already been processessed, if not then load it
@@ -44,7 +60,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 					EngineUtils::ProcessTemplate(actor["template"].GetString());
 				}
 				ActorTemplate* actorTemplate = templates.at(actor["template"].GetString());
-
+				
 				// make the initial values inherit the template values
 				name = actorTemplate->name;
 				x = actorTemplate->pos_x;
@@ -55,23 +71,40 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				blocking = actorTemplate->blocking;
 				nearby_dialogue = actorTemplate->nearby_dialogue;
 				contact_dialogue = actorTemplate->contact_dialogue;
+
+				view_image = actorTemplate->view_image;
+				scaleX = actorTemplate->scaleX;
+				scaleY = actorTemplate->scaleY;
+				rotation_deg = actorTemplate->rotation;
+				pivot_offsetX = actorTemplate->pivot_offsetX;
+				pivot_offsetY = actorTemplate->pivot_offsetY;
 			}
 
 			// make the actor overwrite template values as needed 
 			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
-			if (actor.HasMember("x")) { x = actor["x"].GetInt(); }
-			if (actor.HasMember("y")) { y = actor["y"].GetInt(); }
+			if (actor.HasMember("transform_position_x")) { x = actor["transform_position_x"].GetInt(); }
+			if (actor.HasMember("transform_position_y")) { y = actor["transform_position_y"].GetInt(); }
 			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetInt(); }
 			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetInt(); }
 			if (actor.HasMember("view")) { view = *actor["view"].GetString(); }
 			if (actor.HasMember("blocking")) { blocking = actor["blocking"].GetBool(); }
 			if (actor.HasMember("nearby_dialogue")) { nearby_dialogue = actor["nearby_dialogue"].GetString(); }
 			if (actor.HasMember("contact_dialogue")) { contact_dialogue = actor["contact_dialogue"].GetString(); }
+
+			if (actor.HasMember("view_image")) { view_image = actor["view_image"].GetString(); }
+			if (actor.HasMember("transform_scale_x")) { scaleX = actor["transform_scale_x"].GetDouble(); }
+			if (actor.HasMember("transform_scale_y")) { scaleY = actor["transform_scale_y"].GetDouble(); }
+			if (actor.HasMember("transform_rotation_degrees")) { rotation_deg = actor["transform_rotation_degrees"].GetDouble(); }
+			if (actor.HasMember("view_pivot_offset_x")) { pivot_offsetX = actor["view_pivot_offset_x"].GetDouble(); }
+			if (actor.HasMember("view_pivot_offset_y")) { pivot_offsetY = actor["view_pivot_offset_y"].GetDouble(); }
 			
 			// create actor variable and store it in list of actors
-			uint64_t position = EngineUtils::combine(x, y);
+			glm::vec2 position{ x, y };
 			glm::ivec2 velocity{ vel_x, vel_y };
-			Actor* new_actor(new Actor(name, view, position, velocity, blocking, nearby_dialogue, contact_dialogue));
+			glm::vec2 scale{ scaleX, scaleY };
+			glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
+			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
+				view_image, scale, rotation_deg, pivot_offset));
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map
@@ -94,10 +127,8 @@ void Scene::MovePlayer(std::string& movement)
 		movement != "w")
 		return;
 
-	int x, y;
-	// Split the current position into x and y
-	EngineUtils::split(player->position, x, y);
-
+	int x = player->position.x;
+	int y = player->position.y;
 	// Temporary variables to hold new positions
 	int newX = x;
 	int newY = y;
@@ -117,7 +148,7 @@ void Scene::MovePlayer(std::string& movement)
 	}
 
 	// Check for blocking at the new position
-	uint64_t tempPosition = EngineUtils::combine(newX, newY);
+	glm::vec2 tempPosition{ newX, newY };
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
 		return;
 
@@ -133,10 +164,10 @@ void Scene::MoveActors() {
 		}
 	}
 }
-/*
+
 void Scene::RenderScene()
 {
-	int x_res, y_res;
+	/*int x_res, y_res;
 	EngineUtils::split(Game::GetCameraResolution(), x_res, y_res);
 
 	// Calculate starting and ending coordinates for the customizable grid
@@ -155,19 +186,19 @@ void Scene::RenderScene()
 			//check the map and see if there is an actor present
 			if (actors_map.find(EngineUtils::combine(x, y)) != actors_map.end()) {
 				// use .back() to render highest actorID on top (aka the actor loaded in last)
-				std::cout << actors_map.at(EngineUtils::combine(x, y)).back()->view;
+				//std::cout << actors_map.at(EngineUtils::combine(x, y)).back()->view;
 			}
 			else {
 				std::cout << " ";
 			}
 		}
 		std::cout << '\n';
-	}
+	}*/
 }
-*/
+
 
 // PRIVATE HELPER FUNCTIONS
-void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {
+void Scene::addActorToMap(glm::vec2& position, Actor* new_actor) {
 	// Check if the position key already exists in the map
 	auto it = actors_map.find(position);
 	if (it != actors_map.end()) {
@@ -180,8 +211,8 @@ void Scene::addActorToMap(uint64_t& position, Actor* new_actor) {
 	}
 }
 
-void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
-	const uint64_t oldPos = actor->position;
+void Scene::updateActorPosition(Actor* actor, glm::vec2 newPos) {
+	const glm::vec2 oldPos = actor->position;
 	// get actors position vector
 	std::vector<Actor*>& oldVec = actors_map[oldPos];
 
@@ -201,15 +232,15 @@ void Scene::updateActorPosition(Actor* actor, uint64_t newPos) {
 	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
 }
 
-uint64_t Scene::getNewPosFromVelocity(uint64_t& position, glm::ivec2& velocity) {
+glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::ivec2& velocity) {
 	
-	int x, y = 0;
-	EngineUtils::split(position, x, y);
+	int x = 0;
+	int y = 0;
 
 	// Update x and y components with velocity
-	x += velocity.x;
-	y += velocity.y;
-	uint64_t newPosition = EngineUtils::combine(x, y);
+	x += position.x;
+	y += position.y;
+	glm::vec2 newPosition{ x, y };
 
 	//only return the updated position if its not blocked
 	if (!CheckBlocking(newPosition)) {

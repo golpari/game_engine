@@ -49,7 +49,7 @@ public:
 
 	std::string GameEnd(bool good);
 
-	void LoadInitialScene(rapidjson::Document& out_gameConfig);
+	void LoadInitialScene();
 
 	void LoadScene(std::string sceneName);
 

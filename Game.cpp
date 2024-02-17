@@ -145,7 +145,7 @@ std::string Game::GameEnd(bool good) {
 	}
 }
 
-void Game::LoadInitialScene(rapidjson::Document& out_gameConfig) {
+void Game::LoadInitialScene() {
 
 	//check for initial scene
 	if (out_gameConfig.HasMember("initial_scene")) {
@@ -218,7 +218,8 @@ std::string Game::PrintDialogue() {
 	std::string endgameString = "";
 
 	// Split the player's position into x and y coordinates
-	EngineUtils::split(currentScene->player->position, x, y);
+	x = currentScene->player->position.x;
+	y = currentScene->player->position.y;
 
 	// Offsets for the surrounding 8 spaces
 	const std::vector<glm::ivec2> offsets = {
@@ -239,7 +240,7 @@ std::string Game::PrintDialogue() {
 		int checkY = y + offset.y;
 
 		// Combine the coordinates back into a uint64_t position
-		uint64_t adjacent = EngineUtils::combine(checkX, checkY);
+		glm::vec2 adjacent{ checkX, checkY };
 
 		// check actors at adjacent position
 		auto actorsIt = currentScene->actors_map.find(adjacent);
@@ -291,14 +292,17 @@ void Game::RunScene()
 {
 	Renderer renderer;
 
-	//get title, otherwise default ot ""
+	//get title, otherwise default to ""
 	std::string title = "";
 	if (out_gameConfig.HasMember("game_title")) {
 		title = out_gameConfig["game_title"].GetString();
 	}
+
 	ProcessIntro();
+	LoadInitialScene();
 	int index = 0;
 	bool playAudio = false;
+	bool playScene = false;
 
 	renderer.Initialize(title);
 	while (true) {
@@ -314,7 +318,19 @@ void Game::RunScene()
 		if (playAudio) {
 			PlayGameplayAudio();
 			playAudio = false;
+			playScene = true;
 		}
+
+		if (playScene) {
+			// render all actors
+			for (Actor* actor : currentScene->actors) {
+				{
+					renderer.RenderActor(*actor,{0, 0});
+				}
+			}
+		}
+
+
 
 		renderer.EndFrame();
 	}
