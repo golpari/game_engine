@@ -324,9 +324,7 @@ void Game::RunScene()
 		if (playScene) {
 			// render all actors
 			for (Actor* actor : currentScene->actors) {
-				{
-					renderer.RenderActor(*actor,{0, 0});
-				}
+				renderer.RenderActor(*actor,{0, 0});
 			}
 		}
 
