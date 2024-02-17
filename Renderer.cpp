@@ -90,8 +90,8 @@ void Renderer::RenderImage(const std::string& imageName)
     // get img w and h
     int w, h;
     SDL_QueryTexture(img, NULL, NULL, &w, &h);
-    SDL_Rect destination_rect = { 0, 0, w, h };
-    SDL_Point pivot_point = { w * 0.5, h * 0.5 };
+    SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
+    SDL_Point pivot_point = { w * 0.5, h };
     SDL_RenderCopyEx(
         renderer,
         img,
