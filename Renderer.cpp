@@ -149,11 +149,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         int w, h;
         SDL_QueryTexture(img, NULL, NULL, &w, &h);
 
-        // Assuming winWidth and winHeight are the dimensions of your window, and are defined elsewhere in your Renderer class
-        // Calculate the center of the window
-        int centerX = std::round(winWidth / 2);
-        int centerY = std::round(winHeight / 2);
-
+        // get pivot offset
         double pivotX = std::round(w * 0.5);
         double pivotY = std::round(h * 0.5);
         if (actor.pivot_offsetX.has_value()) {
@@ -164,39 +160,27 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x) * PIXEL_SCALE;
-        float relativeYPos = std::round(actor.position.y - playerPosition.y) * PIXEL_SCALE;
+        float relativeXPos = std::round(actor.position.x - playerPosition.x);
+        float relativeYPos = std::round(actor.position.y - playerPosition.y);
 
-        // Convert this position so that an object at the playerPosition would be at the center of the screen
-        float renderX = static_cast<int>(centerX + relativeXPos - pivotX);
-        float renderY = static_cast<int>(centerY + relativeYPos - pivotY);
+        SDL_Point pivotSDLPoint;
+        pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
+        pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
-        // Calculate the scaling factors
-        //float scaleX = std::abs(actor.scale.x);
-        //float scaleY = std::abs(actor.scale.y);
-
-        //// Calculate the new width and height after applying the scaling factors
-        //int scaledW = std::round(w * scaleX);
-        //int scaledH = std::round(h * scaleY);
-
-        //// Calculate the change in width and height to adjust the actor's position accordingly
-        //int deltaW = scaledW - w;
-        //int deltaH = scaledH - h;
-
-        // Calculate the center point of the texture for rotation
-        SDL_Point pivot_point = { static_cast<int>(w * 0.5), static_cast<int>(h * 0.5)};
-
-        // Create the destination rectangle at the position where the actor should be drawn
-        SDL_Rect destination_rect = { renderX, renderY, std::round(w * std::abs(actor.scale.x)), std::round(h * std::abs(actor.scale.y)) };
+        SDL_Rect dstRect;
+        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x);
+        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y);
+        dstRect.w = w * std::abs(actor.scale.x);
+        dstRect.h = h * std::abs(actor.scale.y);
 
         // Render the texture with the specified rotation and pivot point
         SDL_RenderCopyEx(
             renderer,
             img,
             NULL,
-            &destination_rect,
+            &dstRect,
             actor.rotation, // rotation angle
-            &pivot_point,
+            &pivotSDLPoint,
             GetFlipType(actor)
         );
     }
