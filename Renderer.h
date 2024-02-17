@@ -30,7 +30,7 @@ public:
 
     void Initialize(const std::string& title);
 
-    void StartFrame(std::vector<std::string> &introImages, int& index);
+    void StartFrame(std::vector<std::string> &introImages, int& index, std::vector<Actor*>& actors);
     void EndFrame();
     void Cleanup();
     void RenderImage(const std::string& imageName);

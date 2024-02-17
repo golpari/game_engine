@@ -308,7 +308,7 @@ void Game::RunScene()
 	while (true) {
 
 		// start frame and process events
-		renderer.StartFrame(introImages, index);
+		renderer.StartFrame(introImages, index, currentScene->actors);
 
 		// DO STUFF!!! 
 		// 

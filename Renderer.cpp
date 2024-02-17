@@ -39,7 +39,7 @@ void Renderer::Initialize(const std::string& title)
     renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);  
 }
 
-void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
+void Renderer::StartFrame(std::vector<std::string> &introImages, int& index, std::vector<Actor*>& actors)
 {
     // Check Events
     SDL_Event nextEvent;
@@ -48,6 +48,10 @@ void Renderer::StartFrame(std::vector<std::string> &introImages, int& index)
             SDL_SetRenderDrawColor(renderer, r, g, b, 255);
             if (introImages.empty())
                 SDL_RenderClear(renderer);
+            // render all actors
+            for (Actor* actor : actors) {
+                RenderActor(*actor, { 0, 0 });
+            }
             EndFrame();
             exit(0);
         }
