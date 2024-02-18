@@ -65,5 +65,7 @@ private:
 	void Deallocate();
 
 	void RunIntro(int& index, Renderer& renderer, bool& playAudio);
+
+	std::string HudSetup();
 };
 #endif

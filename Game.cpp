@@ -17,8 +17,8 @@ void Game::GameStart() {
 
 void Game::ProcessIntro() {
 	//process intro images
-	if (out_gameConfig.HasMember("intro_image") 
-		&& out_gameConfig["intro_image"].IsArray() 
+	if (out_gameConfig.HasMember("intro_image")
+		&& out_gameConfig["intro_image"].IsArray()
 		&& !out_gameConfig["intro_image"].GetArray().Empty()) {
 		introImages.reserve(out_gameConfig["intro_image"].GetArray().Size());
 		for (const auto& img : out_gameConfig["intro_image"].GetArray()) {
@@ -91,7 +91,7 @@ void Game::ProcessIntro() {
 
 	}
 
-	
+
 }
 
 void Game::PlayGameplayAudio() {
@@ -276,7 +276,7 @@ std::string Game::PrintDialogue() {
 			}
 		}
 	}
-	
+
 	// sort the dialogues to be printed by actorID (which is the same as dialogueID)
 	std::sort(dialogues.begin(), dialogues.end(), DialogueComparator());
 
@@ -325,18 +325,19 @@ void Game::RunScene()
 		if (playScene) {
 			// render all actors
 			for (Actor* actor : currentScene->actors) {
-				renderer.RenderActor(*actor,{0, 0});
+				renderer.RenderActor(*actor, { 0, 0 });
+			}
+			if (currentScene->player != nullptr) {
+				renderer.RenderHUD(HudSetup(), font, health, score);
 			}
 		}
-
-
 
 		renderer.EndFrame();
 	}
 	/*std::string input;
 	do {
-		
-		
+
+
 		//update player position based on the movement
 		if (!firstRun) currentScene->MoveActors();
 		firstRun = false;
@@ -420,6 +421,16 @@ void Game::Deallocate() {
 	// Deallocate memory pointed to by the 'player' pointer
 	//delete currentScene->player; // Deallocate memory for the player
 	currentScene->player = nullptr;
+}
+
+// returns filename of the hp image, if no hp img defined, then exits with error
+std::string Game::HudSetup()
+{
+	if (!out_gameConfig.HasMember("hp_image")) {
+		std::cout << "error: player actor requires an hp_image be defined";
+		exit(0);
+	}
+	return out_gameConfig["hp_image"].GetString();
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {

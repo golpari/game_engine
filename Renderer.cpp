@@ -186,6 +186,44 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
     }
 }
 
+void Renderer::RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score)
+{
+    // RENDER HP IMAGES
+    SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + hp_image + ".png").c_str());
+
+    // get img w and h
+    int w, h;
+    SDL_QueryTexture(img, NULL, NULL, &w, &h);
+    
+
+    // RENDER SCORE
+
+    // Render the text to a surface
+    SDL_Surface* surface = TTF_RenderText_Solid(font, ("score : " + std::to_string(score)).c_str(), SDL_Color{255, 255, 255, 255});
+
+    // Create a texture from the surface
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    for (int i = 0; i < health; i++) {
+        SDL_Rect destination_rect = { 5 + i * (w + 5), 25, w, h };
+        SDL_RenderCopy(
+            renderer,
+            img,
+            NULL,
+            &destination_rect
+        );
+    }
+
+    // Set the rendering space and render to screen
+    SDL_Rect renderQuad = { 5, 5, surface->w, surface->h };
+    SDL_RenderCopy(
+        renderer,
+        texture,
+        NULL,
+        &renderQuad
+    );
+}
+
 uint64_t Renderer::SetCameraResolution(bool renderConfigProcessed) {
     //default values (diff for HW5, used to be 9x13)
 

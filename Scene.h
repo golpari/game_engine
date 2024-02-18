@@ -33,7 +33,7 @@ public:
 
 	std::unordered_map<glm::vec2, std::vector<Actor*>, hashFunction> actors_map;
 	std::vector<Actor*> actors;
-	Actor* player;
+	Actor* player = nullptr;
 
 	Scene() { player = nullptr; }
 
