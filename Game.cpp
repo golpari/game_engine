@@ -1,5 +1,8 @@
 #include "Game.h"
 
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer);
+
+
 void Game::GameStart() {
 
 	EngineUtils::CheckPathExists("resources/", true);
@@ -308,7 +311,7 @@ void Game::RunScene()
 	while (true) {
 
 		// start frame and process events
-		if (!renderer.StartFrame(introImages, index, currentScene->actors)) {
+		if (!StartFrame(introImages, index, renderer)) {
 			// in case of exit window event being triggered
 			RenderAll(renderer);
 			renderer.EndFrame();
@@ -479,4 +482,44 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 		}
 		playAudio = true;
 	}
+}
+
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer)
+{
+	// Check Events
+	SDL_Event nextEvent;
+	while (Helper::SDL_PollEvent498(&nextEvent)) {
+		if (nextEvent.type == SDL_QUIT) {
+			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
+			if (introImages.empty())
+				SDL_RenderClear(renderer.renderer);
+			// render all actors
+			//for (Actor* actor : actors) {
+			//    RenderActor(*actor, { 0, 0 });
+			//}
+			//EndFrame();
+			//exit(0);
+			return false;
+		}
+
+		// Mouse event: SDL_MOUSEBUTTONDOWN is for mouse button press
+		else if (nextEvent.type == SDL_MOUSEBUTTONDOWN && nextEvent.button.button == SDL_BUTTON_LEFT) {
+			// Handle left mouse click
+			index++;
+		}
+
+		// Keyboard event: SDL_KEYDOWN is for key press
+		else if (nextEvent.type == SDL_KEYDOWN) {
+			// Check for spacebar or enter key using scancode
+			if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+				// Handle spacebar or enter key press
+				index++;
+			}
+
+		}
+	}
+
+	SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
+	SDL_RenderClear(renderer.renderer);
+	return true;
 }

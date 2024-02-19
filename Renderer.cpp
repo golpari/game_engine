@@ -46,7 +46,7 @@ void Renderer::Initialize(const std::string& title)
     renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);  
 }
 
-bool Renderer::StartFrame(std::vector<std::string> &introImages, int& index, std::vector<Actor*>& actors)
+/*bool Renderer::StartFrame(std::vector<std::string>& introImages, int& index)
 {
     // Check Events
     SDL_Event nextEvent;
@@ -77,13 +77,14 @@ bool Renderer::StartFrame(std::vector<std::string> &introImages, int& index, std
                 // Handle spacebar or enter key press
                 index++;
             }
+            
         }
     }
 
     SDL_SetRenderDrawColor(renderer, r, g, b, 255);
     SDL_RenderClear(renderer);
     return true;
-}
+}*/
 
 void Renderer::EndFrame()
 {

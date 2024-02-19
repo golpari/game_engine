@@ -19,15 +19,15 @@ class Renderer
 {
     std::unordered_map<std::string, SDL_Texture*> textures;
     rapidjson::Document out_renderingConfig;
-    
-    int r = 255;
-    int g = 255;
-    int b = 255;
 
     int winWidth = 640;
     int winHeight = 360;
 
 public:
+    int r = 255;
+    int g = 255;
+    int b = 255;
+
     SDL_Renderer* renderer = nullptr;
     Camera cam;
 
@@ -36,7 +36,7 @@ public:
     void Initialize(const std::string& title);
 
     // returns false if end event triggered
-    bool StartFrame(std::vector<std::string> &introImages, int& index, std::vector<Actor*>& actors);
+    bool StartFrame(std::vector<std::string> &introImages, int& index);
     void EndFrame();
     void Cleanup();
     void RenderImage(const std::string& imageName);
