@@ -311,6 +311,7 @@ void Game::RunScene()
 		if (!renderer.StartFrame(introImages, index, currentScene->actors)) {
 			// in case of exit window event being triggered
 			RenderAll(renderer);
+			renderer.EndFrame();
 			exit(0);
 		}
 
