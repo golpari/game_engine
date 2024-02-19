@@ -10,6 +10,11 @@ void Renderer::Initialize(const std::string& title)
     // FIRST THING, read in rendering json 
     bool processed = ProcessRenderingConfig();
 
+    //set up the camera offset info
+    if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
+    if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
+
+
     // tell SDL what you want to do 
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -163,16 +168,16 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x - cam.cam_offset_x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y - cam.cam_offset_y);
+        float relativeXPos = std::round(actor.position.x - playerPosition.x);
+        float relativeYPos = std::round(actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
         pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
         pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
         SDL_Rect dstRect;
-        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x);
-        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y);
+        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE);
+        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE);
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 

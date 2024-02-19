@@ -23,9 +23,6 @@ class Renderer;
 class Game {	
 
 public:
-
-	Renderer renderer;
-
 	std::vector<Scene> scenes;
 	rapidjson::Document out_gameConfig;
 
