@@ -67,5 +67,7 @@ private:
 	void RunIntro(int& index, Renderer& renderer, bool& playAudio);
 
 	std::string HudSetup();
+
+	void RenderAll(Renderer& renderer);
 };
 #endif

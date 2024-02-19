@@ -308,7 +308,11 @@ void Game::RunScene()
 	while (true) {
 
 		// start frame and process events
-		renderer.StartFrame(introImages, index, currentScene->actors);
+		if (!renderer.StartFrame(introImages, index, currentScene->actors)) {
+			// in case of exit window event being triggered
+			RenderAll(renderer);
+			exit(0);
+		}
 
 		// DO STUFF!!! 
 		// 
@@ -323,13 +327,7 @@ void Game::RunScene()
 		}
 
 		if (playScene) {
-			// render all actors
-			for (Actor* actor : currentScene->actors) {
-				renderer.RenderActor(*actor, { 0, 0 });
-			}
-			if (currentScene->player != nullptr) {
-				renderer.RenderHUD(HudSetup(), font, health, score);
-			}
+			RenderAll(renderer);
 		}
 
 		renderer.EndFrame();
@@ -431,6 +429,18 @@ std::string Game::HudSetup()
 		exit(0);
 	}
 	return out_gameConfig["hp_image"].GetString();
+}
+
+void Game::RenderAll(Renderer& renderer)
+{
+	// render all actors
+	for (Actor* actor : currentScene->actors) {
+		renderer.RenderActor(*actor, { 0, 0 });
+	}
+	// render HUD icons and text
+	if (currentScene->player != nullptr) {
+		renderer.RenderHUD(HudSetup(), font, health, score);
+	}
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
