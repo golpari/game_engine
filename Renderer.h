@@ -1,18 +1,20 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <SDL_ttf.h>
 #include <string>
 #include <unordered_map>
 
-#include <SDL_ttf.h>
-
 #include "Actor.h"
+#include "EngineUtils.h"
 #include "glm/glm.hpp"
 #include "Helper.h"
-#include "EngineUtils.h"
-#include "Game.h"
 
-// A class to store all our rendering
+struct Camera {
+    float cam_offset_x = 0;
+    float cam_offset_y = 0;
+};
+
 class Renderer
 {
     std::unordered_map<std::string, SDL_Texture*> textures;
@@ -27,6 +29,9 @@ class Renderer
 
 public:
     SDL_Renderer* renderer = nullptr;
+    Camera cam;
+
+    Renderer() {}
 
     void Initialize(const std::string& title);
 

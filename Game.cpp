@@ -7,6 +7,10 @@ void Game::GameStart() {
 
 	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 
+	//set up the camera offset info
+	if (out_gameConfig.HasMember("cam_offset_x")) renderer.cam.cam_offset_x = out_gameConfig["cam_offset_x"].GetFloat();
+	if (out_gameConfig.HasMember("cam_offset_y")) renderer.cam.cam_offset_y = out_gameConfig["cam_offset_y"].GetFloat();
+
 	/*this->LoadInitialScene(out_gameConfig);
 
 	if (out_gameConfig.HasMember("game_start_message")) {
@@ -290,8 +294,6 @@ std::string Game::PrintDialogue() {
 
 void Game::RunScene()
 {
-	Renderer renderer;
-
 	//get title, otherwise default to ""
 	std::string title = "";
 	if (out_gameConfig.HasMember("game_title")) {

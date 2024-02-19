@@ -10,12 +10,12 @@
 #include <vector>
 
 #include "ActorTemplate.h"
+#include "AudioHelper.h"
 #include "EngineUtils.h"
 #include "rapidjson/document.h"
-#include "Scene.h"
 #include "Renderer.h"
+#include "Scene.h"
 #include "SDL_ttf.h"
-#include "AudioHelper.h"
 
 class Scene;
 class Renderer;
@@ -23,6 +23,9 @@ class Renderer;
 class Game {	
 
 public:
+
+	Renderer renderer;
+
 	std::vector<Scene> scenes;
 	rapidjson::Document out_gameConfig;
 

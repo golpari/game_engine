@@ -1,6 +1,7 @@
 #include "Renderer.h"
 
 const int PIXEL_SCALE = 100;
+
 SDL_RendererFlip GetFlipType(const Actor& actor);
 
 // draw window
@@ -162,8 +163,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y);
+        float relativeXPos = std::round(actor.position.x - playerPosition.x - cam.cam_offset_x);
+        float relativeYPos = std::round(actor.position.y - playerPosition.y - cam.cam_offset_y);
 
         SDL_Point pivotSDLPoint;
         pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
