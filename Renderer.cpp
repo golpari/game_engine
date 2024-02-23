@@ -145,53 +145,62 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
 
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
+    // first, texture must exist
     if (!actor.view_image.empty()) {
-        SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.view_image + ".png").c_str());
-
-        /*if (img == nullptr) {
-            // Output the SDL error to the console or handle it as needed
-            std::cerr << "Unable to load texture. SDL_Error: " << SDL_GetError() << std::endl;
-            return; // Exit the function if the texture couldn't be loaded
-        }*/
-
-        // Get img width (w) and height (h)
-        int w, h;
-        SDL_QueryTexture(img, NULL, NULL, &w, &h);
-
-        // get pivot offset
-        double pivotX = std::round(w * 0.5);
-        double pivotY = std::round(h * 0.5);
-        if (actor.pivot_offsetX.has_value()) {
-            pivotX = actor.pivot_offsetX.value();
+            // if texture not alrdy loaded
+        if (textures.find(actor.view_image) == textures.end()) {
+            //load it
+            SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.view_image + ".png").c_str());
+            textures[actor.view_image] = img;
         }
-        if (actor.pivot_offsetY.has_value()) {
-            pivotY = actor.pivot_offsetY.value();
+        // if texture alrdy exists
+        else {
+
+            /*if (img == nullptr) {
+                // Output the SDL error to the console or handle it as needed
+                std::cerr << "Unable to load texture. SDL_Error: " << SDL_GetError() << std::endl;
+                return; // Exit the function if the texture couldn't be loaded
+            }*/
+
+            // Get img width (w) and height (h)
+            int w, h;
+            SDL_QueryTexture(textures[actor.view_image], NULL, NULL, &w, &h);
+
+            // get pivot offset
+            double pivotX = std::round(w * 0.5);
+            double pivotY = std::round(h * 0.5);
+            if (actor.pivot_offsetX.has_value()) {
+                pivotX = actor.pivot_offsetX.value();
+            }
+            if (actor.pivot_offsetY.has_value()) {
+                pivotY = actor.pivot_offsetY.value();
+            }
+
+            // Calculate the actor's position relative to the playerPosition, such that the player is always centered
+            float relativeXPos = std::round(actor.position.x - playerPosition.x);
+            float relativeYPos = std::round(actor.position.y - playerPosition.y);
+
+            SDL_Point pivotSDLPoint;
+            pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
+            pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
+
+            SDL_Rect dstRect;
+            dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE);
+            dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE);
+            dstRect.w = w * std::abs(actor.scale.x);
+            dstRect.h = h * std::abs(actor.scale.y);
+
+            // Render the texture with the specified rotation and pivot point
+            SDL_RenderCopyEx(
+                renderer,
+                textures[actor.view_image],
+                NULL,
+                &dstRect,
+                actor.rotation, // rotation angle
+                &pivotSDLPoint,
+                GetFlipType(actor)
+            );
         }
-
-        // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y);
-
-        SDL_Point pivotSDLPoint;
-        pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
-        pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
-
-        SDL_Rect dstRect;
-        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE);
-        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE);
-        dstRect.w = w * std::abs(actor.scale.x);
-        dstRect.h = h * std::abs(actor.scale.y);
-
-        // Render the texture with the specified rotation and pivot point
-        SDL_RenderCopyEx(
-            renderer,
-            img,
-            NULL,
-            &dstRect,
-            actor.rotation, // rotation angle
-            &pivotSDLPoint,
-            GetFlipType(actor)
-        );
     }
 }
 
