@@ -515,7 +515,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 				// Handle spacebar or enter key press
 				index++;
 			}
-
+			// do move player stuff TODO
 		}
 	}
 

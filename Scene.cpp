@@ -131,6 +131,7 @@ void Scene::MovePlayer(std::string& movement)
 
 	// Determine new position based on movement direction
 	if (movement == "n") {
+	//if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 		newY = y - 1;
 	}
 	else if (movement == "e") {
