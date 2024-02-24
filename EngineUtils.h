@@ -177,8 +177,17 @@ struct ActorComparator {
 
 struct RenderComparator {
 	bool operator()(const Actor* a, const Actor* b) const {
-		if (a->render_order == b->render_order) return a->actorID < b->actorID;
-		else return a->render_order < b->render_order;
+
+		// get the render orders
+		double renderA;
+		double renderB;
+		if (a->render_order.has_value()) renderA = a->render_order.value();
+		else renderA = a->position.y;
+		if (b->render_order.has_value()) renderB = b->render_order.value();
+		else renderB = b->position.y;
+
+		if (renderA == renderB) return a->actorID < b->actorID;
+		else return renderA < renderB;
 	}
 };
 

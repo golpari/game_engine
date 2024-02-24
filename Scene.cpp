@@ -102,9 +102,6 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			glm::ivec2 velocity{ vel_x, vel_y };
 			glm::vec2 scale{ scaleX, scaleY };
 
-			// if render order not set, base it off transformation_y position
-			if (!render_order.has_value()) { render_order = y; }
-
 			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
 			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
 				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY, render_order));
