@@ -1,5 +1,7 @@
 #include "Game.h"
 
+const int COOLDOWN = 180;
+
 bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene);
 
 
@@ -200,8 +202,10 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 	}
 	if (dialogue.find("game over") != std::string::npos)
 		return Game::GameEnd(false);
-	if (dialogue.find("health down") != std::string::npos)
+	if (dialogue.find("health down") != std::string::npos && Helper::GetFrameNumber() > (cooldownPoint + COOLDOWN)) {
 		health--;
+		cooldownPoint = Helper::GetFrameNumber();
+	}
 	if (dialogue.find("score up") != std::string::npos && !scoredUpped) {
 		score++;
 		scoredUpped = true;
@@ -338,6 +342,13 @@ void Game::RunScene()
 
 		if (playScene) {
 			RenderAll(renderer);
+		}
+
+		if (loadNew) {
+			loadNew = false;
+			LoadScene(nextScene);
+			SDL_RenderClear(renderer.renderer);
+			currentScene->RenderScene();
 		}
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
@@ -517,6 +528,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
 			if (introImages.empty())
 				SDL_RenderClear(renderer.renderer);
+			std::cout << Helper::GetFrameNumber();
 			return false; // so that it is known to dump and end the frame for closeout event
 		}
 

@@ -33,6 +33,7 @@ public:
 	Scene* currentScene = nullptr;
 
 	std::stringstream ss;
+	int cooldownPoint = -180;
 	bool firstRun = true;
 	int health = 3;
 	int score = 0;
