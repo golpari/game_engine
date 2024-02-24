@@ -481,17 +481,17 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	if (introImages.size() > index && introTexts.size() > index) {
 		renderer.RenderImage(introImages[index]);
 		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 1, 0);
 	}
 	else if (introTexts.size() > index && !introImages.empty()) {
 		renderer.RenderImage(introImages[introImages.size() - 1]);
 		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 1, 0);
 	}
 	else if (introImages.size() > index && !introTexts.empty()) {
 		renderer.RenderImage(introImages[index]);
 		TTF_SizeText(font, introTexts[introTexts.size() - 1].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
+		renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, 1, 0);
 	}
 	else if (introImages.size() > index && introTexts.empty()) {
 		renderer.RenderImage(introImages[index]);
