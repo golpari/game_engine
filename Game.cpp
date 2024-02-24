@@ -202,7 +202,7 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 	}
 	if (dialogue.find("game over") != std::string::npos)
 		return Game::GameEnd(false);
-	if (dialogue.find("health down") != std::string::npos && Helper::GetFrameNumber() > (cooldownPoint + COOLDOWN)) {
+	if (dialogue.find("health down") != std::string::npos && Helper::GetFrameNumber() >= (cooldownPoint + COOLDOWN)) {
 		health--;
 		cooldownPoint = Helper::GetFrameNumber();
 	}
@@ -455,6 +455,8 @@ std::string Game::HudSetup()
 
 void Game::RenderAll(Renderer& renderer)
 {
+	
+
 	/*** render all actors in their render order ***/
 
 	// sort the list of actors by render order for ease of rendering
@@ -474,13 +476,13 @@ void Game::RenderAll(Renderer& renderer)
 	// reset the ordering of actors list to sorted by ID
 	std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
 	
+	//render dialogue / process it before rendering HUD
+	PrintDialogue(renderer);
+
 	// render HUD icons and text
 	if (currentScene->player != nullptr) {
 		renderer.RenderHUD(HudSetup(), font, health, score);
 	}
-
-	//render dialogue
-	PrintDialogue(renderer);
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
