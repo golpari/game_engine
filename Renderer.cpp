@@ -118,7 +118,7 @@ void Renderer::RenderImage(const std::string& imageName)
     );
 }
 
-void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int x, int y)
+void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int numTextsShown, int index)
 {
     
     //  All text will render at(25, height - 50) where  height is the window height.
@@ -129,8 +129,12 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
     // Create a texture from the surface
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
+    int x = 0;
+    int y = 0;
+    TTF_SizeText(font, text.c_str(), &x, &y);
+
     // Set the rendering space and render to screen
-    SDL_Rect renderQuad = { 25, winHeight - 50, surface->w, surface->h };
+    SDL_Rect renderQuad = { 25, winHeight - 50 - (numTextsShown - 1 - index) * 50, surface->w, surface->h };
     SDL_Point pivot_point = { x, y };
     SDL_RenderCopyEx(
         renderer,

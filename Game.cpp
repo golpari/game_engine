@@ -213,7 +213,7 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 	return "";
 }
 
-std::string Game::PrintDialogue() {
+std::string Game::PrintDialogue(Renderer& renderer) {
 	std::vector<Dialogue> dialogues;
 
 	//for nearby dialogue
@@ -284,8 +284,10 @@ std::string Game::PrintDialogue() {
 	std::sort(dialogues.begin(), dialogues.end(), DialogueComparator());
 
 	//print the dialogues in order by actorID
-	for (Dialogue& dialogue : dialogues) {
-		ss << dialogue.text << "\n";
+	int size = dialogues.size();
+	for (int i = 0; i < size; i++) {
+		//std::cout << dialogue.text << "\n";
+		renderer.RenderText(font, dialogues[i].text, 16, SDL_Color{255, 255, 255, 255}, size, i);
 	}
 
 	return endgameString;
@@ -460,6 +462,9 @@ void Game::RenderAll(Renderer& renderer)
 	if (currentScene->player != nullptr) {
 		renderer.RenderHUD(HudSetup(), font, health, score);
 	}
+
+	//render dialogue
+	PrintDialogue(renderer);
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
@@ -472,17 +477,17 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	if (introImages.size() > index && introTexts.size() > index) {
 		renderer.RenderImage(introImages[index]);
 		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
 	}
 	else if (introTexts.size() > index && !introImages.empty()) {
 		renderer.RenderImage(introImages[introImages.size() - 1]);
 		TTF_SizeText(font, introTexts[index].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+		renderer.RenderText(font, introTexts[index], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
 	}
 	else if (introImages.size() > index && !introTexts.empty()) {
 		renderer.RenderImage(introImages[index]);
 		TTF_SizeText(font, introTexts[introTexts.size() - 1].c_str(), &w, &h);
-		renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, w, h);
+		renderer.RenderText(font, introTexts[introTexts.size() - 1], 16, SDL_Color{ 255, 255, 255, 255 }, 0, 0);
 	}
 	else if (introImages.size() > index && introTexts.empty()) {
 		renderer.RenderImage(introImages[index]);
@@ -508,13 +513,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
 			if (introImages.empty())
 				SDL_RenderClear(renderer.renderer);
-			// render all actors
-			//for (Actor* actor : actors) {
-			//    RenderActor(*actor, { 0, 0 });
-			//}
-			//EndFrame();
-			//exit(0);
-			return false;
+			return false; // so that it is known to dump and end the frame for closeout event
 		}
 
 		// Mouse event: SDL_MOUSEBUTTONDOWN is for mouse button press

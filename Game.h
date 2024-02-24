@@ -55,7 +55,7 @@ public:
 
 	std::string CheckDialogue(std::string& dialogue, bool& scoredUpped);
 
-	std::string PrintDialogue();
+	std::string PrintDialogue(Renderer& renderer);
 
 	void RunScene();
 
