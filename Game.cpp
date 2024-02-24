@@ -214,6 +214,10 @@ std::string Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 }
 
 std::string Game::PrintDialogue(Renderer& renderer) {
+
+	if (currentScene->player == nullptr) {
+		return "";
+	}
 	std::vector<Dialogue> dialogues;
 
 	//for nearby dialogue
