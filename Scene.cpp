@@ -48,6 +48,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			rotation_deg = 0.0;
 			std::optional<double> pivot_offsetX; // actual default is actor_view.w * 0.5
 			std::optional<double> pivot_offsetY; // actual default is actor_view.h * 0.5
+			std::optional<double> render_order; //default is transform_y if render_order not set
 
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("template")) {
@@ -74,6 +75,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				rotation_deg = actorTemplate->rotation;
 				pivot_offsetX = actorTemplate->pivot_offsetX;
 				pivot_offsetY = actorTemplate->pivot_offsetY;
+				render_order = actorTemplate->render_order;
 			}
 
 			// make the actor overwrite template values as needed 
@@ -93,14 +95,19 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			if (actor.HasMember("transform_rotation_degrees")) { rotation_deg = actor["transform_rotation_degrees"].GetDouble(); }
 			if (actor.HasMember("view_pivot_offset_x")) { pivot_offsetX = actor["view_pivot_offset_x"].GetDouble(); }
 			if (actor.HasMember("view_pivot_offset_y")) { pivot_offsetY = actor["view_pivot_offset_y"].GetDouble(); }
+			if (actor.HasMember("render_order")) { render_order = actor["render_order"].GetDouble(); }
 			
 			// create actor variable and store it in list of actors
 			glm::vec2 position{ x, y };
 			glm::ivec2 velocity{ vel_x, vel_y };
 			glm::vec2 scale{ scaleX, scaleY };
+
+			// if render order not set, base it off transformation_y position
+			if (!render_order.has_value()) { render_order = y; }
+
 			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
 			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY));
+				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY, render_order));
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map

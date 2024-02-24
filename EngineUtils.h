@@ -77,6 +77,7 @@ public:
 			double rotation_deg = 0.0;
 			double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
 			double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
+			double render_order;
 
 			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
 			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetInt(); }
@@ -94,10 +95,11 @@ public:
 			if (out_template.HasMember("transform_rotation_degrees")) { rotation_deg = out_template["transform_rotation_degrees"].GetDouble(); }
 			if (out_template.HasMember("view_pivot_offset_x")) { pivot_offsetX = out_template["view_pivot_offset_x"].GetDouble(); }
 			if (out_template.HasMember("view_pivot_offset_y")) { pivot_offsetY = out_template["view_pivot_offset_y"].GetDouble(); }
+			if (out_template.HasMember("render_order")) { render_order = out_template["render_order"].GetDouble(); }
 
 			// create template variable
 			ActorTemplate* new_template = new ActorTemplate(name, /*view, */x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY);
+				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY, render_order);
 			// store template in map of templates
 			templates[templateName] = new_template;
 		}
@@ -170,6 +172,13 @@ struct Dialogue {
 struct ActorComparator {
 	bool operator()(const Actor* a, const Actor* b) const {
 		return a->actorID < b->actorID;
+	}
+};
+
+struct RenderComparator {
+	bool operator()(const Actor* a, const Actor* b) const {
+		if (a->render_order == b->render_order) return a->actorID < b->actorID;
+		else return a->render_order < b->render_order;
 	}
 };
 

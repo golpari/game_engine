@@ -437,10 +437,14 @@ std::string Game::HudSetup()
 
 void Game::RenderAll(Renderer& renderer)
 {
-	// render all actors
+	/*** render all actors in their render order ***/
+
+	// sort the list of actors by render order for ease of rendering
+	std::sort(currentScene->actors.begin(), currentScene->actors.end(), RenderComparator());
+
 	if (currentScene->player == nullptr) {
 		for (Actor* actor : currentScene->actors) {
-			renderer.RenderActor(*actor, { 0, 0 });
+			renderer.RenderActor(*actor, { 0, 0 }); // if no player present, camera set at 0,0
 		}
 	}
 	else {
@@ -448,6 +452,9 @@ void Game::RenderAll(Renderer& renderer)
 			renderer.RenderActor(*actor, currentScene->player->position);
 		}
 	}
+
+	// reset the ordering of actors list to sorted by ID
+	std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
 	
 	// render HUD icons and text
 	if (currentScene->player != nullptr) {
