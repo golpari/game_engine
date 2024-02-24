@@ -334,6 +334,12 @@ void Game::RunScene()
 		if (!playScene)
 			RunIntro(index, renderer, playAudio);
 
+		if (loadNew) {
+			loadNew = false;
+			SDL_RenderClear(renderer.renderer);
+			LoadScene(nextScene);
+		}
+
 		if (playAudio) {
 			PlayGameplayAudio();
 			playAudio = false;
@@ -344,12 +350,7 @@ void Game::RunScene()
 			RenderAll(renderer);
 		}
 
-		if (loadNew) {
-			loadNew = false;
-			LoadScene(nextScene);
-			SDL_RenderClear(renderer.renderer);
-			currentScene->RenderScene();
-		}
+		
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 	}
