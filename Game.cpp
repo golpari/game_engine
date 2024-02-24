@@ -528,7 +528,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
 			if (introImages.empty())
 				SDL_RenderClear(renderer.renderer);
-			std::cout << Helper::GetFrameNumber();
+			//std::cout << Helper::GetFrameNumber();
 			return false; // so that it is known to dump and end the frame for closeout event
 		}
 
