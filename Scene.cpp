@@ -114,7 +114,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	}
 }
 
-void Scene::MovePlayer(std::string& movement)
+void Scene::MovePlayer(std::string movement)
 {
 	//if not valid movement, do nothing
 	if (movement != "n" &&

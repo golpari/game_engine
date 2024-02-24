@@ -86,11 +86,11 @@ void Renderer::Initialize(const std::string& title)
     return true;
 }*/
 
-void Renderer::EndFrame()
-{
-    // show render to user
-    Helper::SDL_RenderPresent498(renderer);
-}
+//void Renderer::EndFrame()
+//{
+//    // show render to user
+//    Helper::SDL_RenderPresent498(renderer);
+//}
 
 void Renderer::RenderImage(const std::string& imageName)
 {

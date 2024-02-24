@@ -36,8 +36,8 @@ public:
     void Initialize(const std::string& title);
 
     // returns false if end event triggered
-    bool StartFrame(std::vector<std::string> &introImages, int& index);
-    void EndFrame();
+   // bool StartFrame(std::vector<std::string> &introImages, int& index);
+   // void EndFrame();
     void Cleanup();
     void RenderImage(const std::string& imageName);
     void RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int x, int y);

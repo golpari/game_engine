@@ -41,7 +41,7 @@ public:
 
 	void ProcessActors(rapidjson::Document& doc);
 
-	void MovePlayer(std::string& movement);
+	void MovePlayer(std::string movement);
 
 	void MoveActors();
 

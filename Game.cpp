@@ -1,6 +1,6 @@
 #include "Game.h"
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer);
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene);
 
 
 void Game::GameStart() {
@@ -293,7 +293,7 @@ std::string Game::PrintDialogue() {
 
 void Game::RunScene()
 {
-	Renderer renderer;
+	Renderer renderer; // want a diff renderer for every scene
 
 	//get title, otherwise default to ""
 	std::string title = "";
@@ -311,10 +311,10 @@ void Game::RunScene()
 	while (true) {
 
 		// start frame and process events
-		if (!StartFrame(introImages, index, renderer)) {
+		if (!StartFrame(introImages, index, renderer, currentScene)) {
 			// in case of exit window event being triggered
 			RenderAll(renderer);
-			renderer.EndFrame();
+			Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 			exit(0);
 		}
 
@@ -334,7 +334,7 @@ void Game::RunScene()
 			RenderAll(renderer);
 		}
 
-		renderer.EndFrame();
+		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 	}
 	/*std::string input;
 	do {
@@ -403,7 +403,7 @@ void Game::RunScene()
 	} while (std::cin >> input && input != "quit");*/
 }
 
-//PRIVATE HELPER
+//private helpers
 void Game::Deallocate() {
 	// Deallocate memory pointed to by the pointers in the unordered_map
 	for (auto& map_entry : currentScene->actors_map) {
@@ -438,9 +438,17 @@ std::string Game::HudSetup()
 void Game::RenderAll(Renderer& renderer)
 {
 	// render all actors
-	for (Actor* actor : currentScene->actors) {
-		renderer.RenderActor(*actor, { 0, 0 });
+	if (currentScene->player == nullptr) {
+		for (Actor* actor : currentScene->actors) {
+			renderer.RenderActor(*actor, { 0, 0 });
+		}
 	}
+	else {
+		for (Actor* actor : currentScene->actors) {
+			renderer.RenderActor(*actor, currentScene->player->position);
+		}
+	}
+	
 	// render HUD icons and text
 	if (currentScene->player != nullptr) {
 		renderer.RenderHUD(HudSetup(), font, health, score);
@@ -484,7 +492,7 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	}
 }
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer)
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene)
 {
 	// Check Events
 	SDL_Event nextEvent;
@@ -516,6 +524,20 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 				index++;
 			}
 			// do move player stuff TODO
+			if (currentScene->player != nullptr) {
+				if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+					currentScene->MovePlayer("w");
+				}
+				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+					currentScene->MovePlayer("e");
+				}
+				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
+					currentScene->MovePlayer("n");
+				}
+				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+					currentScene->MovePlayer("s");
+				}
+			}
 		}
 	}
 
