@@ -350,6 +350,7 @@ void Game::RunScene()
 			loadNew = false;
 			SDL_RenderClear(renderer.renderer);
 			LoadScene(nextScene);
+			RenderAll(renderer);
 		}
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
