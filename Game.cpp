@@ -273,6 +273,8 @@ std::string Game::PrintDialogue(Renderer& renderer) {
 		}
 	}
 
+	if (loadNew) return "";
+
 	// for contact dialogue
 	auto actorsIt = currentScene->actors_map.find(currentScene->player->position);
 	if (actorsIt != currentScene->actors_map.end()) {
@@ -334,12 +336,6 @@ void Game::RunScene()
 		if (!playScene)
 			RunIntro(index, renderer, playAudio);
 
-		if (loadNew) {
-			loadNew = false;
-			SDL_RenderClear(renderer.renderer);
-			LoadScene(nextScene);
-		}
-
 		if (playAudio) {
 			PlayGameplayAudio();
 			playAudio = false;
@@ -350,7 +346,11 @@ void Game::RunScene()
 			RenderAll(renderer);
 		}
 
-		
+		if (loadNew) {
+			loadNew = false;
+			SDL_RenderClear(renderer.renderer);
+			LoadScene(nextScene);
+		}
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 	}
