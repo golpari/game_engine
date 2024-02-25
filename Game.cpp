@@ -382,9 +382,13 @@ void Game::RunScene()
 	renderer.Initialize(title);
 	while (true) {
 		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
-
 			// in case of exit window event being triggered
-			if (!win && !lose) RenderAll(renderer);
+			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);			
+
+			if (!win && !lose) {
+				if (introImages.empty()) SDL_RenderClear(renderer.renderer);
+				else RenderAll(renderer);
+			}
 			if (win) {
 				SDL_RenderClear(renderer.renderer);
 				if (!goodImage.empty()) renderer.RenderImage(goodImage);
@@ -608,9 +612,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 	SDL_Event nextEvent;
 	while (Helper::SDL_PollEvent498(&nextEvent)) {
 		if (nextEvent.type == SDL_QUIT) {
-			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
-			if (introImages.empty())
-				SDL_RenderClear(renderer.renderer);
+			
 			//std::cout << Helper::GetFrameNumber();
 			return false; // so that it is known to dump and end the frame for closeout event
 		}
