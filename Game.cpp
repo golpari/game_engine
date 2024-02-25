@@ -381,16 +381,26 @@ void Game::RunScene()
 
 	renderer.Initialize(title);
 	while (true) {
-
-		// start frame and process events
 		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
+
 			// in case of exit window event being triggered
-			RenderAll(renderer);
+			if (!win && !lose) RenderAll(renderer);
+			if (win) {
+				SDL_RenderClear(renderer.renderer);
+				if (!goodImage.empty()) renderer.RenderImage(goodImage);
+			}
+			else if (lose) {
+				SDL_RenderClear(renderer.renderer);
+				if (!badImage.empty()) renderer.RenderImage(badImage);
+			}
+
 			Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 			exit(0);
 		}
 
 		if (!win && !lose) {
+			// start frame and process events
+			
 			if (!playScene)
 				RunIntro(index, renderer, playAudio);
 
@@ -409,7 +419,7 @@ void Game::RunScene()
 				RenderAll(renderer);
 			}
 
-			if (loadNew) {
+			if (loadNew && !win && !lose) {
 				loadNew = false;
 				SDL_RenderClear(renderer.renderer);
 				LoadScene(nextScene);
@@ -529,8 +539,6 @@ std::string Game::HudSetup()
 
 void Game::RenderAll(Renderer& renderer)
 {
-	
-
 	/*** render all actors in their render order ***/
 
 	// sort the list of actors by render order for ease of rendering
