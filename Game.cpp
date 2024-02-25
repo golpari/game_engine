@@ -216,12 +216,12 @@ int Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 			if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".wav", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".wav").c_str()),
-					-1);
+					0);
 			}
 			else if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".ogg", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".ogg").c_str()),
-					-1);
+					0);
 			}
 		}
 		lose = true;
@@ -243,12 +243,12 @@ int Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 			if (EngineUtils::CheckPathExists("resources/audio/" + goodAudio + ".wav", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + goodAudio + ".wav").c_str()),
-					-1);
+					0);
 			}
 			else if (EngineUtils::CheckPathExists("resources/audio/" + goodAudio + ".ogg", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + goodAudio + ".ogg").c_str()),
-					-1);
+					0);
 			}
 		}
 		win = true;
@@ -262,12 +262,12 @@ int Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
 			if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".wav", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".wav").c_str()),
-					-1);
+					0);
 			}
 			else if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".ogg", false)) {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".ogg").c_str()),
-					-1);
+					0);
 			}
 		}
 		lose = true;
@@ -401,8 +401,11 @@ void Game::RunScene()
 			}
 
 			if (playScene) {
-				if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0)
+				//update actors every 60 frames
+				if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0) {
+					std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
 					currentScene->MoveActors();
+				}
 				RenderAll(renderer);
 			}
 
@@ -543,9 +546,6 @@ void Game::RenderAll(Renderer& renderer)
 			renderer.RenderActor(*actor, currentScene->player->position);
 		}
 	}
-
-	// reset the ordering of actors list to sorted by ID
-	std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
 	
 	//render dialogue / process it before rendering HUD
 	PrintDialogue(renderer);

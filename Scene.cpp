@@ -235,12 +235,12 @@ void Scene::updateActorPosition(Actor* actor, glm::vec2 newPos) {
 
 glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::ivec2& velocity) {
 	
-	int x = 0;
-	int y = 0;
+	int x = position.x;
+	int y = position.y;
 
 	// Update x and y components with velocity
-	x += position.x;
-	y += position.y;
+	x += velocity.x;
+	y += velocity.y;
 	glm::vec2 newPosition{ x, y };
 
 	//only return the updated position if its not blocked
