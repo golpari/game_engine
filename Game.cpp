@@ -387,7 +387,7 @@ void Game::RunScene()
 
 			if (!win && !lose) {
 				if (introImages.empty()) SDL_RenderClear(renderer.renderer);
-				else RenderAll(renderer);
+				RenderAll(renderer);
 			}
 			if (win) {
 				SDL_RenderClear(renderer.renderer);
