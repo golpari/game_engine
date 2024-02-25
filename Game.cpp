@@ -384,13 +384,13 @@ void Game::RunScene()
 		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
 
 			// in case of exit window event being triggered
-			if (!win && !lose) {
-				RenderAll(renderer);
-			}
+			if (!win && !lose) RenderAll(renderer);
 			if (win) {
+				SDL_RenderClear(renderer.renderer);
 				if (!goodImage.empty()) renderer.RenderImage(goodImage);
 			}
 			else if (lose) {
+				SDL_RenderClear(renderer.renderer);
 				if (!badImage.empty()) renderer.RenderImage(badImage);
 			}
 
@@ -400,7 +400,7 @@ void Game::RunScene()
 
 		if (!win && !lose) {
 			// start frame and process events
-			
+
 			if (!playScene)
 				RunIntro(index, renderer, playAudio);
 
@@ -438,6 +438,7 @@ void Game::RunScene()
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 	}
+
 	/*std::string input;
 	do {
 
