@@ -5,7 +5,7 @@ const int PLAY = 0;
 const int LOSE = 1;
 const int WIN = 2;
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene);
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene, bool playScene);
 
 
 void Game::GameStart() {
@@ -383,7 +383,7 @@ void Game::RunScene()
 	while (true) {
 
 		// start frame and process events
-		if (!StartFrame(introImages, index, renderer, currentScene)) {
+		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
 			// in case of exit window event being triggered
 			RenderAll(renderer);
 			Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
@@ -593,7 +593,7 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	}
 }
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene)
+bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene, bool playScene)
 {
 	// Check Events
 	SDL_Event nextEvent;
@@ -620,7 +620,7 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 				index++;
 			}
 			// do move player stuff TODO
-			if (currentScene->player != nullptr) {
+			if (currentScene->player != nullptr && playScene) {
 				if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
 					currentScene->MovePlayer("w");
 				}
