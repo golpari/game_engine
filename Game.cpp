@@ -381,12 +381,13 @@ void Game::RunScene()
 
 	renderer.Initialize(title);
 	while (true) {
-		SDL_RenderClear(renderer.renderer);
-
 		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
 
 			// in case of exit window event being triggered
-			if (!win && !lose) RenderAll(renderer);
+			if (!win && !lose) {
+				SDL_RenderClear(renderer.renderer);
+				RenderAll(renderer);
+			}
 			if (win) {
 				SDL_RenderClear(renderer.renderer);
 				if (!goodImage.empty()) renderer.RenderImage(goodImage);
