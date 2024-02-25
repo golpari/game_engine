@@ -385,15 +385,12 @@ void Game::RunScene()
 
 			// in case of exit window event being triggered
 			if (!win && !lose) {
-				SDL_RenderClear(renderer.renderer);
 				RenderAll(renderer);
 			}
 			if (win) {
-				SDL_RenderClear(renderer.renderer);
 				if (!goodImage.empty()) renderer.RenderImage(goodImage);
 			}
 			else if (lose) {
-				SDL_RenderClear(renderer.renderer);
 				if (!badImage.empty()) renderer.RenderImage(badImage);
 			}
 
