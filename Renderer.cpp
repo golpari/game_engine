@@ -95,7 +95,12 @@ void Renderer::Initialize(const std::string& title)
 void Renderer::RenderImage(const std::string& imageName)
 {
     // TODO dont load texture on every frame
-    SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + imageName + ".png").c_str());
+    // if texture not alrdy loaded
+    if (textures.find(imageName) == textures.end()) {
+        //load it
+        SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + imageName + ".png").c_str());
+        textures[imageName] = img;
+    }
 
     /*if (img == nullptr) {
         // Output the SDL error to the console or handle it as needed
@@ -105,12 +110,12 @@ void Renderer::RenderImage(const std::string& imageName)
 
     // get img w and h
     int w, h;
-    SDL_QueryTexture(img, NULL, NULL, &w, &h);
+    SDL_QueryTexture(textures[imageName], NULL, NULL, &w, &h);
     SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
     SDL_Point pivot_point = { w * 0.5, h };
     SDL_RenderCopyEx(
         renderer,
-        img,
+        textures[imageName],
         NULL,
         &destination_rect,
         0, // rotation angle
@@ -152,7 +157,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
     // first, texture must exist
     if (!actor.view_image.empty()) {
-            // if texture not alrdy loaded
+        // if texture not alrdy loaded
         if (textures.find(actor.view_image) == textures.end()) {
             //load it
             SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.view_image + ".png").c_str());
