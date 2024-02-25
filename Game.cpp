@@ -381,6 +381,8 @@ void Game::RunScene()
 
 	renderer.Initialize(title);
 	while (true) {
+		SDL_RenderClear(renderer.renderer);
+
 		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
 
 			// in case of exit window event being triggered
