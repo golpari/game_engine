@@ -39,6 +39,13 @@ public:
 	int score = 0;
 	bool loadNew = false;
 	std::string nextScene = "";
+	bool win = false;
+	bool lose = false;
+
+	std::string badImage = "";
+	std::string goodImage = "";
+	std::string badAudio = "";
+	std::string goodAudio = "";
 
 	Game() { currentScene = nullptr; }
 
@@ -54,9 +61,9 @@ public:
 
 	void LoadScene(std::string sceneName);
 
-	std::string CheckDialogue(std::string& dialogue, bool& scoredUpped);
+	int CheckDialogue(std::string& dialogue, bool& scoredUpped);
 
-	std::string PrintDialogue(Renderer& renderer);
+	int PrintDialogue(Renderer& renderer);
 
 	void RunScene();
 

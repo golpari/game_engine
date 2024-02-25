@@ -94,6 +94,7 @@ void Renderer::Initialize(const std::string& title)
 
 void Renderer::RenderImage(const std::string& imageName)
 {
+    // TODO dont load texture on every frame
     SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + imageName + ".png").c_str());
 
     /*if (img == nullptr) {
