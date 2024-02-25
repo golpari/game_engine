@@ -386,7 +386,7 @@ void Game::RunScene()
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);			
 
 			if (!win && !lose) {
-				SDL_RenderClear(renderer.renderer);
+				if (introImages.empty() || playScene) SDL_RenderClear(renderer.renderer);
 				RenderAll(renderer);
 			}
 			if (win) {
