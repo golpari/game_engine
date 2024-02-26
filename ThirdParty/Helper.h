@@ -24,8 +24,8 @@
  /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
  /* https://bit.ly/3OClfHc */
 
-#include "SDL_image.h"
-#include "SDL.h"
+#include "SDL2_image/SDL_image.h"
+#include "SDL2/SDL.h"
 
 enum InputStatus { NOT_INITIALIZED, INPUT_FILE_MISSING, INPUT_FILE_PRESENT };
 

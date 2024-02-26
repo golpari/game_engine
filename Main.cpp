@@ -2,11 +2,11 @@
 #include <unordered_map>
 #include <filesystem>
 
-#include <SDL.h>
-#include <SDL_events.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
+#include <SDL2_image/SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
 #include "Game.h"
 #include "ActorTemplate.h"
@@ -26,14 +26,3 @@ int main(int argc, char* argv[]) {
     gameManager.RunScene();
     return 0;
 }
-
-int main() {   
-    Game gameManager;
-    gameManager.GameStart();
-    gameManager.RunScene();
-
-    std::cout << gameManager.GameEnd(false);
-  
-    return 0; 
-}
-
