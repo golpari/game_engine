@@ -104,7 +104,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
@@ -132,7 +132,7 @@ if not exist "$(TargetDir)SDL2_ttf.dll" xcopy "$(ProjectDir)lib\SDL2_ttf.dll" "$
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
@@ -156,7 +156,7 @@ if not exist "$(TargetDir)SDL2_ttf.dll" xcopy "$(ProjectDir)lib\SDL2_ttf.dll" "$
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
@@ -184,7 +184,7 @@ if not exist "$(TargetDir)SDL2_ttf.dll" xcopy "$(ProjectDir)lib\SDL2_ttf.dll" "$
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL2_image.lib;$(ProjectDir)lib\SDL2_mixer.lib;$(ProjectDir)lib\SDL2_ttf.lib;$(ProjectDir)lib\SDL2.lib;$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>if not exist "$(TargetDir)SDL2.dll" xcopy "$(ProjectDir)lib\SDL2.dll" "$(TargetDir)"
