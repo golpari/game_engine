@@ -112,7 +112,7 @@ void Renderer::RenderImage(const std::string& imageName)
     int w, h;
     SDL_QueryTexture(textures[imageName], NULL, NULL, &w, &h);
     SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
-    SDL_Point pivot_point = { w * 0.5, h };
+    SDL_Point pivot_point = { static_cast<int>((w * 0.5)), h };
     SDL_RenderCopyEx(
         renderer,
         textures[imageName],
