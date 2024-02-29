@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		E702C1E32B8C347B0001F16B /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49D0C2B8BE08E008B384A /* Renderer.cpp */; };
+		E702C1F52B903C220001F16B /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E702C1F12B903C220001F16B /* SDL2_image.framework */; };
+		E702C1F62B903C220001F16B /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E702C1F22B903C220001F16B /* SDL2_mixer.framework */; };
+		E702C1F72B903C220001F16B /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E702C1F32B903C220001F16B /* SDL2_ttf.framework */; };
+		E702C1F82B903C220001F16B /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E702C1F42B903C220001F16B /* SDL2.framework */; };
 		E7D49CE22B677E70008B384A /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE02B677E6F008B384A /* Main.cpp */; };
 		E7D49CEB2B70D170008B384A /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE62B70D170008B384A /* Actor.cpp */; };
 		E7D49CEC2B70D170008B384A /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D49CE72B70D170008B384A /* Scene.cpp */; };
@@ -27,6 +31,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E702C1F12B903C220001F16B /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		E702C1F22B903C220001F16B /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		E702C1F32B903C220001F16B /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
+		E702C1F42B903C220001F16B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		E702C1F92B903FF50001F16B /* game_engine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = game_engine.entitlements; sourceTree = "<group>"; };
 		E7D49CCF2B676FFA008B384A /* game_engine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = game_engine; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D49CE02B677E6F008B384A /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		E7D49CE12B677E70008B384A /* ThirdParty */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThirdParty; sourceTree = "<group>"; };
@@ -47,15 +56,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E702C1F52B903C220001F16B /* SDL2_image.framework in Frameworks */,
+				E702C1F62B903C220001F16B /* SDL2_mixer.framework in Frameworks */,
+				E702C1F72B903C220001F16B /* SDL2_ttf.framework in Frameworks */,
+				E702C1F82B903C220001F16B /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E702C1F02B903C220001F16B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E702C1F12B903C220001F16B /* SDL2_image.framework */,
+				E702C1F22B903C220001F16B /* SDL2_mixer.framework */,
+				E702C1F32B903C220001F16B /* SDL2_ttf.framework */,
+				E702C1F42B903C220001F16B /* SDL2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E7D49CC62B676FFA008B384A = {
 			isa = PBXGroup;
 			children = (
+				E702C1F92B903FF50001F16B /* game_engine.entitlements */,
 				E7D49D0C2B8BE08E008B384A /* Renderer.cpp */,
 				E7D49D0A2B8BE08E008B384A /* Renderer.h */,
 				E7D49CE62B70D170008B384A /* Actor.cpp */,
@@ -69,6 +94,7 @@
 				E7D49CE02B677E6F008B384A /* Main.cpp */,
 				E7D49CE12B677E70008B384A /* ThirdParty */,
 				E7D49CD02B676FFA008B384A /* Products */,
+				E702C1F02B903C220001F16B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -291,28 +317,42 @@
 		E7D49CD72B676FFA008B384A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = game_engine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/**";
+				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SYSTEM_HEADER_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/SDL2.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_ttf.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_mixer.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_image.framework/Versions/A",
+				);
 			};
 			name = Debug;
 		};
 		E7D49CD82B676FFA008B384A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = game_engine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/**";
+				LD_RUNPATH_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SYSTEM_HEADER_SEARCH_PATHS = "";
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks/SDL2.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_ttf.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_mixer.framework/Versions/A",
+					"$(PROJECT_DIR)/Frameworks/SDL2_image.framework/Versions/A",
+				);
 			};
 			name = Release;
 		};
