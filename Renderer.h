@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <SDL2_ttf/SDL_ttf.h>
+#include "SDL2_ttf/SDL_ttf.h"
 #include <string>
 #include <unordered_map>
 
