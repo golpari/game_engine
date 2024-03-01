@@ -10,7 +10,7 @@ void Renderer::Initialize(const std::string& title)
     // FIRST THING, read in rendering json 
     bool processed = ProcessRenderingConfig();
 
-    //set up the camera offset info
+    //set up the camera offset info only if renderConfig processed
     if (processed) {
         if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
