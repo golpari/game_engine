@@ -27,8 +27,13 @@
  /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
  /* https://bit.ly/3OClfHc */
 
-#include "SDL2_image/SDL_image.h"
-#include "SDL2/SDL.h"
+#if linux || __WIN64 || __WIN32
+    #include "SDL_image.h"
+    #include "SDL.h"
+#else
+    #include "SDL2_image/SDL_image.h"
+    #include "SDL2/SDL.h"
+#endif
 
 enum InputStatus { NOT_INITIALIZED, INPUT_FILE_MISSING, INPUT_FILE_PRESENT };
 enum RenderLoggerStatus { RL_NOT_INITIALIZED, RL_NOT_ENABLED, RL_ENABLED };

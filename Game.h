@@ -15,7 +15,12 @@
 #include "rapidjson/document.h"
 #include "Renderer.h"
 #include "Scene.h"
-#include "SDL2_ttf/SDL_ttf.h"
+
+#if linux || __WIN64 || __WIN32
+    #include "SDL_ttf.h"
+#else
+    #include "SDL2_ttf/SDL_ttf.h"
+#endif
 
 class Scene;
 class Renderer;

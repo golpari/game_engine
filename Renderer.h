@@ -1,9 +1,13 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "SDL2_ttf/SDL_ttf.h"
-#include <string>
-#include <unordered_map>
+#if linux || __WIN64 || __WIN32
+    #include "SDL_ttf.h"
+#else
+    #include "SDL2_ttf/SDL_ttf.h"
+    #include <string>
+    #include <unordered_map>
+#endif
 
 #include "Actor.h"
 #include "EngineUtils.h"
