@@ -11,9 +11,10 @@ void Renderer::Initialize(const std::string& title)
     bool processed = ProcessRenderingConfig();
 
     //set up the camera offset info
-    if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
-    if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
-
+    if (processed) {
+        if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
+        if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
+    }
 
     // tell SDL what you want to do 
     SDL_Init(SDL_INIT_VIDEO);
