@@ -112,15 +112,12 @@ void Renderer::RenderImage(const std::string& imageName)
     int w, h;
     SDL_QueryTexture(textures[imageName], NULL, NULL, &w, &h);
     SDL_Rect destination_rect = { 0, 0, winWidth, winHeight };
-    SDL_Point pivot_point = { static_cast<int>((w * 0.5)), h };
-    SDL_RenderCopyEx(
+    //SDL_Point pivot_point = { static_cast<int>((w * 0.5)), h };
+    SDL_RenderCopy(
         renderer,
         textures[imageName],
         NULL,
-        &destination_rect,
-        0, // rotation angle
-        &pivot_point,
-        SDL_FLIP_NONE
+        &destination_rect
     );
 }
 
@@ -141,15 +138,12 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
 
     // Set the rendering space and render to screen
     SDL_Rect renderQuad = { 25, winHeight - 50 - (numTextsShown - 1 - index) * 50, surface->w, surface->h };
-    SDL_Point pivot_point = { x, y };
-    SDL_RenderCopyEx(
+    //SDL_Point pivot_point = { x, y };
+    SDL_RenderCopy(
         renderer,
         texture,
         NULL,
-        &renderQuad,
-        0, // rotation angle
-        &pivot_point,
-        SDL_FLIP_NONE
+        &renderQuad
     );
 }
 
@@ -201,7 +195,9 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         dstRect.h = h * std::abs(actor.scale.y);
 
         // Render the texture with the specified rotation and pivot point
-        SDL_RenderCopyEx(
+        Helper::SDL_RenderCopyEx498(
+            actor.actorID,
+            actor.actor_name,
             renderer,
             textures[actor.view_image],
             NULL,
