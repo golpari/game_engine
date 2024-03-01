@@ -10,10 +10,10 @@
 /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
 /* https://bit.ly/3OClfHc */
 
-#if linux || __WIN64 || __WIN32
-    #include "SDL_mixer.h"
-#else
+#if __APPLE__
     #include "SDL2_mixer/SDL_mixer.h"
+#else
+    #include "SDL_mixer.h"
 #endif
 
 #include "Helper.h"

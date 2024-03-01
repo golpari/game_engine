@@ -27,12 +27,12 @@
  /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
  /* https://bit.ly/3OClfHc */
 
-#if linux || __WIN64 || __WIN32
-    #include "SDL_image.h"
-    #include "SDL.h"
-#else
+#if __APPLE__
     #include "SDL2_image/SDL_image.h"
     #include "SDL2/SDL.h"
+#else
+    #include "SDL_image.h"
+    #include "SDL.h"
 #endif
 
 enum InputStatus { NOT_INITIALIZED, INPUT_FILE_MISSING, INPUT_FILE_PRESENT };

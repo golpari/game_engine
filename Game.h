@@ -16,10 +16,10 @@
 #include "Renderer.h"
 #include "Scene.h"
 
-#if linux || __WIN64 || __WIN32
-    #include "SDL_ttf.h"
-#else
+#if __APPLE__
     #include "SDL2_ttf/SDL_ttf.h"
+#else
+    #include "SDL_ttf.h"
 #endif
 
 class Scene;
