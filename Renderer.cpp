@@ -194,7 +194,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 
-        // Render the texture with the specified rotation and pivot point
+        // Render the texture with the specified rotation and pivot point, use rendercopyex498
         Helper::SDL_RenderCopyEx498(
             actor.actorID,
             actor.actor_name,
