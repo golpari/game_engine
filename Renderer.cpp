@@ -207,8 +207,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
         SDL_Rect dstRect;
-        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE) / zoomFactor;
-        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE) / zoomFactor;
+        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + (winWidth * 0.5f) / zoomFactor - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE);
+        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + (winHeight * 0.5f) / zoomFactor - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE);
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 
