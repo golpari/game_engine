@@ -48,6 +48,7 @@ public:
     void Cleanup();
     void RenderImage(const std::string& imageName);
     void RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int numTextsShown, int index);
+    void RenderActors(std::vector<Actor*> actors, Actor* player);
     void RenderActor(const Actor& actor, glm::vec2 playerPosition);
     void RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score);
 

@@ -549,16 +549,7 @@ void Game::RenderAll(Renderer& renderer)
 	// sort the list of actors by render order for ease of rendering
 	std::sort(currentScene->actors.begin(), currentScene->actors.end(), RenderComparator());
 
-	if (currentScene->player == nullptr) {
-		for (Actor* actor : currentScene->actors) {
-			renderer.RenderActor(*actor, { 0, 0 }); // if no player present, camera set at 0,0
-		}
-	}
-	else {
-		for (Actor* actor : currentScene->actors) {
-			renderer.RenderActor(*actor, currentScene->player->position);
-		}
-	}
+	renderer.RenderActors(currentScene->actors, currentScene->player);
 	
 	//render dialogue / process it before rendering HUD
 	PrintDialogue(renderer);

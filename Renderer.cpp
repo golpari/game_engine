@@ -15,10 +15,6 @@ void Renderer::Initialize(const std::string& title)
         if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
         if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
-
-        // adjust the camera positioning to take into account zoom
-        cam.cam_offset_x = cam.cam_offset_x - winWidth / zoomFactor; //not it, use chatgpt
-        //cam.cam_offset_y = cam.cam_offset_y - winHeight / zoomFactor;
     }
 
     // tell SDL what you want to do 
@@ -153,10 +149,22 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
     );
 }
 
+void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
+    SDL_RenderSetScale(renderer, zoomFactor, zoomFactor);
+    if (player == nullptr) {
+        for (Actor* actor : actors) {
+            RenderActor(*actor, { 0, 0 }); // if no player present, camera set at 0,0
+        }
+    }
+    else {
+        for (Actor* actor : actors) {
+            RenderActor(*actor, player->position);
+        }
+    }
+}
+
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
-    SDL_RenderSetScale(renderer, zoomFactor, zoomFactor);
-
     // first, texture must exist
     if (!actor.view_image.empty()) {
         // if texture not alrdy loaded
@@ -197,8 +205,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
         SDL_Rect dstRect;
-        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE);
-        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE);
+        dstRect.x = std::round(relativeXPos * PIXEL_SCALE + winWidth * 0.5f - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE) / zoomFactor;
+        dstRect.y = std::round(relativeYPos * PIXEL_SCALE + winHeight * 0.5f - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE) / zoomFactor;
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 
@@ -219,6 +227,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 
 void Renderer::RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score)
 {
+    SDL_RenderSetScale(renderer, 1, 1);
+
     // RENDER HP IMAGES
     SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + hp_image + ".png").c_str());
 
