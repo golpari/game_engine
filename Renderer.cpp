@@ -150,7 +150,7 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
 }
 
 void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
-    // scale actors w the zoom 
+    // scale actors w the zoom  
     SDL_RenderSetScale(renderer, zoomFactor, zoomFactor);
 
     if (player == nullptr) {
