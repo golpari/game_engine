@@ -33,6 +33,8 @@ public:
     int g = 255;
     int b = 255;
 
+    double zoomFactor = 1;
+
     SDL_Renderer* renderer = nullptr;
     Camera cam;
 

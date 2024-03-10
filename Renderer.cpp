@@ -14,6 +14,11 @@ void Renderer::Initialize(const std::string& title)
     if (processed) {
         if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
+        if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
+
+        // adjust the camera positioning to take into account zoom
+        cam.cam_offset_x = cam.cam_offset_x - winWidth / zoomFactor; //not it, use chatgpt
+        //cam.cam_offset_y = cam.cam_offset_y - winHeight / zoomFactor;
     }
 
     // tell SDL what you want to do 
@@ -150,6 +155,8 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
 
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
+    SDL_RenderSetScale(renderer, zoomFactor, zoomFactor);
+
     // first, texture must exist
     if (!actor.view_image.empty()) {
         // if texture not alrdy loaded
