@@ -416,11 +416,11 @@ void Game::RunScene()
 			}
 
 			if (playScene) {
-				//update actors every 60 frames
-				if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0) {
+				//instead of updating actors every 60 frames, update EVERY FRAME
+				//if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0) {
 					std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
 					currentScene->MoveActors();
-				}
+				//}
 				RenderAll(renderer);
 			}
 
