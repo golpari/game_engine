@@ -118,7 +118,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	}
 }
 
-void Scene::MovePlayer(std::string movement)
+void Scene::MovePlayer(std::string movement, float speed)
 {
 	//if not valid movement, do nothing
 	if (movement != "n" &&
@@ -127,29 +127,33 @@ void Scene::MovePlayer(std::string movement)
 		movement != "w")
 		return;
 
-	int x = player->position.x;
-	int y = player->position.y;
+	float x = player->position.x;
+	float y = player->position.y;
 	// Temporary variables to hold new positions
-	int newX = x;
-	int newY = y;
+	float newX = x;
+	float newY = y;
 
 	// Determine new position based on movement direction
 	if (movement == "n") {
 	//if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-		newY = y - 1;
+		newY = y - speed;
 	}
 	else if (movement == "e") {
-		newX = x + 1;
+		newX = x + speed;
 	}
 	else if (movement == "s") {
-		newY = y + 1;
+		newY = y + speed;
 	}
 	else if (movement == "w") {
-		newX = x - 1;
+		newX = x - speed;
 	}
 
-	// Check for blocking at the new position
 	glm::vec2 tempPosition{ newX, newY };
+
+	// normalize the vector if diagonal
+	if (newX != 0 && newY != 0) glm::normalize(tempPosition);
+
+	// Check for blocking at the new position
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
 		return;
 

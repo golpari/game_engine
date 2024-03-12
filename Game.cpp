@@ -19,6 +19,7 @@ void Game::GameStart() {
 	if (out_gameConfig.HasMember("game_over_good_image")) goodImage = out_gameConfig["game_over_good_image"].GetString();
 	if (out_gameConfig.HasMember("game_over_bad_audio")) badAudio = out_gameConfig["game_over_bad_audio"].GetString();
 	if (out_gameConfig.HasMember("game_over_good_audio")) goodAudio = out_gameConfig["game_over_good_audio"].GetString();
+	if (out_gameConfig.HasMember("player_movement_speed")) playerSpeed = out_gameConfig["player_movement_speed"].GetFloat();
 
 	/*this->LoadInitialScene(out_gameConfig);
 
@@ -381,7 +382,7 @@ void Game::RunScene()
 
 	renderer.Initialize(title);
 	while (true) {
-		if (!StartFrame(introImages, index, renderer, currentScene, playScene)) {
+		if (!StartFrame(index, renderer, playScene)) {
 			// in case of exit window event being triggered
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);			
 
@@ -597,7 +598,7 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	}
 }
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene, bool playScene)
+bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 {
 	// Check Events
 	SDL_Event nextEvent;
@@ -624,16 +625,16 @@ bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& ren
 			// do move player stuff TODO
 			if (currentScene->player != nullptr && playScene) {
 				if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-					currentScene->MovePlayer("w");
+					currentScene->MovePlayer("w", playerSpeed);
 				}
 				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-					currentScene->MovePlayer("e");
+					currentScene->MovePlayer("e", playerSpeed);
 				}
 				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
-					currentScene->MovePlayer("n");
+					currentScene->MovePlayer("n", playerSpeed);
 				}
 				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-					currentScene->MovePlayer("s");
+					currentScene->MovePlayer("s", playerSpeed);
 				}
 			}
 		}

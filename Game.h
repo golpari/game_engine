@@ -46,6 +46,7 @@ public:
 	std::string nextScene = "";
 	bool win = false;
 	bool lose = false;
+	float playerSpeed = 0.02;
 
 	std::string badImage = "";
 	std::string goodImage = "";
@@ -82,5 +83,7 @@ private:
 	std::string HudSetup();
 
 	void RenderAll(Renderer& renderer);
+
+	bool StartFrame(int& index, Renderer& renderer, bool playScene);
 };
 #endif
