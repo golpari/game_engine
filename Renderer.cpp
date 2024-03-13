@@ -156,7 +156,7 @@ void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
 
     if (player == nullptr) {
         for (Actor* actor : actors) {
-            RenderActor(*actor, { 0, 0 }); // if no player present, camera set at 0,0
+            RenderActor(*actor, { 0, 0 }); //if no player present, camera set at 0,0
         }
     }
     else {
