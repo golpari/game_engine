@@ -384,12 +384,13 @@ void Game::RunScene()
 	while (true) {
 		if (!StartFrame(index, renderer, playScene)) {
 			// in case of exit window event being triggered
-			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);			
+			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);	
+
+			std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
+			currentScene->MoveActors();
 
 			if (!win && !lose) {
 				if (introImages.empty() || playScene) SDL_RenderClear(renderer.renderer);
-				std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
-				currentScene->MoveActors();
 				RenderAll(renderer);
 			}
 			if (win) {
