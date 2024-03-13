@@ -15,6 +15,7 @@ void Renderer::Initialize(const std::string& title)
         if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
         if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
+        if (out_renderingConfig.HasMember("cam_ease_factor")) camEasefactor = out_renderingConfig["cam_ease_factor "].GetFloat();
     }
 
     // tell SDL what you want to do 
@@ -160,11 +161,15 @@ void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
     }
     else {
         for (Actor* actor : actors) {
+            //dont render directly off player->position
+            // render with the camera ease too!
+            //glm::vec2 newCamPos = glm::mix(current_cam_pos, player_current_pos, cam_ease_factor);
             RenderActor(*actor, player->position);
         }
     }
 }
 
+//playerPosition is where the actor will be rendered, a better term would be 'renderPosition'
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
     // first, texture must exist

@@ -388,6 +388,8 @@ void Game::RunScene()
 
 			if (!win && !lose) {
 				if (introImages.empty() || playScene) SDL_RenderClear(renderer.renderer);
+				std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
+				currentScene->MoveActors();
 				RenderAll(renderer);
 			}
 			if (win) {

@@ -16,6 +16,8 @@
 #include "Helper.h"
 
 struct Camera {
+    float xPos = 0;
+    float yPos = 0;
     float cam_offset_x = 0;
     float cam_offset_y = 0;
 };
@@ -27,13 +29,13 @@ class Renderer
 
     int winWidth = 640;
     int winHeight = 360;
+    double zoomFactor = 1;
+    float camEasefactor = 1;
 
 public:
     int r = 255;
     int g = 255;
     int b = 255;
-
-    double zoomFactor = 1;
 
     SDL_Renderer* renderer = nullptr;
     Camera cam;
