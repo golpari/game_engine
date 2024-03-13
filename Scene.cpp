@@ -136,22 +136,24 @@ void Scene::MovePlayer(std::string movement, float speed)
 	// Determine new position based on movement direction
 	if (movement == "n") {
 	//if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-		newY = y - speed;
+		newY = y - 1;
 	}
 	else if (movement == "e") {
-		newX = x + speed;
+		newX = x + 1;
 	}
 	else if (movement == "s") {
-		newY = y + speed;
+		newY = y + 1;
 	}
 	else if (movement == "w") {
-		newX = x - speed;
+		newX = x - 1;
 	}
 
-	glm::vec2 tempPosition{ newX, newY };
+	glm::vec2 playerDir{ newX, newY };
+	glm::vec2 tempPosition;
 
 	// normalize the vector if diagonal
-	if (newX != 0 && newY != 0) glm::normalize(tempPosition);
+	if (glm::length(playerDir) > 0.0001f) tempPosition = glm::normalize(playerDir) * speed;
+	else tempPosition = playerDir * speed;
 
 	// Check for blocking at the new position
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
