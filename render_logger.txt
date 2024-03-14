@@ -19,7 +19,7 @@ frame:actor_id:actor_name
 0:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 0:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 0:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-0:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+0:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 0:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 1:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 1:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -37,7 +37,7 @@ frame:actor_id:actor_name
 1:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 1:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 1:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-1:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+1:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 1:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 2:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 2:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -55,7 +55,7 @@ frame:actor_id:actor_name
 2:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 2:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 2:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-2:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+2:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 2:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 3:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 3:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -73,7 +73,7 @@ frame:actor_id:actor_name
 3:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 3:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 3:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-3:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+3:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 3:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 4:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 4:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -91,7 +91,7 @@ frame:actor_id:actor_name
 4:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 4:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 4:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-4:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+4:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 4:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 5:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 5:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -109,7 +109,7 @@ frame:actor_id:actor_name
 5:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 5:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 5:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-5:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+5:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 5:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 6:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 6:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -127,7 +127,7 @@ frame:actor_id:actor_name
 6:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 6:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 6:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-6:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+6:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 6:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 7:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 7:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -145,7 +145,7 @@ frame:actor_id:actor_name
 7:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 7:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 7:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-7:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+7:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 7:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 8:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 8:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -163,7 +163,7 @@ frame:actor_id:actor_name
 8:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 8:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 8:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-8:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+8:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 8:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 9:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 9:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -181,7 +181,7 @@ frame:actor_id:actor_name
 9:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 9:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 9:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-9:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+9:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 9:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 10:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 10:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -199,7 +199,7 @@ frame:actor_id:actor_name
 10:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 10:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 10:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-10:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+10:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 10:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 11:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 11:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -217,7 +217,7 @@ frame:actor_id:actor_name
 11:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 11:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 11:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-11:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+11:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 11:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 12:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 12:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -235,7 +235,7 @@ frame:actor_id:actor_name
 12:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 12:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 12:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-12:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+12:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 12:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 13:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 13:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -253,7 +253,7 @@ frame:actor_id:actor_name
 13:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 13:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 13:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-13:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+13:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 13:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 14:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 14:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -271,7 +271,7 @@ frame:actor_id:actor_name
 14:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 14:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 14:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-14:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+14:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 14:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 15:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 15:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -289,7 +289,7 @@ frame:actor_id:actor_name
 15:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 15:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 15:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-15:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+15:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 15:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 16:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 16:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -307,7 +307,7 @@ frame:actor_id:actor_name
 16:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 16:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 16:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-16:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+16:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 16:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 17:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 17:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -325,7 +325,7 @@ frame:actor_id:actor_name
 17:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 17:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 17:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-17:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+17:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 17:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 18:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 18:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -343,7 +343,7 @@ frame:actor_id:actor_name
 18:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 18:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 18:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-18:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+18:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 18:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 19:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 19:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -361,7 +361,7 @@ frame:actor_id:actor_name
 19:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 19:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 19:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-19:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+19:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 19:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 20:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 20:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -379,7 +379,7 @@ frame:actor_id:actor_name
 20:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 20:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 20:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-20:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+20:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 20:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 21:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 21:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -397,7 +397,7 @@ frame:actor_id:actor_name
 21:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 21:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 21:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-21:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+21:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 21:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 22:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 22:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -415,7 +415,7 @@ frame:actor_id:actor_name
 22:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 22:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 22:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-22:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+22:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 22:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 23:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 23:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -433,7 +433,7 @@ frame:actor_id:actor_name
 23:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 23:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 23:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-23:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+23:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 23:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 24:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 24:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -451,7 +451,7 @@ frame:actor_id:actor_name
 24:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 24:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 24:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-24:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+24:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 24:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 25:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 25:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -469,7 +469,7 @@ frame:actor_id:actor_name
 25:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 25:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 25:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-25:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+25:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 25:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 26:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 26:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -487,7 +487,7 @@ frame:actor_id:actor_name
 26:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 26:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 26:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-26:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+26:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 26:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 27:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 27:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -505,7 +505,7 @@ frame:actor_id:actor_name
 27:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 27:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 27:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-27:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+27:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 27:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 28:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 28:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -523,7 +523,7 @@ frame:actor_id:actor_name
 28:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 28:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 28:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-28:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+28:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 28:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 29:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 29:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -541,7 +541,7 @@ frame:actor_id:actor_name
 29:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 29:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 29:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-29:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+29:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 29:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 30:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 30:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -559,7 +559,7 @@ frame:actor_id:actor_name
 30:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 30:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 30:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-30:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+30:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 30:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 31:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 31:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -577,7 +577,7 @@ frame:actor_id:actor_name
 31:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 31:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 31:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-31:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+31:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 31:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 32:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 32:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -595,7 +595,7 @@ frame:actor_id:actor_name
 32:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 32:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 32:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-32:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+32:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 32:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 33:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 33:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -613,7 +613,7 @@ frame:actor_id:actor_name
 33:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 33:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 33:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-33:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+33:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 33:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 34:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 34:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -631,7 +631,7 @@ frame:actor_id:actor_name
 34:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 34:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 34:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-34:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+34:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 34:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 35:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 35:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -649,7 +649,7 @@ frame:actor_id:actor_name
 35:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 35:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 35:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-35:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+35:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 35:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 36:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 36:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -667,7 +667,7 @@ frame:actor_id:actor_name
 36:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 36:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 36:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-36:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+36:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 36:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 37:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 37:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -685,7 +685,7 @@ frame:actor_id:actor_name
 37:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 37:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 37:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-37:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+37:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 37:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 38:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 38:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -703,7 +703,7 @@ frame:actor_id:actor_name
 38:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 38:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 38:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-38:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+38:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 38:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 39:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 39:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -721,7 +721,7 @@ frame:actor_id:actor_name
 39:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 39:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 39:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-39:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+39:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 39:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 40:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 40:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -739,7 +739,7 @@ frame:actor_id:actor_name
 40:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 40:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 40:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-40:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+40:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 40:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 41:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 41:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -757,7 +757,7 @@ frame:actor_id:actor_name
 41:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 41:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 41:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-41:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+41:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 41:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 42:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 42:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -775,7 +775,7 @@ frame:actor_id:actor_name
 42:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 42:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 42:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-42:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+42:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 42:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 43:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 43:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -793,7 +793,7 @@ frame:actor_id:actor_name
 43:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 43:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 43:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-43:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+43:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 43:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 44:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 44:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -811,7 +811,7 @@ frame:actor_id:actor_name
 44:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 44:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 44:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-44:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+44:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 44:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 45:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 45:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -829,7 +829,7 @@ frame:actor_id:actor_name
 45:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 45:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 45:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-45:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+45:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 45:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 46:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 46:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -847,7 +847,7 @@ frame:actor_id:actor_name
 46:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 46:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 46:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-46:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+46:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 46:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 47:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 47:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -865,7 +865,7 @@ frame:actor_id:actor_name
 47:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 47:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 47:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-47:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+47:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 47:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 48:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 48:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -883,7 +883,7 @@ frame:actor_id:actor_name
 48:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 48:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 48:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-48:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+48:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 48:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 49:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 49:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -901,7 +901,7 @@ frame:actor_id:actor_name
 49:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 49:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 49:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-49:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+49:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 49:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1
 50:0:tile dstrect 66 -10 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 50:1:tile dstrect 66 90 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
@@ -919,5 +919,5 @@ frame:actor_id:actor_name
 50:13:tile dstrect 466 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 50:14:tile dstrect 566 290 100 100 angle 0 center 50 50 flip 0 renderscale 1 1
 50:15:player dstrect 280 73 80 167 angle 0 center 40 167 flip 0 renderscale 1 1
-50:16:crown dstrect 271 -60 491 300 angle 0 center 245 300 flip 0 renderscale 1 1
+50:16:crown dstrect 270 -60 491 300 angle 0 center 246 300 flip 0 renderscale 1 1
 50:17:villy dstrect 75 73 82 167 angle 0 center 41 167 flip 0 renderscale 1 1

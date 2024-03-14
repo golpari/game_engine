@@ -14,10 +14,10 @@ bool Scene::CheckBlocking(glm::vec2& position)
 void Scene::ProcessActors(rapidjson::Document& doc)
 {
 	std::string name = "";
-	float x = 0;
-	float y = 0;
-	float vel_x = 0;
-	float vel_y = 0;
+	double x = 0;
+	double y = 0;
+	double vel_x = 0;
+	double vel_y = 0;
 	char view = '?';
 	bool blocking = false;
 	std::string nearby_dialogue = "";
@@ -80,10 +80,10 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 
 			// make the actor overwrite template values as needed 
 			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
-			if (actor.HasMember("transform_position_x")) { x = actor["transform_position_x"].GetFloat(); }
-			if (actor.HasMember("transform_position_y")) { y = actor["transform_position_y"].GetFloat(); }
-			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetFloat(); }
-			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetFloat(); }
+			if (actor.HasMember("transform_position_x")) { x = actor["transform_position_x"].GetDouble(); }
+			if (actor.HasMember("transform_position_y")) { y = actor["transform_position_y"].GetDouble(); }
+			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetDouble(); }
+			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetDouble(); }
 			if (actor.HasMember("view")) { view = *actor["view"].GetString(); }
 			if (actor.HasMember("blocking")) { blocking = actor["blocking"].GetBool(); }
 			if (actor.HasMember("nearby_dialogue")) { nearby_dialogue = actor["nearby_dialogue"].GetString(); }
@@ -118,7 +118,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	}
 }
 
-void Scene::MovePlayer(std::string movement, float speed)
+void Scene::MovePlayer(std::string movement, double speed)
 {
 	//if not valid movement, do nothing
 	if (movement != "n" &&
@@ -127,33 +127,30 @@ void Scene::MovePlayer(std::string movement, float speed)
 		movement != "w")
 		return;
 
-	float x = player->position.x;
-	float y = player->position.y;
-	// Temporary variables to hold new positions
-	float newX = x;
-	float newY = y;
+	double x = player->position.x;
+	double y = player->position.y;
+	glm::vec2 playerDir{ 0, 0 };
 
 	// Determine new position based on movement direction
 	if (movement == "n") {
-	//if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-		newY = y - 1;
+		playerDir += glm::vec2(0, -1);
 	}
 	else if (movement == "e") {
-		newX = x + 1;
+		playerDir += glm::vec2(1, 0);
 	}
 	else if (movement == "s") {
-		newY = y + 1;
+		playerDir += glm::vec2(0, 1);
 	}
 	else if (movement == "w") {
-		newX = x - 1;
+		playerDir += glm::vec2(-1, 0);
 	}
 
-	glm::vec2 playerDir{ newX, newY };
+	
 	glm::vec2 tempPosition;
 
 	// normalize the vector if diagonal
-	if (glm::length(playerDir) > 0.0001f) tempPosition = player->position + (glm::normalize(playerDir) * speed);
-	else tempPosition = player->position + (playerDir * speed);
+	if (glm::length(playerDir) > 0.001f) tempPosition = player->position + ((glm::normalize(playerDir) * static_cast<float>(speed)));
+	else tempPosition = player->position + (playerDir * static_cast<float>(speed));
 
 	// Check for blocking at the new position
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
@@ -241,8 +238,8 @@ void Scene::updateActorPosition(Actor* actor, glm::vec2 newPos) {
 
 glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::vec2& velocity) {
 	
-	int x = position.x;
-	int y = position.y;
+	double x = position.x;
+	double y = position.y;
 
 	// Update x and y components with velocity
 	x += velocity.x;

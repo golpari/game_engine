@@ -9,10 +9,10 @@ class ActorTemplate
 {
 public:
 	std::string name = "";
-	float pos_x = 0;
-	float pos_y = 0;
-	float vel_y = 0;
-	float vel_x = 0;
+	double pos_x = 0;
+	double pos_y = 0;
+	double vel_y = 0;
+	double vel_x = 0;
 	char view = '?';
 	bool blocking = false;
 	std::string nearby_dialogue = "";
@@ -28,7 +28,7 @@ public:
 	double pivot_offsetY = 0.0; //TODO STD OPTOINAL
 	double render_order;
 
-	ActorTemplate(std::string actor_name_in, /*char view_in, */float pos_x_in, float pos_y_in, float vel_x_in, float vel_y_in,
+	ActorTemplate(std::string actor_name_in, /*char view_in, */double pos_x_in, double pos_y_in, double vel_x_in, double vel_y_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in,
 		std::string view_image_in, double scaleX_in, double scaleY_in, double rotation_in, 
 		double pivot_offsetX_in, double pivot_offsetY_in, double render_order_in)

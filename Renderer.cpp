@@ -194,8 +194,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         SDL_QueryTexture(textures[actor.view_image], NULL, NULL, &w, &h);
 
         // get pivot offset
-        double pivotX = (w * 0.5f);
-        double pivotY = (h * 0.5f);
+        double pivotX = (w * 0.5);
+        double pivotY = (h * 0.5);
         if (actor.pivot_offsetX.has_value()) {
             pivotX = actor.pivot_offsetX.value();
         }
@@ -204,16 +204,19 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y);
+        //double relativeXPos = std::round(actor.position.x - playerPosition.x);
+        //double relativeYPos = std::round(actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
         pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
         pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
+        double newPosX = static_cast<int>(std::round((actor.position.x - playerPosition.x) * PIXEL_SCALE) - pivotSDLPoint.x);
+        double newPosY = static_cast<int>(std::round((actor.position.y - playerPosition.y) * PIXEL_SCALE) - pivotSDLPoint.y);
+
         SDL_Rect dstRect;
-        dstRect.x = static_cast<int>(std::round(relativeXPos * PIXEL_SCALE + (winWidth * 0.5f) / zoomFactor - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE));
-        dstRect.y = static_cast<int>(std::round(relativeYPos * PIXEL_SCALE + (winHeight * 0.5f) / zoomFactor - pivotSDLPoint.y - cam.cam_offset_y * PIXEL_SCALE));
+        dstRect.x = static_cast<int>(newPosX + std::round((winWidth * 0.5) / zoomFactor - cam.cam_offset_x * PIXEL_SCALE));
+        dstRect.y = static_cast<int>(newPosY + std::round((winHeight * 0.5) / zoomFactor- cam.cam_offset_y * PIXEL_SCALE));
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 

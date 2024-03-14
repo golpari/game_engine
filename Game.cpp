@@ -16,7 +16,7 @@ void Game::GameStart() {
 	if (out_gameConfig.HasMember("game_over_good_image")) goodImage = out_gameConfig["game_over_good_image"].GetString();
 	if (out_gameConfig.HasMember("game_over_bad_audio")) badAudio = out_gameConfig["game_over_bad_audio"].GetString();
 	if (out_gameConfig.HasMember("game_over_good_audio")) goodAudio = out_gameConfig["game_over_good_audio"].GetString();
-	if (out_gameConfig.HasMember("player_movement_speed")) playerSpeed = out_gameConfig["player_movement_speed"].GetFloat();
+	if (out_gameConfig.HasMember("player_movement_speed")) playerSpeed = out_gameConfig["player_movement_speed"].GetDouble();
 
 	/*this->LoadInitialScene(out_gameConfig);
 
@@ -639,13 +639,13 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 				if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
 					currentScene->MovePlayer("w", playerSpeed);
 				}
-				else if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
+				if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
 					currentScene->MovePlayer("e", playerSpeed);
 				}
-				else if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
+				if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
 					currentScene->MovePlayer("n", playerSpeed);
 				}
-				else if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
+				if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
 					currentScene->MovePlayer("s", playerSpeed);
 				}
 			}

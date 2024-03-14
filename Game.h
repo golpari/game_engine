@@ -47,7 +47,7 @@ public:
 	std::string nextScene = "";
 	bool win = false;
 	bool lose = false;
-	float playerSpeed = 0.02;
+	double playerSpeed = 0.02f;
 
 	std::string badImage = "";
 	std::string goodImage = "";

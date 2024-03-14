@@ -16,6 +16,7 @@
 #include "Helper.h"
 
 struct Camera {
+    
     float xPos = 0;
     float yPos = 0;
     float cam_offset_x = 0;
