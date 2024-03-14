@@ -15,7 +15,7 @@ public:
 	std::string actor_name;
 	int actorID;
 	glm::vec2 position;
-	glm::ivec2 velocity;
+	glm::vec2 velocity;
 	//char view;
 	bool blocking;
 	std::string nearby_dialogue;
@@ -30,7 +30,7 @@ public:
 
 	std::optional<double> render_order;
 
-	Actor(std::string actor_name_in, /*char view_in, */glm::vec2 position_in, glm::ivec2 initial_velocity_in,
+	Actor(std::string actor_name_in, /*char view_in, */glm::vec2 position_in, glm::vec2 initial_velocity_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in,
 		std::string view_image_in, glm::vec2 scale_in, double rotation_in, std::optional<double> pivot_offsetX_in, 
 		std::optional<double> pivot_offsetY_in, std::optional<double> render_order_in)

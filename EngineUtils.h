@@ -62,10 +62,10 @@ public:
 			// process the template
 
 			std::string name = "";
-			int x = 0;
-			int y = 0;
-			int vel_x = 0;
-			int vel_y = 0;
+			float x = 0;
+			float y = 0;
+			float vel_x = 0;
+			float vel_y = 0;
 			char view = '?';
 			bool blocking = false;
 			std::string nearby_dialogue = "";
@@ -80,10 +80,10 @@ public:
 			double render_order;
 
 			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
-			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetInt(); }
-			if (out_template.HasMember("transform_position_y")) { y = out_template["transform_position_y"].GetInt(); }
-			if (out_template.HasMember("vel_x")) { vel_x = out_template["vel_x"].GetInt(); }
-			if (out_template.HasMember("vel_y")) { vel_y = out_template["vel_y"].GetInt(); }
+			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetFloat(); }
+			if (out_template.HasMember("transform_position_y")) { y = out_template["transform_position_y"].GetFloat(); }
+			if (out_template.HasMember("vel_x")) { vel_x = out_template["vel_x"].GetFloat(); }
+			if (out_template.HasMember("vel_y")) { vel_y = out_template["vel_y"].GetFloat(); }
 			if (out_template.HasMember("view")) { view = *out_template["view"].GetString(); }
 			if (out_template.HasMember("blocking")) { blocking = out_template["blocking"].GetBool(); }
 			if (out_template.HasMember("nearby_dialogue")) { nearby_dialogue = out_template["nearby_dialogue"].GetString(); }

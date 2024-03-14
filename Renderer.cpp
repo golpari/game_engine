@@ -27,7 +27,7 @@ void Renderer::Initialize(const std::string& title)
     SetCameraResolution(processed);
 
     // Create the window
-    SDL_Window* window = SDL_CreateWindow(
+    SDL_Window* window = Helper::SDL_CreateWindow498(
         title.c_str(),                  //window title
         SDL_WINDOWPOS_CENTERED,         // initial x position
         SDL_WINDOWPOS_CENTERED,         // initial y position
@@ -194,8 +194,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         SDL_QueryTexture(textures[actor.view_image], NULL, NULL, &w, &h);
 
         // get pivot offset
-        double pivotX = std::round(w * 0.5);
-        double pivotY = std::round(h * 0.5);
+        double pivotX = (w * 0.5f);
+        double pivotY = (h * 0.5f);
         if (actor.pivot_offsetX.has_value()) {
             pivotX = actor.pivot_offsetX.value();
         }
@@ -204,12 +204,12 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = std::round(actor.position.x - playerPosition.x);
-        float relativeYPos = std::round(actor.position.y - playerPosition.y);
+        float relativeXPos = (actor.position.x - playerPosition.x);
+        float relativeYPos = (actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
-        pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
-        pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
+        pivotSDLPoint.x = (pivotX * std::abs(actor.scale.x));
+        pivotSDLPoint.y = (pivotY * std::abs(actor.scale.y));
 
         SDL_Rect dstRect;
         dstRect.x = static_cast<int>(std::round(relativeXPos * PIXEL_SCALE + (winWidth * 0.5f) / zoomFactor - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE));

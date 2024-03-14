@@ -55,7 +55,7 @@ private:
 	void updateActorPosition(Actor* actor, glm::vec2 newPos);
 
 	// chat help
-	glm::vec2 getNewPosFromVelocity(glm::vec2& position, glm::ivec2& velocity);
+	glm::vec2 getNewPosFromVelocity(glm::vec2& position, glm::vec2& velocity);
 };
 
 #endif

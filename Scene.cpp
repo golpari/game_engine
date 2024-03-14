@@ -14,10 +14,10 @@ bool Scene::CheckBlocking(glm::vec2& position)
 void Scene::ProcessActors(rapidjson::Document& doc)
 {
 	std::string name = "";
-	int x = 0;
-	int y = 0;
-	int vel_x = 0;
-	int vel_y = 0;
+	float x = 0;
+	float y = 0;
+	float vel_x = 0;
+	float vel_y = 0;
 	char view = '?';
 	bool blocking = false;
 	std::string nearby_dialogue = "";
@@ -80,10 +80,10 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 
 			// make the actor overwrite template values as needed 
 			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
-			if (actor.HasMember("transform_position_x")) { x = actor["transform_position_x"].GetInt(); }
-			if (actor.HasMember("transform_position_y")) { y = actor["transform_position_y"].GetInt(); }
-			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetInt(); }
-			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetInt(); }
+			if (actor.HasMember("transform_position_x")) { x = actor["transform_position_x"].GetFloat(); }
+			if (actor.HasMember("transform_position_y")) { y = actor["transform_position_y"].GetFloat(); }
+			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetFloat(); }
+			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetFloat(); }
 			if (actor.HasMember("view")) { view = *actor["view"].GetString(); }
 			if (actor.HasMember("blocking")) { blocking = actor["blocking"].GetBool(); }
 			if (actor.HasMember("nearby_dialogue")) { nearby_dialogue = actor["nearby_dialogue"].GetString(); }
@@ -239,7 +239,7 @@ void Scene::updateActorPosition(Actor* actor, glm::vec2 newPos) {
 	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
 }
 
-glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::ivec2& velocity) {
+glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::vec2& velocity) {
 	
 	int x = position.x;
 	int y = position.y;
