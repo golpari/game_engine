@@ -204,12 +204,12 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        float relativeXPos = (actor.position.x - playerPosition.x);
-        float relativeYPos = (actor.position.y - playerPosition.y);
+        float relativeXPos = std::round(actor.position.x - playerPosition.x);
+        float relativeYPos = std::round(actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
-        pivotSDLPoint.x = (pivotX * std::abs(actor.scale.x));
-        pivotSDLPoint.y = (pivotY * std::abs(actor.scale.y));
+        pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
+        pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
 
         SDL_Rect dstRect;
         dstRect.x = static_cast<int>(std::round(relativeXPos * PIXEL_SCALE + (winWidth * 0.5f) / zoomFactor - pivotSDLPoint.x - cam.cam_offset_x * PIXEL_SCALE));
