@@ -5,9 +5,6 @@ const int PLAY = 0;
 const int LOSE = 1;
 const int WIN = 2;
 
-bool StartFrame(std::vector<std::string>& introImages, int& index, Renderer& renderer, Scene* currentScene, bool playScene);
-
-
 void Game::GameStart() {
 
 	EngineUtils::CheckPathExists("resources/", true);
@@ -366,6 +363,8 @@ int Game::PrintDialogue(Renderer& renderer) {
 
 void Game::RunScene()
 {
+	Input::Init(); //setup the keycodes
+
 	Renderer renderer; // want a diff renderer for every scene
 
 	//get title, otherwise default to ""
@@ -379,6 +378,12 @@ void Game::RunScene()
 	int index = 0;
 	bool playAudio = false;
 	bool playScene = false;
+
+	//if no intro, then jump right to playScene
+	if (introImages.empty()) {
+		playScene = true;
+		playAudio = true;
+	}
 
 	renderer.Initialize(title);
 	while (true) {
@@ -606,6 +611,10 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 	// Check Events
 	SDL_Event nextEvent;
 	while (Helper::SDL_PollEvent498(&nextEvent)) {
+
+		// process each event to update the keys
+		Input::ProcessEvent(nextEvent);
+
 		if (nextEvent.type == SDL_QUIT) {
 			
 			//std::cout << Helper::GetFrameNumber();
@@ -617,26 +626,26 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 			// Handle left mouse click
 			index++;
 		}
-
-		// Keyboard event: SDL_KEYDOWN is for key press
-		else if (nextEvent.type == SDL_KEYDOWN) {
+		
+		// check keycodes
+		{
 			// Check for spacebar or enter key using scancode
-			if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+			if (Input::GetKeyDown(SDL_SCANCODE_SPACE) || Input::GetKeyDown(SDL_SCANCODE_RETURN)) {
 				// Handle spacebar or enter key press
 				index++;
 			}
-			// do move player stuff TODO
+			// do move player stuff
 			if (currentScene->player != nullptr && playScene) {
-				if (nextEvent.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+				if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
 					currentScene->MovePlayer("w", playerSpeed);
 				}
-				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+				else if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
 					currentScene->MovePlayer("e", playerSpeed);
 				}
-				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_UP) {
+				else if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
 					currentScene->MovePlayer("n", playerSpeed);
 				}
-				else if (nextEvent.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+				else if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
 					currentScene->MovePlayer("s", playerSpeed);
 				}
 			}

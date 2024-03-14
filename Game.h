@@ -15,6 +15,7 @@
 #include "rapidjson/document.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "Input.h"
 
 #if __APPLE__
     #include "SDL2_ttf/SDL_ttf.h"

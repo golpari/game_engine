@@ -152,8 +152,8 @@ void Scene::MovePlayer(std::string movement, float speed)
 	glm::vec2 tempPosition;
 
 	// normalize the vector if diagonal
-	if (glm::length(playerDir) > 0.0001f) tempPosition = glm::normalize(playerDir) * speed;
-	else tempPosition = playerDir * speed;
+	if (glm::length(playerDir) > 0.0001f) tempPosition = player->position + (glm::normalize(playerDir) * speed);
+	else tempPosition = player->position + (playerDir * speed);
 
 	// Check for blocking at the new position
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
