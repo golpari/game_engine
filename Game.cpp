@@ -610,6 +610,7 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 {
 	// Check Events
 	SDL_Event nextEvent;
+	glm::vec2 playerDir;
 	while (Helper::SDL_PollEvent498(&nextEvent)) {
 
 		// process each event to update the keys
@@ -635,20 +636,23 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 				index++;
 			}
 			// do move player stuff
+			playerDir = glm::vec2( 0, 0 );
 			if (currentScene->player != nullptr && playScene) {
 				if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
-					currentScene->MovePlayer("w", playerSpeed);
+					playerDir += glm::vec2(-1, 0);
 				}
 				if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
-					currentScene->MovePlayer("e", playerSpeed);
+					playerDir += glm::vec2(1, 0);
 				}
 				if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
-					currentScene->MovePlayer("n", playerSpeed);
+					playerDir += glm::vec2(0, -1);
 				}
 				if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
-					currentScene->MovePlayer("s", playerSpeed);
+					playerDir += glm::vec2(0, 1);
 				}
+				currentScene->MovePlayer(playerDir, playerSpeed);
 			}
+			
 		}
 	}
 

@@ -340,7 +340,6 @@ if not exist "$(TargetDir)SDL2_ttf.dll" xcopy "$(ProjectDir)lib\SDL2_ttf.dll" "$
     <ClInclude Include="ActorTemplate.h" />
     <ClInclude Include="EngineUtils.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Image.h" />
     <ClInclude Include="include\begin_code.h" />
     <ClInclude Include="include\close_code.h" />
     <ClInclude Include="include\SDL.h" />
@@ -747,7 +746,6 @@ if not exist "$(TargetDir)SDL2_ttf.dll" xcopy "$(ProjectDir)lib\SDL2_ttf.dll" "$
     <ClInclude Include="ThirdParty\rapidjson\writer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Image.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />

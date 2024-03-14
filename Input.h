@@ -39,6 +39,42 @@ public:
 	}
 
 	static void Update() {
+		// Temporarily store states to avoid changing states in the middle of iterating
+		std::unordered_map<SDL_Scancode, INPUT_STATE> tempStates;
+
+		// Determine new states based on current states and recent events
+		for (const auto& keyState : keyboard_states) {
+			auto key = keyState.first;
+			auto state = keyState.second;
+			// Transition from just pressed to continuously pressed
+			if (state == INPUT_STATE_JUST_BECAME_DOWN) {
+				tempStates[key] = INPUT_STATE_DOWN;
+			}
+			// Transition from just released to continuously released
+			else if (state == INPUT_STATE_JUST_BECAME_UP) {
+				tempStates[key] = INPUT_STATE_UP;
+			}
+		}
+
+		// Apply the temporary states
+		for (const auto& state : tempStates) {
+			keyboard_states[state.first] = state.second;
+		}
+
+		// Process just-pressed and just-released keys
+		for (SDL_Scancode key : just_became_down_scancodes) {
+			keyboard_states[key] = INPUT_STATE_JUST_BECAME_DOWN;
+		}
+		for (SDL_Scancode key : just_became_up_scancodes) {
+			keyboard_states[key] = INPUT_STATE_JUST_BECAME_UP;
+		}
+
+		// Clear the lists for the next frame
+		just_became_down_scancodes.clear();
+		just_became_up_scancodes.clear();
+	}
+
+	/*static void Update() {
 
 		// update all the values for continued keyPresses
 		for (auto& it : keyboard_states) {
@@ -70,10 +106,11 @@ public:
 		// empty these lists for use on the next frame
 		just_became_down_scancodes.clear();
 		just_became_up_scancodes.clear();
-	}
+	}*/
 
 	static bool GetKey(SDL_Scancode keycode) {
-		if (keyboard_states[keycode] == INPUT_STATE_DOWN || keyboard_states[keycode] == INPUT_STATE_JUST_BECAME_DOWN) return true;
+		if (keyboard_states[keycode] == INPUT_STATE_DOWN || keyboard_states[keycode] == INPUT_STATE_JUST_BECAME_DOWN)
+			return true;
 		return false;
 	}
 	static bool GetKeyDown(SDL_Scancode keycode) {

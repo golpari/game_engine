@@ -208,8 +208,8 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         //double relativeYPos = std::round(actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
-        pivotSDLPoint.x = std::round(pivotX * std::abs(actor.scale.x));
-        pivotSDLPoint.y = std::round(pivotY * std::abs(actor.scale.y));
+        pivotSDLPoint.x = static_cast<int>(std::round(pivotX * std::abs(actor.scale.x)));
+        pivotSDLPoint.y = static_cast<int>(std::round(pivotY * std::abs(actor.scale.y)));
 
         double newPosX = static_cast<int>(std::round((actor.position.x - playerPosition.x) * PIXEL_SCALE) - pivotSDLPoint.x);
         double newPosY = static_cast<int>(std::round((actor.position.y - playerPosition.y) * PIXEL_SCALE) - pivotSDLPoint.y);
