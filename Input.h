@@ -33,9 +33,6 @@ public:
 		else if (e.type == SDL_KEYUP) {
 			just_became_up_scancodes.push_back(e.key.keysym.scancode);
 		}
-
-		//update the keyboard states once per frame
-		Update();
 	}
 
 	static void Update() {

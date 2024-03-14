@@ -451,72 +451,6 @@ void Game::RunScene()
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 	}
-
-	/*std::string input;
-	do {
-
-
-		//update player position based on the movement
-		if (!firstRun) currentScene->MoveActors();
-		firstRun = false;
-
-		currentScene->MovePlayer(input);
-
-		//currentScene->RenderScene();
-
-		// check + print nearby & contact dialogue & eng game if needed
-		std::string endgame = PrintDialogue();
-
-		// print player health and score
-		ss << "health : " << health << ", "
-			<< "score : " << score << '\n';
-
-		//if relevant, print relevant game end string  and return
-		if (endgame != "") {
-			ss << endgame;
-			std::cout << ss.str();
-			ss.clear();
-			ss.str("");
-			exit(0);
-		}
-
-		if (loadNew) {
-			loadNew = false;
-			std::cout << ss.str();
-			ss.clear();
-			ss.str("");
-			LoadScene(nextScene);
-			currentScene->RenderScene();
-
-			// check + print nearby & contact dialogue & eng game if needed
-			std::string endgame = PrintDialogue();
-
-			// print player health and score
-			ss << "health : " << health << ", "
-				<< "score : " << score << '\n';
-
-			//prompt user
-			ss << "Please make a decision..." << '\n';
-
-			//explain user options
-			ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
-
-			std::cout << ss.str();
-			ss.clear();
-			ss.str("");
-		}
-		else {
-			//prompt user
-			ss << "Please make a decision..." << '\n';
-
-			//explain user options
-			ss << "Your options are \"n\", \"e\", \"s\", \"w\", \"quit\"" << '\n';
-
-			std::cout << ss.str();
-			ss.clear();
-			ss.str("");
-		}
-	} while (std::cin >> input && input != "quit");*/
 }
 
 //private helpers
@@ -627,33 +561,35 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 			// Handle left mouse click
 			index++;
 		}
-		
-		// check keycodes
-		{
-			// Check for spacebar or enter key using scancode
-			if (Input::GetKeyDown(SDL_SCANCODE_SPACE) || Input::GetKeyDown(SDL_SCANCODE_RETURN)) {
-				// Handle spacebar or enter key press
-				index++;
-			}
-			// do move player stuff
-			playerDir = glm::vec2( 0, 0 );
-			if (currentScene->player != nullptr && playScene) {
-				if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
-					playerDir += glm::vec2(-1, 0);
-				}
-				if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
-					playerDir += glm::vec2(1, 0);
-				}
-				if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
-					playerDir += glm::vec2(0, -1);
-				}
-				if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
-					playerDir += glm::vec2(0, 1);
-				}
-				currentScene->MovePlayer(playerDir, playerSpeed);
-			}
-			
+	}
+
+	Input::Update();
+
+	// check keycodes
+	{
+		// Check for spacebar or enter key using scancode
+		if (Input::GetKeyDown(SDL_SCANCODE_SPACE) || Input::GetKeyDown(SDL_SCANCODE_RETURN)) {
+			// Handle spacebar or enter key press
+			index++;
 		}
+		// do move player stuff
+		playerDir = glm::vec2(0, 0);
+		if (currentScene->player != nullptr && playScene) {
+			if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
+				playerDir += glm::vec2(-1, 0);
+			}
+			if (Input::GetKey(SDL_SCANCODE_RIGHT) || Input::GetKey(SDL_SCANCODE_D)) {
+				playerDir += glm::vec2(1, 0);
+			}
+			if (Input::GetKey(SDL_SCANCODE_UP) || Input::GetKey(SDL_SCANCODE_W)) {
+				playerDir += glm::vec2(0, -1);
+			}
+			if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
+				playerDir += glm::vec2(0, 1);
+			}
+			currentScene->MovePlayer(playerDir, playerSpeed);
+		}
+
 	}
 
 	SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);
