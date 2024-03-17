@@ -18,7 +18,7 @@ void Renderer::Initialize(const std::string& title, Actor* player)
         if (out_renderingConfig.HasMember("cam_ease_factor")) camEasefactor = out_renderingConfig["cam_ease_factor"].GetFloat();
     }
 
-    // set the initial cam position to playerPos, otherwise default is (0,0)
+    // set the initial cam position to playerPos, otherwise default is (0,0) 
     // need to do this for camEase
     if (player != nullptr) {
         cam.position = player->position;
