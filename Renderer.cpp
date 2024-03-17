@@ -5,7 +5,7 @@ const int PIXEL_SCALE = 100;
 SDL_RendererFlip GetFlipType(const Actor& actor);
 
 // draw window
-void Renderer::Initialize(const std::string& title)
+void Renderer::Initialize(const std::string& title, Actor* player)
 {
     // FIRST THING, read in rendering json 
     bool processed = ProcessRenderingConfig();
@@ -16,6 +16,12 @@ void Renderer::Initialize(const std::string& title)
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
         if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
         if (out_renderingConfig.HasMember("cam_ease_factor")) camEasefactor = out_renderingConfig["cam_ease_factor "].GetFloat();
+    }
+
+    // set the initial cam position to playerPos, otherwise default is (0,0)
+    // need to do this for camEase
+    if (player != nullptr) {
+        cam.position = player->position;
     }
 
     // tell SDL what you want to do 
@@ -156,15 +162,16 @@ void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
 
     if (player == nullptr) {
         for (Actor* actor : actors) {
-            RenderActor(*actor, { 0, 0 }); //if no player present, camera set at 0,0
+            RenderActor(*actor, cam.position); //if no player present, camera set at 0,0
         }
     }
     else {
         for (Actor* actor : actors) {
             //dont render directly off player->position
             // render with the camera ease too!
-            //glm::vec2 newCamPos = glm::mix(current_cam_pos, player_current_pos, cam_ease_factor);
-            RenderActor(*actor, player->position);
+            glm::vec2 newCamPos = glm::mix(cam.position, player->position, camEasefactor);
+            cam.position = newCamPos;
+            RenderActor(*actor, cam.position);
         }
     }
 }
@@ -183,11 +190,6 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 
         //now that the texture is loaded. render it. 
 
-        /*if (img == nullptr) {
-            // Output the SDL error to the console or handle it as needed
-            std::cerr << "Unable to load texture. SDL_Error: " << SDL_GetError() << std::endl;
-            return; // Exit the function if the texture couldn't be loaded
-        }*/
 
         // Get img width (w) and height (h)
         int w, h;
@@ -204,8 +206,6 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         }
 
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
-        //double relativeXPos = std::round(actor.position.x - playerPosition.x);
-        //double relativeYPos = std::round(actor.position.y - playerPosition.y);
 
         SDL_Point pivotSDLPoint;
         pivotSDLPoint.x = static_cast<int>(std::round(pivotX * std::abs(actor.scale.x)));

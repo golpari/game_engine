@@ -17,8 +17,7 @@
 
 struct Camera {
     
-    float xPos = 0;
-    float yPos = 0;
+    glm::vec2 position = { 0, 0 };
     float cam_offset_x = 0;
     float cam_offset_y = 0;
 };
@@ -43,7 +42,7 @@ public:
 
     Renderer() {}
 
-    void Initialize(const std::string& title);
+    void Initialize(const std::string& title, Actor* player); // second param added so that cam position can be initially set to player pos if player exists
 
     // returns false if end event triggered
    // bool StartFrame(std::vector<std::string> &introImages, int& index);

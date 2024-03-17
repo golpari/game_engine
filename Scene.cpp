@@ -123,7 +123,9 @@ void Scene::MovePlayer(glm::vec2& direction, double speed)
 	glm::vec2 tempPosition;
 
 	// normalize the vector if diagonal
-	if (glm::length(direction) > 0.001f) tempPosition = player->position + ((glm::normalize(direction) * static_cast<float>(speed)));
+	if (glm::length(direction) > 0.001f) 
+		tempPosition = player->position + ((glm::normalize(direction) * static_cast<float>(speed)));
+
 	else tempPosition = player->position + (direction * static_cast<float>(speed));
 
 	// Check for blocking at the new position

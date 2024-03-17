@@ -28,9 +28,12 @@ public:
 	{
 		// check if the current event is a key up or key down event
 		if (e.type == SDL_KEYDOWN) {
+			keyboard_states[e.key.keysym.scancode] = INPUT_STATE_JUST_BECAME_DOWN;
 			just_became_down_scancodes.push_back(e.key.keysym.scancode);
 		}
+		
 		else if (e.type == SDL_KEYUP) {
+			keyboard_states[e.key.keysym.scancode] = INPUT_STATE_JUST_BECAME_UP;
 			just_became_up_scancodes.push_back(e.key.keysym.scancode);
 		}
 	}
@@ -62,9 +65,13 @@ public:
 		for (SDL_Scancode key : just_became_down_scancodes) {
 			keyboard_states[key] = INPUT_STATE_JUST_BECAME_DOWN;
 		}
+		if (Helper::GetFrameNumber() == 22) {
+
+		}
 		for (SDL_Scancode key : just_became_up_scancodes) {
 			keyboard_states[key] = INPUT_STATE_JUST_BECAME_UP;
 		}
+		
 
 		// Clear the lists for the next frame
 		just_became_down_scancodes.clear();

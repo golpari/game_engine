@@ -385,7 +385,7 @@ void Game::RunScene()
 		playAudio = true;
 	}
 
-	renderer.Initialize(title);
+	renderer.Initialize(title, currentScene->player);
 	while (true) {
 		if (!StartFrame(index, renderer, playScene)) {
 			// in case of exit window event being triggered
@@ -545,6 +545,7 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 	// Check Events
 	SDL_Event nextEvent;
 	glm::vec2 playerDir;
+	Input::Update();
 	while (Helper::SDL_PollEvent498(&nextEvent)) {
 
 		// process each event to update the keys
