@@ -166,11 +166,11 @@ void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
         }
     }
     else {
+        glm::vec2 newCamPos = glm::mix(cam.position, player->position, camEasefactor);
+        cam.position = newCamPos;
         for (Actor* actor : actors) {
             //dont render directly off player->position
             // render with the camera ease too!
-            glm::vec2 newCamPos = glm::mix(cam.position, player->position, camEasefactor);
-            cam.position = newCamPos;
             RenderActor(*actor, cam.position);
         }
     }
