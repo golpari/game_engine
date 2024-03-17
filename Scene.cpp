@@ -99,7 +99,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			
 			// create actor variable and store it in list of actors
 			glm::vec2 position{ x, y };
-			glm::ivec2 velocity{ vel_x, vel_y };
+			glm::vec2 velocity{ vel_x, vel_y };
 			glm::vec2 scale{ scaleX, scaleY };
 
 			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };

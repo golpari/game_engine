@@ -36,7 +36,7 @@ public:
 		std::optional<double> pivot_offsetY_in, std::optional<double> render_order_in)
 		: actor_name(std::move(actor_name_in)), // Use std::move for strings
 		actorID(guuid++), // Directly initialize to 0
-		position(std::move(position_in)), // Use std::move if glm::ivec2 has a move constructor; otherwise, it's fine as is
+		position(std::move(position_in)), // Use std::move if glm::vec2 has a move constructor; otherwise, it's fine as is
 		velocity(std::move(initial_velocity_in)), // Same as position
 		/*view(view_in),*/
 		blocking(blocking_in),
