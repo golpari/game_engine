@@ -11,7 +11,7 @@
 #ifndef INPUTHELPER_H
 #define INPUTHELPER_H
 
-#define HELPER_VERSION 0.8
+#define HELPER_VERSION 0.81
 
 #include <unordered_map>
 #include <queue>
@@ -27,13 +27,8 @@
  /* Here is the instructor solution folder structure (if we make $(ProjectDir) a include directory, these paths are valid. */
  /* https://bit.ly/3OClfHc */
 
-#if __APPLE__
-	#include "SDL2/SDL.h"
-	#include "SDL_image/SDL_image.h"
-#else
-	#include "SDL.h"
-	#include "SDL_image.h"
-#endif
+#include "SDL_image/SDL_image.h"
+#include "SDL2/SDL.h"
 
 enum InputStatus { NOT_INITIALIZED, INPUT_FILE_MISSING, INPUT_FILE_PRESENT };
 enum RenderLoggerStatus { RL_NOT_INITIALIZED, RL_NOT_ENABLED, RL_ENABLED };
@@ -333,7 +328,7 @@ private:
 	}
 
 	static bool IsLoggingMode() {
-		return true; //IsEnvVariableSet("RENDERLOGGER");
+		return IsEnvVariableSet("RENDERLOGGER");
 	}
 
 	/* The engine will aim for 60fps (16ms per frame) during a normal play session. */
@@ -379,7 +374,11 @@ private:
 			std::getline(iss, frameStr, ';');
 			int frameNumber = std::stoi(frameStr);
 
-			std::queue<SDL_Event> new_queue;
+			if (frame_to_user_input.find(frameNumber) == frame_to_user_input.end())
+				frame_to_user_input[frameNumber] = std::queue<SDL_Event>();
+
+			std::queue<SDL_Event>& new_queue = frame_to_user_input[frameNumber];
+
 			while (std::getline(iss, eventStr, ';')) {
 
 				/* Identify event type */
@@ -446,8 +445,6 @@ private:
 
 				new_queue.push(fabricated_sdl_event);
 			}
-
-			frame_to_user_input[frameNumber] = new_queue;
 		}
 
 		input_status = INPUT_FILE_PRESENT;
