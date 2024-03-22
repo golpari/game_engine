@@ -186,7 +186,7 @@ void Scene::AnimatePlayer(glm::vec2& direction, bool flip) {
 	/*If the actor attempts to move east, the x component should become positive (regardless of its original value).
 	If the actor attempts to move west, the x component should become negative (regardless of its original value. */
 	if (direction.x > 0) {
-		if (flip) player->scale.x = std::abs(player ->scale.x);
+		if (flip) player->scale.x = std::abs(player->scale.x);
 	}
 	else if (direction.x < 0) {
 		if (flip) player->scale.x = -1 * std::abs(player->scale.x);
