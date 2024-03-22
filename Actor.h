@@ -29,11 +29,16 @@ public:
 	std::optional<double> pivot_offsetY;
 
 	std::optional<double> render_order;
+	std::optional<std::string> view_image_back;
+	std::string currentView = ""; //this is to track which view is being displayed at any given time 
+	//-- actor pivot always rendered wrt view_image but thats not always the one displayed
+	bool movement_bounce_enabled = false;
+	bool moving = false;
 
 	Actor(std::string actor_name_in, /*char view_in, */glm::vec2 position_in, glm::vec2 initial_velocity_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in,
-		std::string view_image_in, glm::vec2 scale_in, double rotation_in, std::optional<double> pivot_offsetX_in, 
-		std::optional<double> pivot_offsetY_in, std::optional<double> render_order_in)
+		std::string view_image_in, glm::vec2 scale_in, double rotation_in, std::optional<double> pivot_offsetX_in,
+		std::optional<double> pivot_offsetY_in, std::optional<double> render_order_in, std::optional<std::string> view_image_back_in, bool movement_bounce_in)
 		: actor_name(std::move(actor_name_in)), // Use std::move for strings
 		actorID(guuid++), // Directly initialize to 0
 		position(std::move(position_in)), // Use std::move if glm::vec2 has a move constructor; otherwise, it's fine as is
@@ -50,7 +55,10 @@ public:
 		rotation(rotation_in),
 		pivot_offsetX(pivot_offsetX_in),
 		pivot_offsetY(pivot_offsetY_in),
-		render_order(render_order_in)
+		render_order(render_order_in),
+		view_image_back(view_image_back_in),
+		currentView(view_image_in),
+		movement_bounce_enabled(movement_bounce_in)
 	{}
 
 

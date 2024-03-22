@@ -16,6 +16,7 @@ void Renderer::Initialize(const std::string& title, Actor* player)
         if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
         if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
         if (out_renderingConfig.HasMember("cam_ease_factor")) camEasefactor = out_renderingConfig["cam_ease_factor"].GetFloat();
+        if (out_renderingConfig.HasMember("x_scale_actor_flipping_on_movement")) animateActorsOnMovement = out_renderingConfig["x_scale_actor_flipping_on_movement"].GetBool();
     }
 
     // set the initial cam position to playerPos, otherwise default is (0,0) 
@@ -180,8 +181,13 @@ void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
     // first, texture must exist
-    if (!actor.view_image.empty()) {
+    if (!actor.currentView.empty()) {
         // if texture not alrdy loaded
+        if (textures.find(actor.currentView) == textures.end()) {
+            //load it
+            SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.currentView + ".png").c_str());
+            textures[actor.currentView] = img;
+        }
         if (textures.find(actor.view_image) == textures.end()) {
             //load it
             SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + actor.view_image + ".png").c_str());
@@ -193,7 +199,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 
         // Get img width (w) and height (h)
         int w, h;
-        SDL_QueryTexture(textures[actor.view_image], NULL, NULL, &w, &h);
+        SDL_QueryTexture(textures[actor.view_image], NULL, NULL, &w, &h); //calculate pivot wrt the view_image
 
         // get pivot offset
         double pivotX = (w * 0.5);
@@ -205,14 +211,20 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
             pivotY = actor.pivot_offsetY.value();
         }
 
+        // bouncing movement
+        glm::vec2 extra_view_offset = { 0, 0 };
+        if (actor.movement_bounce_enabled && actor.moving) {
+            extra_view_offset = glm::vec2(0, -glm::abs(glm::sin(Helper::GetFrameNumber() * 0.15f)) * 10.0f);
+        }
+
         // Calculate the actor's position relative to the playerPosition, such that the player is always centered
 
         SDL_Point pivotSDLPoint;
         pivotSDLPoint.x = static_cast<int>(std::round(pivotX * std::abs(actor.scale.x)));
         pivotSDLPoint.y = static_cast<int>(std::round(pivotY * std::abs(actor.scale.y)));
 
-        double newPosX = static_cast<int>(std::round((actor.position.x - playerPosition.x) * PIXEL_SCALE) - pivotSDLPoint.x);
-        double newPosY = static_cast<int>(std::round((actor.position.y - playerPosition.y) * PIXEL_SCALE) - pivotSDLPoint.y);
+        double newPosX = static_cast<int>(std::round((actor.position.x - playerPosition.x) * PIXEL_SCALE) - pivotSDLPoint.x + extra_view_offset.x);
+        double newPosY = static_cast<int>(std::round((actor.position.y - playerPosition.y) * PIXEL_SCALE) - pivotSDLPoint.y + extra_view_offset.y);
 
         SDL_Rect dstRect;
         dstRect.x = static_cast<int>(newPosX + std::round((winWidth * 0.5) / zoomFactor - cam.cam_offset_x * PIXEL_SCALE));
@@ -220,12 +232,14 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
         dstRect.w = w * std::abs(actor.scale.x);
         dstRect.h = h * std::abs(actor.scale.y);
 
+        
+
         // Render the texture with the specified rotation and pivot point, use rendercopyex498
         Helper::SDL_RenderCopyEx498(
             actor.actorID,
             actor.actor_name,
             renderer,
-            textures[actor.view_image],
+            textures[actor.currentView],
             NULL,
             &dstRect,
             actor.rotation, // rotation angle

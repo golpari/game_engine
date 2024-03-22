@@ -41,9 +41,13 @@ public:
 
 	void ProcessActors(rapidjson::Document& doc);
 
-	void MovePlayer(glm::vec2& direction, double speed);
+	void MovePlayer(glm::vec2& direction, double speed, bool flip);
 
-	void MoveActors();
+	void MoveActors(bool animate);
+
+	void AnimateActor(Actor* actor, bool flip);
+
+	void AnimatePlayer(glm::vec2& direction, bool flip);
 
 	void RenderScene();
 

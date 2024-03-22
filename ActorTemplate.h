@@ -27,11 +27,13 @@ public:
 	double pivot_offsetX = 0.0; // ACTUAL DEFAUlt iS 0.5*w and 0.5*h !!! TODO: process differently
 	double pivot_offsetY = 0.0; //TODO STD OPTOINAL
 	double render_order;
+	std::string view_image_back;
+	bool movementBounce = false;
 
 	ActorTemplate(std::string actor_name_in, /*char view_in, */double pos_x_in, double pos_y_in, double vel_x_in, double vel_y_in,
 		bool blocking_in, std::string nearby_dialogue_in, std::string contact_dialogue_in,
 		std::string view_image_in, double scaleX_in, double scaleY_in, double rotation_in, 
-		double pivot_offsetX_in, double pivot_offsetY_in, double render_order_in)
+		double pivot_offsetX_in, double pivot_offsetY_in, double render_order_in, std::string view_image_back_in, bool movementBounce_in)
 		: name(std::move(actor_name_in)), // Use std::move for strings
 		pos_x(pos_x_in), 
 		pos_y(pos_y_in),
@@ -50,7 +52,9 @@ public:
 		rotation(rotation_in),
 		pivot_offsetX(pivot_offsetX_in),
 		pivot_offsetY(pivot_offsetY_in),
-		render_order(render_order_in)
+		render_order(render_order_in),
+		view_image_back(view_image_back_in),
+		movementBounce(movementBounce_in)
 	{}
 
 

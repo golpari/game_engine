@@ -392,7 +392,7 @@ void Game::RunScene()
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);	
 
 			std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
-			currentScene->MoveActors();
+			currentScene->MoveActors(renderer.animateActorsOnMovement);
 
 			if (!win && !lose) {
 				if (introImages.empty() || playScene) SDL_RenderClear(renderer.renderer);
@@ -427,7 +427,7 @@ void Game::RunScene()
 				//instead of updating actors every 60 frames, update EVERY FRAME
 				//if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0) {
 					std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
-					currentScene->MoveActors();
+					currentScene->MoveActors(renderer.animateActorsOnMovement);
 				//}
 				RenderAll(renderer);
 			}
@@ -588,7 +588,7 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 			if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
 				playerDir += glm::vec2(0, 1);
 			}
-			currentScene->MovePlayer(playerDir, playerSpeed);
+			currentScene->MovePlayer(playerDir, playerSpeed, renderer.animateActorsOnMovement);
 		}
 
 	}

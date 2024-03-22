@@ -36,6 +36,7 @@ public:
     int r = 255;
     int g = 255;
     int b = 255;
+    bool animateActorsOnMovement;
 
     SDL_Renderer* renderer = nullptr;
     Camera cam;

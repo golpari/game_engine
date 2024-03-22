@@ -78,6 +78,8 @@ public:
 			double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
 			double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
 			double render_order;
+			std::string view_image_back = "";
+			bool movementBounce = false;
 
 			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
 			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetFloat(); }
@@ -96,10 +98,12 @@ public:
 			if (out_template.HasMember("view_pivot_offset_x")) { pivot_offsetX = out_template["view_pivot_offset_x"].GetDouble(); }
 			if (out_template.HasMember("view_pivot_offset_y")) { pivot_offsetY = out_template["view_pivot_offset_y"].GetDouble(); }
 			if (out_template.HasMember("render_order")) { render_order = out_template["render_order"].GetDouble(); }
+			if (out_template.HasMember("view_image_back")) { view_image_back = out_template["view_image_back"].GetString(); }
+			if (out_template.HasMember("movement_bounce_enabled")) { movementBounce = out_template["movement_bounce_enabled"].GetBool(); }
 
 			// create template variable
 			ActorTemplate* new_template = new ActorTemplate(name, /*view, */x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY, render_order);
+				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce);
 			// store template in map of templates
 			templates[templateName] = new_template;
 		}

@@ -49,6 +49,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			std::optional<double> pivot_offsetX; // actual default is actor_view.w * 0.5
 			std::optional<double> pivot_offsetY; // actual default is actor_view.h * 0.5
 			std::optional<double> render_order; //default is transform_y if render_order not set
+			std::optional<std::string> view_image_back;
+			bool movementBounce = false;
 
 			//PROCESS EACH ACTOR
 			if (actor.HasMember("template")) {
@@ -76,6 +78,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				pivot_offsetX = actorTemplate->pivot_offsetX;
 				pivot_offsetY = actorTemplate->pivot_offsetY;
 				render_order = actorTemplate->render_order;
+				view_image_back = actorTemplate->view_image_back;
+				movementBounce = actorTemplate->movementBounce;
 			}
 
 			// make the actor overwrite template values as needed 
@@ -96,6 +100,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			if (actor.HasMember("view_pivot_offset_x")) { pivot_offsetX = actor["view_pivot_offset_x"].GetDouble(); }
 			if (actor.HasMember("view_pivot_offset_y")) { pivot_offsetY = actor["view_pivot_offset_y"].GetDouble(); }
 			if (actor.HasMember("render_order")) { render_order = actor["render_order"].GetDouble(); }
+			if (actor.HasMember("view_image_back")) { view_image_back = actor["view_image_back"].GetString(); }
+			if (actor.HasMember("movement_bounce_enabled")) { movementBounce = actor["movement_bounce_enabled"].GetBool(); }
 			
 			// create actor variable and store it in list of actors
 			glm::vec2 position{ x, y };
@@ -104,7 +110,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 
 			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
 			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY, render_order));
+				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce));
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map
@@ -118,7 +124,7 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	}
 }
 
-void Scene::MovePlayer(glm::vec2& direction, double speed)
+void Scene::MovePlayer(glm::vec2& direction, double speed, bool flip)
 {	
 	glm::vec2 tempPosition;
 
@@ -132,15 +138,70 @@ void Scene::MovePlayer(glm::vec2& direction, double speed)
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
 		return;
 
+	AnimatePlayer(direction, flip);
+
 	// Update player's position if not blocked
 	updateActorPosition(player, tempPosition);
+
 }
 
-void Scene::MoveActors() {
+void Scene::MoveActors(bool flip) {
 	//update all actors except for the player (which is the last actor)
 	for (int i = 0; i < actors.size(); i++) {
 		if (actors[i]->actor_name != "player") {
 			updateActorPosition(actors[i], getNewPosFromVelocity(actors[i]->position, actors[i]->velocity));
+			AnimateActor(actors[i], flip);
+		}
+	}	
+}
+
+void Scene::AnimateActor(Actor* actor, bool flip) {
+	/*If the actor attempts to move east, the x component should become positive (regardless of its original value).
+	If the actor attempts to move west, the x component should become negative (regardless of its original value. */
+	if (actor->position.x < getNewPosFromVelocity(actor->position, actor->velocity).x) {
+		if (flip) actor->scale.x = std::abs(actor->scale.x);
+	}
+	else if (actor->position.x > getNewPosFromVelocity(actor->position, actor->velocity).x) {
+		if (flip) actor->scale.x = -1 * std::abs(actor->scale.x);
+	}
+
+	if (actor->position == getNewPosFromVelocity(actor->position, actor->velocity)) {
+		actor->moving = false;
+	}
+	else actor->moving = true;
+	
+	// for moving upward / displaying backImage
+	if (actor->view_image_back.has_value()) {
+		if (actor->position.y < getNewPosFromVelocity(actor->position, actor->velocity).y) {
+			actor->currentView = actor->view_image_back.value();
+		}
+		if (actor->position.y > getNewPosFromVelocity(actor->position, actor->velocity).y) {
+			actor->currentView = actor->view_image;
+		}
+	}
+	
+}
+
+void Scene::AnimatePlayer(glm::vec2& direction, bool flip) {
+	/*If the actor attempts to move east, the x component should become positive (regardless of its original value).
+	If the actor attempts to move west, the x component should become negative (regardless of its original value. */
+	if (direction.x > 0) {
+		if (flip) player->scale.x = std::abs(player ->scale.x);
+	}
+	else if (direction.x < 0) {
+		if (flip) player->scale.x = -1 * std::abs(player->scale.x);
+	}
+
+	if (direction == glm::vec2{ 0,0 }) player->moving = false;
+	else player->moving = true;
+
+	// for moving upward / displaying backImage
+	if (player->view_image_back.has_value()) {
+		if (direction.y < 0) {
+			player->currentView = player->view_image_back.value();
+		}
+		if (direction.y > 0) {
+			player->currentView = player->view_image;
 		}
 	}
 }
