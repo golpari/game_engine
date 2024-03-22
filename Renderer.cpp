@@ -213,7 +213,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 
         // bouncing movement
         glm::vec2 extra_view_offset = { 0, 0 };
-        if (actor.movement_bounce_enabled && actor.moving) {
+        if (actor.movement_bounce_enabled) {
             extra_view_offset = glm::vec2(0, -glm::abs(glm::sin(Helper::GetFrameNumber() * 0.15f)) * 10.0f);
         }
 
