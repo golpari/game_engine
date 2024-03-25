@@ -224,6 +224,7 @@ void Scene::MoveActors(bool flip) {
 				AnimateActor(actors[i], flip);
 			}
 		}
+		//TODO if its player
 	}	
 }
 
