@@ -77,7 +77,7 @@ public:
 			double rotation_deg = 0.0;
 			double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
 			double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
-			double render_order;
+			std::optional<double> render_order;
 			std::string view_image_back = "";
 			bool movementBounce = false;
 
@@ -102,8 +102,10 @@ public:
 			if (out_template.HasMember("movement_bounce_enabled")) { movementBounce = out_template["movement_bounce_enabled"].GetBool(); }
 
 			// create template variable
-			ActorTemplate* new_template = new ActorTemplate(name, /*view, */x, y, vel_x, vel_y, blocking, nearby_dialogue, contact_dialogue,
-				view_image, scaleX, scaleY, rotation_deg, pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce);
+			ActorTemplate* new_template = new ActorTemplate(name, x, y, vel_x, vel_y, nearby_dialogue,
+				contact_dialogue, view_image, scaleX, scaleY, rotation_deg,
+				pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce
+			);
 			// store template in map of templates
 			templates[templateName] = new_template;
 		}

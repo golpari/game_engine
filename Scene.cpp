@@ -2,12 +2,32 @@
 
 bool Scene::CheckBlocking(glm::vec2& position)
 {
-	if (actors_map.find(position) != actors_map.end()) {
+	// Roughly how the autograder deals with homework6 collision-related happenings.
+	// A key thing to note-- dialogue-processing occurs after all actor updates.
+	/*
+	1) Begin iterating through actors, calling Update() on each one.
+		1.1) Determine the "desired new position" of the actor(logic different if player vs npc).
+		1.2) If the actor has a valid box collider, collect a vector of all other actors colliding with it at "desired new position" (AABB).
+		1.2.1) For each of these actors we collide with at "desired new position", add them to our "colliding_actors_this_frame" set...
+		1.2.2) ...and add ourselves to the other actor's set.
+		1.3) If the colliding_actors_this_frame set has a size larger than 0 (IE, we collided with something)...
+		1.3.1) Do not move this frame.
+		1.3.2) Invert our velocity(only meaningful for NPCs).
+		1.4) If the colliding_actors_this_frame set has a size of 0, move this actor to "desired new position".
+
+
+		2) Collect and render dialogue(and process dialogue commands). // All actors have been updated at this point.
+		2.1) Find any non - player actors in the player's region (or neighboring regions).
+		2.2) Perform an AABB test on these "nearby" actors to collect actors whos triggers are overlapping the player trigger.
+		2.3) Process and render the nearby_dialogue of these actors.
+		2.4) Process the contact_dialogue of any actors that collided(box colliders) with the player earlier during the frame. */
+
+	/*if (actors_map.find(position) != actors_map.end()) {
 		for (Actor* actor : actors_map.at(position)) {
 			if (actor->blocking)
 				return true;
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -19,7 +39,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 	double vel_x = 0;
 	double vel_y = 0;
 	char view = '?';
-	bool blocking = false;
+	float boxCollWidth = 0;
+	float boxCollHeight = 0;
 	std::string nearby_dialogue = "";
 	std::string contact_dialogue = "";
 
@@ -38,7 +59,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			vel_x = 0;
 			vel_y = 0;
 			view = '?';
-			blocking = false;
+			boxCollWidth = 0;
+			boxCollHeight = 0;
 			nearby_dialogue = "";
 			contact_dialogue = "";
 
@@ -67,7 +89,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 				vel_x = actorTemplate->vel_x;
 				vel_y = actorTemplate->vel_y;
 				view = actorTemplate->view;
-				blocking = actorTemplate->blocking;
+				//blocking = actorTemplate->blocking;
+				// TODO: ADD BOXCOLL TEMPLATE PROCESSING
 				nearby_dialogue = actorTemplate->nearby_dialogue;
 				contact_dialogue = actorTemplate->contact_dialogue;
 
@@ -89,7 +112,8 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			if (actor.HasMember("vel_x")) { vel_x = actor["vel_x"].GetDouble(); }
 			if (actor.HasMember("vel_y")) { vel_y = actor["vel_y"].GetDouble(); }
 			if (actor.HasMember("view")) { view = *actor["view"].GetString(); }
-			if (actor.HasMember("blocking")) { blocking = actor["blocking"].GetBool(); }
+			if (actor.HasMember("box_collider_width")) { boxCollWidth = actor["box_collider_width"].GetFloat(); }
+			if (actor.HasMember("box_collider_height")) { boxCollHeight = actor["box_collider_height"].GetFloat(); }
 			if (actor.HasMember("nearby_dialogue")) { nearby_dialogue = actor["nearby_dialogue"].GetString(); }
 			if (actor.HasMember("contact_dialogue")) { contact_dialogue = actor["contact_dialogue"].GetString(); }
 
@@ -108,8 +132,15 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			glm::vec2 velocity{ vel_x, vel_y };
 			glm::vec2 scale{ scaleX, scaleY };
 
+			// create the box collider, the collider needs to get updated every time the actor moves
+			BoxCollider collider;
+			collider.top = position.y;
+			collider.bottom = position.y + boxCollHeight;
+			collider.left = position.x;
+			collider.right = position.x + boxCollWidth;
+
 			//glm::vec2 pivot_offset{ pivot_offsetX, pivot_offsetY };
-			Actor* new_actor(new Actor(name, /*view, */position, velocity, blocking, nearby_dialogue, contact_dialogue,
+			Actor* new_actor(new Actor(name, /*view, */position, velocity, collider, nearby_dialogue, contact_dialogue,
 				view_image, scale, rotation_deg, pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce));
 			actors.push_back(new_actor);
 
@@ -147,10 +178,51 @@ void Scene::MovePlayer(glm::vec2& direction, double speed, bool flip)
 
 void Scene::MoveActors(bool flip) {
 	//update all actors except for the player (which is the last actor)
+	//1) Begin iterating through actors, calling Update() on each one.
 	for (int i = 0; i < actors.size(); i++) {
 		if (actors[i]->actor_name != "player") {
-			updateActorPosition(actors[i], getNewPosFromVelocity(actors[i]->position, actors[i]->velocity));
-			AnimateActor(actors[i], flip);
+			//1.1) Determine the "desired new position" of the actor(logic different if player vs npc).
+			glm::vec2 newPos = getNewPosFromVelocity(actors[i]->position, actors[i]->velocity);
+// TODO do i need to make the box1 collider be based on the new position and to also update the box1 collider?
+			//1.2) If the actor has a valid box collider, collect a vector of all other actors colliding with it at "desired new position" (AABB).
+			if (actors[i]->collider.left < actors[i]->collider.right && actors[i]->collider.top < actors[i]->collider.bottom) {
+				// AABB COLLISION
+				/*if (box1.left < box2.right
+					&& box1.right > box2.left
+					&& box1.top < box2.bottom
+					&& box1.bottom > box2.top)
+				{
+					// boxes 1 and 2 are colliding
+				}*/
+				std::vector<Actor*> collidingActors;
+				for (int j = 0; j < actors.size(); j++) {
+					// make sure not to check for a collision against yourself
+					if (actors[j] != actors[i]) {
+						if (actors[i]->collider.left < actors[j]->collider.right
+							&& actors[i]->collider.right > actors[j]->collider.left
+							&& actors[i]->collider.top < actors[j]->collider.bottom
+							&& actors[i]->collider.bottom > actors[j]->collider.top) {
+							//1.2.1) For each of these actors we collide with at "desired new position", add them to our "colliding_actors_this_frame" set...
+							actors[i]->actors_collided_this_frame.push_back(actors[j]);
+							//1.2.2) ...and add ourselves to the other actor's set.
+							actors[j]->actors_collided_this_frame.push_back(actors[i]);
+						}
+					}
+				}
+
+
+			}
+			//1.3) If the colliding_actors_this_frame set has a size larger than 0 (IE, we collided with something)...
+			if (actors[i]->actors_collided_this_frame.empty()) {
+				//1.3.1) Do not move this frame. (aka do nothing, see else statement in 1.4)
+				//1.3.2) Invert our velocity(only meaningful for NPCs).
+				actors[i]->velocity *= (-1);
+			}
+			//1.4) If the colliding_actors_this_frame set has a size of 0, move this actor to "desired new position".
+			else {
+				updateActorPosition(actors[i], newPos);
+				AnimateActor(actors[i], flip);
+			}
 		}
 	}	
 }
@@ -283,14 +355,14 @@ glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::vec2& velocity)
 	y += velocity.y;
 	glm::vec2 newPosition{ x, y };
 
-	//only return the updated position if its not blocked
+	/*//only return the updated position if its not blocked
 	if (!CheckBlocking(newPosition)) {
 		return newPosition;
 		// IF ITS BLOCKED FLIP THE VELOCITY !!!!
 	}
 	else {
 		velocity = -velocity;
-	}
+	}*/
 	
 	// return old position if actor wont go anywhere
 	return position;
