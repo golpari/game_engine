@@ -19,7 +19,7 @@ bool Scene::CheckBlocking(glm::vec2& position)
 		2) Collect and render dialogue(and process dialogue commands). // All actors have been updated at this point.
 		2.1) Find any non - player actors in the player's region (or neighboring regions).
 		2.2) Perform an AABB test on these "nearby" actors to collect actors whos triggers are overlapping the player trigger.
-		2.3) Process and render the nearby_dialogue of these actors.
+		2.3) Process and render the nearby_dialogue of these actors.  
 		2.4) Process the contact_dialogue of any actors that collided(box colliders) with the player earlier during the frame. */ 
 
 	/*if (actors_map.find(position) != actors_map.end()) {
