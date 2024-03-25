@@ -169,10 +169,9 @@ void Scene::MovePlayer(glm::vec2& direction, double speed, bool flip)
 	if (CheckBlocking(tempPosition))  // Don't do anything if blocking wall is there
 		return;
 
-	AnimatePlayer(direction, flip);
-
 	// Update player's position if not blocked
 	updateActorPosition(player, tempPosition);
+	AnimatePlayer(direction, flip);
 
 }
 
