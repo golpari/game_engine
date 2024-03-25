@@ -7,7 +7,7 @@ OBJECTS := $(SOURCES:.cpp=.o)
 TARGET := game_engine_linux
 
 # names of libraries
-LIBS := -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image
+LIBS := -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image -llua5.4
 
 # Specify the path to the SDL2 libraries
 LDFLAGS := -L./lib $(LIBS)
