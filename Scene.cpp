@@ -3,7 +3,7 @@
 bool Scene::CheckBlocking(glm::vec2& position)
 {
 	// Roughly how the autograder deals with homework6 collision-related happenings.
-	// A key thing to note-- dialogue-processing occurs after all actor updates.   
+	// A key thing to note-- dialogue-processing occurs after all actor updates.    
 	/*
 	1) Begin iterating through actors, calling Update() on each one.
 		1.1) Determine the "desired new position" of the actor(logic different if player vs npc).
