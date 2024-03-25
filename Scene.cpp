@@ -9,7 +9,7 @@ bool Scene::CheckBlocking(glm::vec2& position)
 		1.1) Determine the "desired new position" of the actor(logic different if player vs npc).
 		1.2) If the actor has a valid box collider, collect a vector of all other actors colliding with it at "desired new position" (AABB).
 		1.2.1) For each of these actors we collide with at "desired new position", add them to our "colliding_actors_this_frame" set...
-		1.2.2) ...and add ourselves to the other actor's set.
+		1.2.2) ...and add ourselves to the other actor's set. 
 		1.3) If the colliding_actors_this_frame set has a size larger than  0 (IE, we collided with something)...
 		1.3.1) Do not move this frame. 
 		1.3.2) Invert our velocity(only meaningful for NPCs).
