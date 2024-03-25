@@ -171,7 +171,7 @@ void Scene::MovePlayer(glm::vec2& direction, double speed, bool flip)
 
 	// Update player's position if not blocked
 	updateActorPosition(player, tempPosition);
-	AnimatePlayer(direction, flip);
+	AnimatePlayer(direction, flip); 
 
 }
 
@@ -212,13 +212,14 @@ void Scene::MoveActors(bool flip) {
 
 			}
 			//1.3) If the colliding_actors_this_frame set has a size larger than 0 (IE, we collided with something)...
-			if (actors[i]->actors_collided_this_frame.empty()) {
+			if (!actors[i]->actors_collided_this_frame.empty()) {
 				//1.3.1) Do not move this frame. (aka do nothing, see else statement in 1.4)
 				//1.3.2) Invert our velocity(only meaningful for NPCs).
 				actors[i]->velocity *= (-1);
 			}
 			//1.4) If the colliding_actors_this_frame set has a size of 0, move this actor to "desired new position".
-			else {
+			else 
+			{
 				updateActorPosition(actors[i], newPos);
 				AnimateActor(actors[i], flip);
 			}
@@ -339,7 +340,6 @@ void Scene::updateActorPosition(Actor* actor, glm::vec2 newPos) {
 
 	// Update the Actor's position property
 	actor->position = newPos;
-
 	// Add actor to new position vector
 	addActorToMap(newPos, actor);
 	std::sort(actors_map[newPos].begin(), actors_map[newPos].end(), ActorComparator());
@@ -355,14 +355,14 @@ glm::vec2 Scene::getNewPosFromVelocity(glm::vec2& position, glm::vec2& velocity)
 	y += velocity.y;
 	glm::vec2 newPosition{ x, y };
 
-	/*//only return the updated position if its not blocked
+	//only return the updated position if its not blocked
 	if (!CheckBlocking(newPosition)) {
 		return newPosition;
 		// IF ITS BLOCKED FLIP THE VELOCITY !!!!
 	}
 	else {
 		velocity = -velocity;
-	}*/
+	}
 	
 	// return old position if actor wont go anywhere
 	return position;
