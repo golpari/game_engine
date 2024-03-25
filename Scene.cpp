@@ -15,7 +15,7 @@ bool Scene::CheckBlocking(glm::vec2& position)
 		1.3.2) Invert our velocity(only meaningful for NPCs).
 		1.4) If the colliding_actors_this_frame set has a size of 0, move this actor to "desired new position".
 
-
+		 
 		2) Collect and render dialogue(and process dialogue commands). // All actors have been updated at this point.
 		2.1) Find any non - player actors in the player's region (or neighboring regions).
 		2.2) Perform an AABB test on these "nearby" actors to collect actors whos triggers are overlapping the player trigger.
