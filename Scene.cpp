@@ -11,7 +11,7 @@ bool Scene::CheckBlocking(glm::vec2& position)
 		1.2.1) For each of these actors we collide with at "desired new position", add them to our "colliding_actors_this_frame" set...
 		1.2.2) ...and add ourselves to the other actor's set.
 		1.3) If the colliding_actors_this_frame set has a size larger than 0 (IE, we collided with something)...
-		1.3.1) Do not move this frame.
+		1.3.1) Do not move this frame. 
 		1.3.2) Invert our velocity(only meaningful for NPCs).
 		1.4) If the colliding_actors_this_frame set has a size of 0, move this actor to "desired new position".
 
