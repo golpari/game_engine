@@ -19,7 +19,7 @@ extern std::unordered_map<std::string, ActorTemplate*> templates;
 class hashFunction {
 public:
 
-	// Use sum of lengths of first and last names
+	// Use sum of lengths of x and y positions
 	// as hash function.
 	size_t operator()(const glm::vec2& position) const
 	{
@@ -33,21 +33,10 @@ public:
 
 	std::unordered_map<glm::vec2, std::vector<Actor*>, hashFunction> actors_map;
 	std::vector<Actor*> actors;
-	Actor* player = nullptr;
 
-	Scene() { player = nullptr; }
-
-	bool CheckBlocking(glm::vec2& position);
+	Scene() {}
 
 	void ProcessActors(rapidjson::Document& doc);
-
-	void MovePlayer(glm::vec2& direction, double speed, bool flip);
-
-	void MoveActors(bool animate);
-
-	void AnimateActor(Actor* actor, bool flip);
-
-	void AnimatePlayer(glm::vec2& direction, bool flip);
 
 	void RenderScene();
 

@@ -7,6 +7,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <string>
+#include <optional>
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
@@ -62,50 +63,11 @@ public:
 			// process the template
 
 			std::string name = "";
-			float x = 0;
-			float y = 0;
-			float vel_x = 0;
-			float vel_y = 0;
-			char view = '?';
-			bool blocking = false;
-			std::string nearby_dialogue = "";
-			std::string contact_dialogue = "";
-
-			std::string view_image = "";
-			double scaleX = 1.0;
-			double scaleY = 1.0;
-			double rotation_deg = 0.0;
-			double pivot_offsetX = 0.0; // actual default is actor_view.w * 0.5
-			double pivot_offsetY = 0.0; // actual default is actor_view.h * 0.5
-			std::optional<double> render_order;
-			std::string view_image_back = "";
-			bool movementBounce = false;
 
 			if (out_template.HasMember("name")) { name = out_template["name"].GetString(); }
-			if (out_template.HasMember("transform_position_x")) { x = out_template["transform_position_x"].GetFloat(); }
-			if (out_template.HasMember("transform_position_y")) { y = out_template["transform_position_y"].GetFloat(); }
-			if (out_template.HasMember("vel_x")) { vel_x = out_template["vel_x"].GetFloat(); }
-			if (out_template.HasMember("vel_y")) { vel_y = out_template["vel_y"].GetFloat(); }
-			if (out_template.HasMember("view")) { view = *out_template["view"].GetString(); }
-			if (out_template.HasMember("blocking")) { blocking = out_template["blocking"].GetBool(); }
-			if (out_template.HasMember("nearby_dialogue")) { nearby_dialogue = out_template["nearby_dialogue"].GetString(); }
-			if (out_template.HasMember("contact_dialogue")) { contact_dialogue = out_template["contact_dialogue"].GetString(); }
-
-			if (out_template.HasMember("view_image")) { view_image = out_template["view_image"].GetString(); }
-			if (out_template.HasMember("transform_scale_x")) { scaleX = out_template["transform_scale_x"].GetDouble(); }
-			if (out_template.HasMember("transform_scale_y")) { scaleY = out_template["transform_scale_y"].GetDouble(); }
-			if (out_template.HasMember("transform_rotation_degrees")) { rotation_deg = out_template["transform_rotation_degrees"].GetDouble(); }
-			if (out_template.HasMember("view_pivot_offset_x")) { pivot_offsetX = out_template["view_pivot_offset_x"].GetDouble(); }
-			if (out_template.HasMember("view_pivot_offset_y")) { pivot_offsetY = out_template["view_pivot_offset_y"].GetDouble(); }
-			if (out_template.HasMember("render_order")) { render_order = out_template["render_order"].GetDouble(); }
-			if (out_template.HasMember("view_image_back")) { view_image_back = out_template["view_image_back"].GetString(); }
-			if (out_template.HasMember("movement_bounce_enabled")) { movementBounce = out_template["movement_bounce_enabled"].GetBool(); }
 
 			// create template variable
-			ActorTemplate* new_template = new ActorTemplate(name, x, y, vel_x, vel_y, nearby_dialogue,
-				contact_dialogue, view_image, scaleX, scaleY, rotation_deg,
-				pivot_offsetX, pivot_offsetY, render_order, view_image_back, movementBounce
-			);
+			ActorTemplate* new_template = new ActorTemplate(name);
 			// store template in map of templates
 			templates[templateName] = new_template;
 		}
@@ -178,28 +140,6 @@ struct Dialogue {
 struct ActorComparator {
 	bool operator()(const Actor* a, const Actor* b) const {
 		return a->actorID < b->actorID;
-	}
-};
-
-struct RenderComparator {
-	bool operator()(const Actor* a, const Actor* b) const {
-
-		// get the render orders
-		double renderA;
-		double renderB;
-		if (a->render_order.has_value()) renderA = a->render_order.value();
-		else renderA = a->position.y;
-		if (b->render_order.has_value()) renderB = b->render_order.value();
-		else renderB = b->position.y;
-
-		if (renderA == renderB) return a->actorID < b->actorID;
-		else return renderA < renderB;
-	}
-};
-
-struct DialogueComparator {
-	bool operator()(const Dialogue a, const Dialogue b) const {
-		return a.dialogueID < b.dialogueID;
 	}
 };
 #endif

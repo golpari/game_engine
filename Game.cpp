@@ -11,19 +11,6 @@ void Game::GameStart() {
 	EngineUtils::CheckPathExists("resources/game.config", true);
 
 	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
-
-	if (out_gameConfig.HasMember("game_over_bad_image")) badImage = out_gameConfig["game_over_bad_image"].GetString();
-	if (out_gameConfig.HasMember("game_over_good_image")) goodImage = out_gameConfig["game_over_good_image"].GetString();
-	if (out_gameConfig.HasMember("game_over_bad_audio")) badAudio = out_gameConfig["game_over_bad_audio"].GetString();
-	if (out_gameConfig.HasMember("game_over_good_audio")) goodAudio = out_gameConfig["game_over_good_audio"].GetString();
-	if (out_gameConfig.HasMember("player_movement_speed")) playerSpeed = out_gameConfig["player_movement_speed"].GetDouble();
-
-	/*this->LoadInitialScene(out_gameConfig);
-
-	if (out_gameConfig.HasMember("game_start_message")) {
-		std::cout << out_gameConfig["game_start_message"].GetString() << "\n";
-	}*/
-
 }
 
 void Game::ProcessIntro() {
@@ -87,7 +74,6 @@ void Game::ProcessIntro() {
 				AudioHelper::Mix_PlayChannel498(0,
 					AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".ogg").c_str()),
 					-1);
-				introAudioPlaying = true;
 			}
 		}
 		// if it DOES exist as a wav, then play it as a wav. We assume that no 2 sameName ogg and wav files exist
@@ -97,7 +83,6 @@ void Game::ProcessIntro() {
 			AudioHelper::Mix_PlayChannel498(0,
 				AudioHelper::Mix_LoadWAV498(("resources/audio/" + audioName + ".wav").c_str()),
 				-1);
-			introAudioPlaying = true;
 		}
 
 	}
@@ -201,166 +186,6 @@ void Game::LoadScene(std::string sceneName)
 	}
 }
 
-int Game::CheckDialogue(std::string& dialogue, bool& scoredUpped) {
-	if (dialogue.find("proceed to") != std::string::npos) {
-		loadNew = true;
-		nextScene = EngineUtils::obtain_word_after_phrase(dialogue, "proceed to ");
-	}
-
-	if (dialogue.find("game over") != std::string::npos) {
-		AudioHelper::Mix_HaltChannel498(0);
-		// begin the lose audio immediately
-		if (!badAudio.empty()) {
-			if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".wav", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".wav").c_str()),
-					0);
-			}
-			else if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".ogg", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".ogg").c_str()),
-					0);
-			}
-		}
-		lose = true;
-		return LOSE;
-	}
-
-	if (dialogue.find("health down") != std::string::npos && Helper::GetFrameNumber() >= (cooldownPoint + COOLDOWN)) {
-		health--;
-		cooldownPoint = Helper::GetFrameNumber();
-	}
-	if (dialogue.find("score up") != std::string::npos && !scoredUpped) {
-		score++;
-		scoredUpped = true;
-	}
-	if (dialogue.find("you win") != std::string::npos) {
-		AudioHelper::Mix_HaltChannel498(0);
-		// begin the Win audio immediately
-		if (!goodAudio.empty()) {
-			if (EngineUtils::CheckPathExists("resources/audio/" + goodAudio + ".wav", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + goodAudio + ".wav").c_str()),
-					0);
-			}
-			else if (EngineUtils::CheckPathExists("resources/audio/" + goodAudio + ".ogg", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + goodAudio + ".ogg").c_str()),
-					0);
-			}
-		}
-		win = true;
-		return WIN;
-	}
-
-	if (health <= 0) {
-		AudioHelper::Mix_HaltChannel498(0);
-		// begin the lose audio immediately
-		if (!badAudio.empty()) {
-			if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".wav", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".wav").c_str()),
-					0);
-			}
-			else if (EngineUtils::CheckPathExists("resources/audio/" + badAudio + ".ogg", false)) {
-				AudioHelper::Mix_PlayChannel498(0,
-					AudioHelper::Mix_LoadWAV498(("resources/audio/" + badAudio + ".ogg").c_str()),
-					0);
-			}
-		}
-		lose = true;
-		return LOSE;
-	}
-
-	return PLAY;
-}
-
-int Game::PrintDialogue(Renderer& renderer) {
-
-	if (currentScene->player == nullptr) {
-		return PLAY;
-	}
-	std::vector<Dialogue> dialogues;
-
-	//for nearby dialogue
-	int x, y = 0;
-	int endgame = PLAY;
-
-	// Split the player's position into x and y coordinates
-	x = currentScene->player->position.x;
-	y = currentScene->player->position.y;
-
-	// Offsets for the surrounding 8 spaces
-	const std::vector<glm::ivec2> offsets = {
-		{ -1, -1 }, { 0, -1 }, { 1, -1 },
-		{ -1,  0 },            { 1,  0 },
-		{ -1,  1 }, { 0,  1 }, { 1,  1 }
-	};
-
-	Dialogue temp;
-
-	// if there is anyone nearby, the player will also be added to the nearby dialogue list
-	bool playerDialogued = false;
-
-	// calculate every option for surrounding positions
-	for (const auto& offset : offsets) {
-		// Calculate the position for each surrounding space
-		int checkX = x + offset.x;
-		int checkY = y + offset.y;
-
-		// Combine the coordinates back into a uint64_t position
-		glm::vec2 adjacent{ checkX, checkY };
-
-		// check actors at adjacent position
-		auto actorsIt = currentScene->actors_map.find(adjacent);
-		if (actorsIt != currentScene->actors_map.end()) {
-			// found actors for this position, add them to the printable list
-			for (Actor* actor : actorsIt->second) {
-				//check nearby dialogue
-				if (actor->actor_name != "player" && adjacent == actor->position && actor->nearby_dialogue != "" && actor->nearby_dialogue != " ") {
-					temp.dialogueID = actor->actorID;
-					temp.text = actor->nearby_dialogue;
-					dialogues.push_back(temp);
-					endgame = CheckDialogue(actor->nearby_dialogue, actor->scoredUpped);
-				}
-			}
-			/*if (!playerDialogued) {
-				actorsWithNearbyDialogue.push_back(scene.player);
-				playerDialogued = true;
-			}*/
-		}
-	}
-
-	if (loadNew) return PLAY;;
-
-	// for contact dialogue
-	auto actorsIt = currentScene->actors_map.find(currentScene->player->position);
-	if (actorsIt != currentScene->actors_map.end()) {
-		// found actors for this position, add them to the printable list
-		for (Actor* actor : actorsIt->second) {
-			// check nearby dialogue
-			if (actor->actor_name != "player" && currentScene->player->position == actor->position && actor->contact_dialogue != "" && actor->contact_dialogue != " ") {
-				temp.dialogueID = actor->actorID;
-				temp.text = actor->contact_dialogue;
-				dialogues.push_back(temp);
-				endgame = CheckDialogue(actor->contact_dialogue, actor->scoredUpped);
-			}
-		}
-	}
-
-	// sort the dialogues to be printed by actorID (which is the same as dialogueID)
-	std::sort(dialogues.begin(), dialogues.end(), DialogueComparator());
-
-	//print the dialogues in order by actorID
-	int size = dialogues.size();
-	for (int i = 0; i < size; i++) {
-		//std::cout << dialogue.text << "\n";
-		renderer.RenderText(font, dialogues[i].text, 16, SDL_Color{255, 255, 255, 255}, size, i);
-	}
-
-	return endgame;
-}
-
 void Game::RunScene()
 {
 	Input::Init(); //setup the keycodes
@@ -385,27 +210,11 @@ void Game::RunScene()
 		playAudio = true;
 	}
 
-	renderer.Initialize(title, currentScene->player);
+	renderer.Initialize(title);
 	while (true) {
 		if (!StartFrame(index, renderer, playScene)) {
 			// in case of exit window event being triggered
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);	
-
-			std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
-			currentScene->MoveActors(renderer.animateActorsOnMovement);
-
-			if (!win && !lose) {
-				if (introImages.empty() || playScene) SDL_RenderClear(renderer.renderer);
-				RenderAll(renderer);
-			}
-			if (win) {
-				SDL_RenderClear(renderer.renderer);
-				if (!goodImage.empty()) renderer.RenderImage(goodImage);
-			}
-			else if (lose) {
-				SDL_RenderClear(renderer.renderer);
-				if (!badImage.empty()) renderer.RenderImage(badImage);
-			}
 
 			Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
 			exit(0);
@@ -424,11 +233,6 @@ void Game::RunScene()
 			}
 
 			if (playScene) {
-				//instead of updating actors every 60 frames, update EVERY FRAME
-				//if (Helper::GetFrameNumber() != 0 && Helper::GetFrameNumber() % 60 == 0) {
-					std::sort(currentScene->actors.begin(), currentScene->actors.end(), ActorComparator());
-					currentScene->MoveActors(renderer.animateActorsOnMovement);
-				//}
 				RenderAll(renderer);
 			}
 
@@ -442,11 +246,9 @@ void Game::RunScene()
 
 		if (win) {
 			SDL_RenderClear(renderer.renderer);
-			if (!goodImage.empty()) renderer.RenderImage(goodImage);
 		}
 		else if (lose) {
 			SDL_RenderClear(renderer.renderer);
-			if (!badImage.empty()) renderer.RenderImage(badImage);
 		}
 
 		Helper::SDL_RenderPresent498(renderer.renderer);//renderer.EndFrame();
@@ -469,10 +271,6 @@ void Game::Deallocate() {
 	//	delete actor; // Deallocate memory for each Actor in the vector
 	//}
 	currentScene->actors.clear(); // Clear the vector (not strictly necessary)
-
-	// Deallocate memory pointed to by the 'player' pointer
-	//delete currentScene->player; // Deallocate memory for the player
-	currentScene->player = nullptr;
 }
 
 // returns filename of the hp image, if no hp img defined, then exits with error
@@ -489,18 +287,7 @@ void Game::RenderAll(Renderer& renderer)
 {
 	/*** render all actors in their render order ***/
 
-	// sort the list of actors by render order for ease of rendering
-	std::sort(currentScene->actors.begin(), currentScene->actors.end(), RenderComparator());
-
-	renderer.RenderActors(currentScene->actors, currentScene->player);
-	
-	//render dialogue / process it before rendering HUD
-	PrintDialogue(renderer);
-
-	// render HUD icons and text
-	if (currentScene->player != nullptr) {
-		renderer.RenderHUD(HudSetup(), font, health, score);
-	}
+	renderer.RenderActors(currentScene->actors);
 }
 
 void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
@@ -532,10 +319,6 @@ void Game::RunIntro(int& index, Renderer& renderer, bool& playAudio) {
 	else
 	{
 		SDL_RenderClear(renderer.renderer);
-		if (introAudioPlaying) {
-			AudioHelper::Mix_HaltChannel498(0);
-			introAudioPlaying = false;
-		}
 		playAudio = true;
 	}
 }
@@ -575,7 +358,7 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 		}
 		// do move player stuff
 		playerDir = glm::vec2(0, 0);
-		if (currentScene->player != nullptr && playScene) {
+		{
 			if (Input::GetKey(SDL_SCANCODE_LEFT) || Input::GetKey(SDL_SCANCODE_A)) {
 				playerDir += glm::vec2(-1, 0);
 			}
@@ -588,7 +371,6 @@ bool Game::StartFrame(int& index, Renderer& renderer, bool playScene)
 			if (Input::GetKey(SDL_SCANCODE_DOWN) || Input::GetKey(SDL_SCANCODE_S)) {
 				playerDir += glm::vec2(0, 1);
 			}
-			currentScene->MovePlayer(playerDir, playerSpeed, renderer.animateActorsOnMovement);
 		}
 
 	}

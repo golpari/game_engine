@@ -47,12 +47,6 @@ public:
 	std::string nextScene = "";
 	bool win = false;
 	bool lose = false;
-	double playerSpeed = 0.02f;
-
-	std::string badImage = "";
-	std::string goodImage = "";
-	std::string badAudio = "";
-	std::string goodAudio = "";
 
 	Game() { currentScene = nullptr; }
 
@@ -68,14 +62,9 @@ public:
 
 	void LoadScene(std::string sceneName);
 
-	int CheckDialogue(std::string& dialogue, bool& scoredUpped);
-
-	int PrintDialogue(Renderer& renderer);
-
 	void RunScene();
 
 private:
-	bool introAudioPlaying = false;
 
 	void Deallocate();
 

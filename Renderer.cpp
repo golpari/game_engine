@@ -5,24 +5,16 @@ const int PIXEL_SCALE = 100;
 SDL_RendererFlip GetFlipType(const Actor& actor);
 
 // draw window
-void Renderer::Initialize(const std::string& title, Actor* player)
+void Renderer::Initialize(const std::string& title)
 {
     // FIRST THING, read in rendering json 
     bool processed = ProcessRenderingConfig();
 
     //set up the camera offset info only if renderConfig processed
     if (processed) {
-        if (out_renderingConfig.HasMember("cam_offset_x")) cam.cam_offset_x = out_renderingConfig["cam_offset_x"].GetFloat();
-        if (out_renderingConfig.HasMember("cam_offset_y")) cam.cam_offset_y = out_renderingConfig["cam_offset_y"].GetFloat();
         if (out_renderingConfig.HasMember("zoom_factor")) zoomFactor = out_renderingConfig["zoom_factor"].GetDouble();
         if (out_renderingConfig.HasMember("cam_ease_factor")) camEasefactor = out_renderingConfig["cam_ease_factor"].GetFloat();
         if (out_renderingConfig.HasMember("x_scale_actor_flipping_on_movement")) animateActorsOnMovement = out_renderingConfig["x_scale_actor_flipping_on_movement"].GetBool();
-    }
-
-    // set the initial cam position to playerPos, otherwise default is (0,0) 
-    // need to do this for camEase
-    if (player != nullptr) {
-        cam.position = player->position;
     }
 
     // tell SDL what you want to do 
@@ -56,52 +48,6 @@ void Renderer::Initialize(const std::string& title, Actor* player)
     renderer = Helper::SDL_CreateRenderer498(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);  
 }
 
-/*bool Renderer::StartFrame(std::vector<std::string>& introImages, int& index)
-{
-    // Check Events
-    SDL_Event nextEvent;
-    while (Helper::SDL_PollEvent498(&nextEvent)) {
-        if (nextEvent.type == SDL_QUIT) {
-            SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-            if (introImages.empty())
-                SDL_RenderClear(renderer);
-            // render all actors
-            //for (Actor* actor : actors) {
-            //    RenderActor(*actor, { 0, 0 });
-            //}
-            //EndFrame();
-            //exit(0);
-            return false;
-        }
-
-        // Mouse event: SDL_MOUSEBUTTONDOWN is for mouse button press
-        else if (nextEvent.type == SDL_MOUSEBUTTONDOWN && nextEvent.button.button == SDL_BUTTON_LEFT) {
-            // Handle left mouse click
-            index++;
-        }
-
-        // Keyboard event: SDL_KEYDOWN is for key press
-        else if (nextEvent.type == SDL_KEYDOWN) {
-            // Check for spacebar or enter key using scancode
-            if (nextEvent.key.keysym.scancode == SDL_SCANCODE_SPACE || nextEvent.key.keysym.scancode == SDL_SCANCODE_RETURN) {
-                // Handle spacebar or enter key press
-                index++;
-            }
-            
-        }
-    }
-
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-    SDL_RenderClear(renderer);
-    return true;
-}*/
-
-//void Renderer::EndFrame()
-//{
-//    // show render to user
-//    Helper::SDL_RenderPresent498(renderer);
-//}
-
 void Renderer::RenderImage(const std::string& imageName)
 {
     // TODO dont load texture on every frame
@@ -111,12 +57,6 @@ void Renderer::RenderImage(const std::string& imageName)
         SDL_Texture* img = IMG_LoadTexture(renderer, ("resources/images/" + imageName + ".png").c_str());
         textures[imageName] = img;
     }
-
-    /*if (img == nullptr) {
-        // Output the SDL error to the console or handle it as needed
-        std::cerr << "Unable to load texture. SDL_Error: " << SDL_GetError() << std::endl;
-        return; // Exit the function if the texture couldn't be loaded
-    }*/
 
     // get img w and h
     int w, h;
@@ -157,31 +97,20 @@ void Renderer::RenderText(TTF_Font* font, const std::string& text, int font_size
     );
 }
 
-void Renderer::RenderActors(std::vector<Actor*> actors, Actor* player) {
+void Renderer::RenderActors(std::vector<Actor*> actors) {
     // scale actors w the zoom  
     SDL_RenderSetScale(renderer, zoomFactor, zoomFactor);
 
-    if (player == nullptr) {
         for (Actor* actor : actors) {
             RenderActor(*actor, cam.position); //if no player present, camera set at 0,0
         }
-    }
-    else {
-        glm::vec2 newCamPos = glm::mix(cam.position, player->position, camEasefactor);
-        cam.position = newCamPos;
-        for (Actor* actor : actors) {
-            //dont render directly off player->position
-            // render with the camera ease too!
-            RenderActor(*actor, cam.position);
-        }
-    }
 }
 
 //playerPosition is where the actor will be rendered, a better term would be 'renderPosition'
 void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
 {
     // first, texture must exist
-    if (!actor.currentView.empty()) {
+   /* if (!actor.currentView.empty()) {
         // if texture not alrdy loaded
         if (textures.find(actor.currentView) == textures.end()) {
             //load it
@@ -247,7 +176,7 @@ void Renderer::RenderActor(const Actor& actor, glm::vec2 playerPosition)
             &pivotSDLPoint,
             GetFlipType(actor)
         );
-    }
+    }*/
 }
 
 void Renderer::RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score)
@@ -311,22 +240,4 @@ bool Renderer::ProcessRenderingConfig() {
         return true;
     }
     return false;
-}
-
-//helper I wrote with help from Chat
-/* "This function starts with SDL_FLIP_NONE and uses bitwise OR (|) 
-to add SDL_FLIP_HORIZONTAL or SDL_FLIP_VERTICAL to the flip variable 
-based on the conditions of actor.scale.x and actor.scale.y. 
-If both scales are negative, both flip flags will be set in the flip 
-variable, which SDL's rendering functions will interpret as flipping 
-both horizontally and vertically." -- ChatGPT explanation */
-SDL_RendererFlip GetFlipType(const Actor& actor) {
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-    if (actor.scale.x < 0)
-        flip = (SDL_RendererFlip)(flip | SDL_FLIP_HORIZONTAL);
-    if (actor.scale.y < 0)
-        flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
-
-    return flip;
 }

@@ -18,8 +18,7 @@
 struct Camera {
     
     glm::vec2 position = { 0, 0 };
-    float cam_offset_x = 0;
-    float cam_offset_y = 0;
+
 };
 
 class Renderer
@@ -43,7 +42,7 @@ public:
 
     Renderer() {}
 
-    void Initialize(const std::string& title, Actor* player); // second param added so that cam position can be initially set to player pos if player exists
+    void Initialize(const std::string& title); // second param added so that cam position can be initially set to player pos if player exists
 
     // returns false if end event triggered
    // bool StartFrame(std::vector<std::string> &introImages, int& index);
@@ -51,7 +50,7 @@ public:
     void Cleanup();
     void RenderImage(const std::string& imageName);
     void RenderText(TTF_Font* font, const std::string& text, int font_size, SDL_Color font_color, int numTextsShown, int index);
-    void RenderActors(std::vector<Actor*> actors, Actor* player);
+    void RenderActors(std::vector<Actor*> actors);
     void RenderActor(const Actor& actor, glm::vec2 playerPosition);
     void RenderHUD(const std::string& hp_image, TTF_Font* font, int health, int score);
 
