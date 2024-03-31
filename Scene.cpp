@@ -11,22 +11,63 @@ void Scene::ProcessActors(rapidjson::Document& doc)
 			name = "";
 
 			//PROCESS EACH ACTOR
+
+			//TEMPLATING
 			if (actor.HasMember("template")) {
 				//check if the template has already been processessed, if not then load it
 				if (templates.find(actor["template"].GetString()) == templates.end()) {
 					EngineUtils::ProcessTemplate(actor["template"].GetString());
 				}
 				ActorTemplate* actorTemplate = templates.at(actor["template"].GetString());
-				
+
 				// make the initial values inherit the template values
 				name = actorTemplate->name;
 			}
-
-			// make the actor overwrite template values as needed 
 			if (actor.HasMember("name")) { name = actor["name"].GetString(); }
 
-			glm::vec2 position{ 0, 0 }; //artificial TODO GET RID OF THIS
 			Actor* new_actor(new Actor(name));
+
+			/*When an actor is created…
+
+				Queue it to have its components’ “OnStart” lifecycle function called at start of next frame.
+				Components may or may not have an OnStart() lifecycle function.
+				Components will only attempt to run their OnStart() function once upon their creation.
+				Components should be processed in the alphabetical order of their key.
+				Note : at game - start, the initial scene will load before the first frame.This means that Actors / components in the initial scene will have their OnStart() called on frame 0 (“the next frame coming”), rather than frame 1.
+				Remember to pass in your ref as an argument to OnStart(and all other lifecycle functions) as seen here*/
+
+			// Read through its json to find associated components.Add these components to the actor.
+			if (actor.HasMember("components") && actor["components"].IsArray()) {
+				for (const auto& component : actor["components"].GetArray()) {
+					if (component.HasMember("type")) { 
+						std::string componentType = component["type"].GetString();
+
+						//make sure the component exists as a lua file
+						if (!EngineUtils::CheckPathExists("resources/component_types/" + componentType + ".lua", false)) {
+							std::cout << "error: failed to locate component " << componentType;
+							exit(0);
+						}
+
+						// Establish inheritance using the raw lua api
+						std::shared_ptr<luabridge::LuaRef> newTable = luabridge::newTable(lua_state);
+						ComponentManager::EstablishInheritance(*newTable, *component_tables[componentType]); //the getGlobal is the parent Table
+
+						new_actor->components[component.GetString()] = newTable;
+
+						if ((*newTable).isTable()) {
+							// check that there is an onStart function worth running
+							luabridge::LuaRef onStart = (*newTable)["OnStart"];
+							if (onStart.isFunction()) {
+								onStarts.push_back(newTable); // push the component that needs to have onStart called to the onStarts vector in the scene class
+							}
+						}
+					}
+				}
+			}
+
+			
+
+			glm::vec2 position{ 0, 0 }; //artificial TODO GET RID OF THIS
 			actors.push_back(new_actor);
 
 			//instead of pushing back to the actors vector, push to optimized actors map

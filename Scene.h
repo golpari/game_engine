@@ -11,10 +11,15 @@
 #include "Actor.h"
 #include "EngineUtils.h"
 #include "Game.h"
+#include "ComponentManager.h"
 #include "glm/glm.hpp"
 #include "rapidjson/document.h"
+#include "lua.hpp"
+#include "LuaBridge.h"
 
 extern std::unordered_map<std::string, ActorTemplate*> templates;
+extern lua_State* lua_state;
+extern std::unordered_map<std::string, std::shared_ptr<luabridge::LuaRef>> component_tables; //map id to component type
 
 class hashFunction {
 public:
@@ -33,6 +38,7 @@ public:
 
 	std::unordered_map<glm::vec2, std::vector<Actor*>, hashFunction> actors_map;
 	std::vector<Actor*> actors;
+	std::vector<std::shared_ptr<luabridge::LuaRef>> onStarts;
 
 	Scene() {}
 

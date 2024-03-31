@@ -7,8 +7,11 @@ const int WIN = 2;
 
 void Game::GameStart() {
 
+	ComponentManager::Initialize();
+
 	EngineUtils::CheckPathExists("resources/", true);
 	EngineUtils::CheckPathExists("resources/game.config", true);
+	EngineUtils::CheckPathExists("resources/component_types/", false);
 
 	EngineUtils::ReadJsonFile("resources/game.config", out_gameConfig);
 }
@@ -211,7 +214,14 @@ void Game::RunScene()
 	}
 
 	renderer.Initialize(title);
+	//every frame starts here
 	while (true) {
+		// loop through components and run their OnStart the frame after they've been loaded, then clear whatever needs to get run
+		for (const auto& entry : currentScene->onStarts) {
+			(*entry)["OnStart"](*entry);
+		}
+		currentScene->onStarts.clear();
+
 		if (!StartFrame(index, renderer, playScene)) {
 			// in case of exit window event being triggered
 			SDL_SetRenderDrawColor(renderer.renderer, renderer.r, renderer.g, renderer.b, 255);	

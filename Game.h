@@ -9,6 +9,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include "lua.hpp"
+#include "LuaBridge.h"
+
 #include "ActorTemplate.h"
 #include "AudioHelper.h"
 #include "EngineUtils.h"

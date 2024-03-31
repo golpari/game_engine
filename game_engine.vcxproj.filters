@@ -1730,6 +1730,9 @@
     <ClInclude Include="ThirdParty\LuaBridge\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\glm-0.9.9.8\glm\detail\glm.cpp">
@@ -1841,6 +1844,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\lua-5.4.6\src\lzio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

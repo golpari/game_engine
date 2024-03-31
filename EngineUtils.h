@@ -13,6 +13,8 @@
 #include "rapidjson/filereadstream.h"
 #include "Actor.h"
 #include "ActorTemplate.h"
+#include "lua.hpp"
+#include "LuaBridge.h"
 
 extern std::unordered_map<std::string, ActorTemplate*> templates;
 
@@ -132,6 +134,11 @@ public:
 	}
 };
 
+struct Component {
+	std::shared_ptr<luabridge::LuaRef> lua;
+	std::string type;
+};
+
 struct Dialogue {
 	std::string text = "";
 	int dialogueID = 0;
@@ -140,6 +147,12 @@ struct Dialogue {
 struct ActorComparator {
 	bool operator()(const Actor* a, const Actor* b) const {
 		return a->actorID < b->actorID;
+	}
+};
+
+struct ComponentComparator {
+	bool operator()(const Component* a, const Component* b) const {
+		return a->type < b->type;
 	}
 };
 #endif
